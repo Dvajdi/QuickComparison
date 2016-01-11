@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">QuickComparison</string>
+    <string name="Number">№</string>
+    <string name="Price">Цена</string>
+    <string name="quantity">Количество</string>
+    <string name="unit">Ед. изм.</string>
+    <string name="quantityunit">Цена за ед.</string>
+    <string name="percent">%</string>
+    <string name="one">1</string>
+</resources>

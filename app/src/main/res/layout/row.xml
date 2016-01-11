@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/doprow">
+
+    <TextView
+        android:layout_width="20dp"
+        android:layout_height="60dp"
+        android:id="@+id/dopn"
+        android:textSize="20sp"
+        android:gravity="center" />
+
+    <EditText
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/doppr"
+        android:gravity="center"
+        android:textSize="20sp" />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/dopq"
+        android:gravity="center"
+        android:textSize="20sp" />
+
+    <Spinner
+        android:layout_width="45dp"
+        android:layout_height="60dp"
+        android:id="@+id/dopu"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="55dp"
+        android:layout_height="60dp"
+        android:id="@+id/dopqu"
+        android:gravity="center"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="60dp"
+        android:id="@+id/dopper"
+        android:gravity="center"
+        android:textSize="20sp" />
+</LinearLayout>
