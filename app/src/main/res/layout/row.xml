@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="20dp"
         android:layout_height="60dp"
-        android:id="@+id/dopn"
+        android:id="@+id/tv_dop_number"
         android:textSize="20sp"
         android:gravity="center" />
 
@@ -16,7 +16,7 @@
         android:layout_height="60dp"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/doppr"
+        android:id="@+id/et_dop_price"
         android:gravity="center"
         android:textSize="20sp" />
 
@@ -25,27 +25,28 @@
         android:layout_height="60dp"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/dopq"
+        android:id="@+id/et_dop_quantity"
         android:gravity="center"
         android:textSize="20sp" />
 
     <Spinner
         android:layout_width="45dp"
         android:layout_height="60dp"
-        android:id="@+id/dopu"
+        android:id="@+id/spinner_dop_u"
         android:gravity="center" />
 
     <TextView
         android:layout_width="55dp"
         android:layout_height="60dp"
-        android:id="@+id/dopqu"
+        android:id="@+id/tv_dop_price_unit"
         android:gravity="center"
         android:textSize="20sp" />
 
     <TextView
         android:layout_width="40dp"
         android:layout_height="60dp"
-        android:id="@+id/dopper"
+        android:id="@+id/tv_dop_percent"
         android:gravity="center"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_gravity="bottom" />
 </LinearLayout>
