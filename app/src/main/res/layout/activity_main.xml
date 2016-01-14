@@ -96,16 +96,16 @@
         <TextView
             android:layout_width="88dp"
             android:layout_height="64dp"
-            android:id="@+id/tv_resalt1"
+            android:id="@+id/tv_price_unit1"
             android:gravity="center"
             android:textSize="20sp"
             android:background="#ffffff" />
 
-        <ImageButton
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/iButton_delete1"
-            android:layout_gravity="left" />
+            android:id="@+id/button_delete1"
+            android:layout_gravity="left" android:background="@mipmap/delete"/>
 
     </LinearLayout>
 
@@ -145,15 +145,15 @@
         <TextView
             android:layout_width="88dp"
             android:layout_height="64dp"
-            android:id="@+id/tv_resalt_2"
+            android:id="@+id/tv_price_unit2"
             android:gravity="center"
             android:textSize="20sp"
             android:background="#ffffff" />
 
-        <ImageButton
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/iButton_delete2"
+            android:id="@+id/button_delete2"
             android:layout_gravity="left" />
     </LinearLayout>
 

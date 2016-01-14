@@ -1,48 +1,38 @@
 package ru.forge.twice_a_day.quickcomparison;
 
-import android.content.res.Resources;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
 
-    EditText et_price1, et_quantity1;
-    TextView tv_number1, tv_price_unit1, tv_percent1;
-    Spinner spinner_u1;
+    EditText et_price1, et_quantity1,et_price2, et_quantity2;
+    TextView tv_price_unit1, tv_price_unit2;
+    Button button_unit1,button_unit2,button_add,button_clear;
+    Button iButton_delete1,iButton_delete2;
+
     LinearLayout rl_main;
-    LinearLayout row2;
-    int [] forId;
+    LinearLayout row2,doprow;
+
+    static int firstId, secondId;
 
     static int i;
     boolean et_price1ChangedAndGreaterThanZero, et_quantity1ChangedAndGreaterThanZero;
     double quantity1, price1;
-    ArrayList<LinearLayout> collectionOfLinearLayot;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,24 +41,29 @@ public class MainActivity extends AppCompatActivity {
         findMyViews();
         setContent();
         setListeners();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
     public void findMyViews() {
         et_price1 = (EditText) findViewById(R.id.et_price1);
         et_quantity1 = (EditText) findViewById(R.id.et_quantity1);
-        tv_number1 = (TextView) findViewById(R.id.tv_number1);
-        tv_price_unit1 = (TextView) findViewById(R.id.tv_price_unit1);
-        tv_percent1 = (TextView) findViewById(R.id.tv_percent1);
-        spinner_u1 = (Spinner) findViewById(R.id.spinner_u1);
+        et_price2 = (EditText) findViewById(R.id.et_price2);
+        et_quantity2 = (EditText) findViewById(R.id.et_quantity2);
+        tv_price_unit1 =(TextView)findViewById(R.id.tv_price_unit1);
+        tv_price_unit2 =(TextView)findViewById(R.id.tv_price_unit2);
+        button_unit1=(Button)findViewById(R.id.button_unit1);
+        iButton_delete1=(Button)findViewById(R.id.button_delete1);
+        button_unit2=(Button)findViewById(R.id.button_unit2);
+        iButton_delete2=(Button)findViewById(R.id.button_delete2);
+        button_add=(Button)findViewById(R.id.button_add);
+        button_clear=(Button)findViewById(R.id.button_clear);
         rl_main = (LinearLayout) findViewById(R.id.rl_main);
-        row2 = (LinearLayout) findViewById(R.id.row2);
+
+        row2=(LinearLayout)findViewById(R.id.row2);
     }
 
     public void setContent() {
-        collectionOfLinearLayot = new ArrayList<>();
+
 
     }
 
@@ -102,13 +97,10 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout llNew = (LinearLayout) LinearLayout.inflate(this, R.layout.row, null);
         llNew.setId(i);
 
-
         Log.d("priv", "id = " + llNew.getId());
         Log.d("priv", "R.layout.row = " + R.layout.row);
 
         rl_main.addView(llNew, lp);
-
-
     }
 
     public void setListeners() {
@@ -136,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (quantity1 > 0 && price1 > 0) {
             tv_price_unit1.setText(price1 / quantity1 + "");
+            makeNewRow();
         } else {
             tv_price_unit1.setText("");
         }
@@ -162,43 +155,5 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    public void onStart() {
-        super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://ru.forge.twice_a_day.quickcomparison/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://ru.forge.twice_a_day.quickcomparison/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }
 }
