@@ -4,7 +4,9 @@
     <string name="Price">Цена</string>
     <string name="quantity">Количество</string>
     <string name="unit">Ед. изм.</string>
-    <string name="quantityunit">Цена за ед.</string>
-    <string name="percent">%</string>
+    <string name="resalt">Результат</string>
     <string name="one">1</string>
+    <string name="Button_unit">ед.</string>
+    <string name="ButtonAdd">Добавить</string>
+    <string name="DuttonClear">Очистить</string>
 </resources>

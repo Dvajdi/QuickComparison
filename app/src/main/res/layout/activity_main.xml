@@ -18,17 +18,8 @@
         android:id="@+id/row1">
 
         <TextView
-            android:layout_width="20dp"
-            android:layout_height="60dp"
-            android:text="@string/Number"
-            android:id="@+id/tv_number"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:gravity="center" />
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="60dp"
+            android:layout_width="96dp"
+            android:layout_height="64dp"
             android:text="@string/Price"
             android:id="@+id/tv_price"
             android:textStyle="bold"
@@ -36,8 +27,8 @@
             android:gravity="center" />
 
         <TextView
-            android:layout_width="100dp"
-            android:layout_height="60dp"
+            android:layout_width="104dp"
+            android:layout_height="64dp"
             android:text="@string/quantity"
             android:id="@+id/tv_quantity"
             android:gravity="center"
@@ -45,28 +36,19 @@
             android:textSize="18sp" />
 
         <TextView
-            android:layout_width="45dp"
-            android:layout_height="60dp"
+            android:layout_width="48dp"
+            android:layout_height="64dp"
             android:text="@string/unit"
-            android:id="@+id/tv_spinner_u"
+            android:id="@+id/tv_unit"
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="18sp" />
 
         <TextView
-            android:layout_width="55dp"
-            android:layout_height="60dp"
-            android:text="@string/quantityunit"
-            android:id="@+id/tv_price_unit"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="60dp"
-            android:text="@string/percent"
-            android:id="@+id/tv_percent"
+            android:layout_width="88dp"
+            android:layout_height="64dp"
+            android:text="@string/resalt"
+            android:id="@+id/tv_resalt"
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="18sp" />
@@ -80,51 +62,132 @@
         android:id="@+id/row2"
         android:layout_gravity="bottom">
 
-        <TextView
-            android:layout_width="20dp"
-            android:layout_height="60dp"
-            android:text="@string/one"
-            android:id="@+id/tv_number1"
-            android:textSize="20sp"
-            android:gravity="center" />
-
         <EditText
-            android:layout_width="80dp"
-            android:layout_height="60dp"
-            android:inputType="number"
+            android:layout_width="96dp"
+            android:layout_height="64dp"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/et_price1"
             android:gravity="center"
             android:textSize="20sp" />
 
         <EditText
-            android:layout_width="100dp"
-            android:layout_height="60dp"
-            android:inputType="number"
+            android:layout_width="104dp"
+            android:layout_height="64dp"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/et_quantity1"
             android:gravity="center"
             android:textSize="20sp" />
 
-        <Spinner
-            android:layout_width="45dp"
-            android:layout_height="60dp"
-            android:id="@+id/spinner_u1"
-            android:gravity="center" />
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="64dp"
+            android:text="@string/Button_unit"
+            android:id="@+id/button_unit1" />
 
         <TextView
-            android:layout_width="55dp"
-            android:layout_height="60dp"
-            android:id="@+id/tv_price_unit1"
+            android:layout_width="88dp"
+            android:layout_height="64dp"
+            android:id="@+id/tv_resalt1"
             android:gravity="center"
             android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="60dp"
-            android:id="@+id/tv_percent1"
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iButton_delete1"
+            android:layout_gravity="left" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/row3"
+        android:layout_gravity="bottom">
+
+        <EditText
+            android:layout_width="96dp"
+            android:layout_height="64dp"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/et_price2"
             android:gravity="center"
             android:textSize="20sp" />
+
+        <EditText
+            android:layout_width="104dp"
+            android:layout_height="64dp"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/et_quantity2"
+            android:gravity="center"
+            android:textSize="20sp" />
+
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="64dp"
+            android:text="@string/Button_unit"
+            android:id="@+id/button_unit2" />
+
+        <TextView
+            android:layout_width="88dp"
+            android:layout_height="64dp"
+            android:id="@+id/tv_resalt_2"
+            android:gravity="center"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iButton_delete2"
+            android:layout_gravity="left" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_bottom"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ButtonAdd"
+            android:id="@+id/button_add"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/DuttonClear"
+            android:id="@+id/button_clear"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_top"
+        android:layout_gravity="top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/tv_more_units"
+            android:layout_weight="2" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_more_units"
+            android:layout_weight="1"
+            android:inputType="numberDecimal" />
     </LinearLayout>
 
 </LinearLayout>
