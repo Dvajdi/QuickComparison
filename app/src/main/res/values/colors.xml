@@ -4,5 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="black">#a81c1c</color>
-    <color name="background_main_activity">#64b5f6</color>
+    <color name="background_main_activity">#2196f3</color>
+    <color name="background_name">#bbdefb</color>
+    <color name="background_tv">#ffffff</color>
+
 </resources>

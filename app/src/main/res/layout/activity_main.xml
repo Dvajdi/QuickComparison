@@ -10,53 +10,97 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ru.forge.twice_a_day.quickcomparison.MainActivity"
     android:id="@+id/rl_main"
-    android:background="#64b5f6">
+    android:background="@color/background_main_activity">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/row1">
+        android:id="@+id/row_top"
+        android:layout_gravity="top">
 
         <TextView
-            android:layout_width="96dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/tv_more_units"
+            android:layout_weight="2"
+            android:background="@color/background_name"
+            android:layout_margin="10dp" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_more_units"
+            android:layout_weight="1"
+            android:inputType="numberDecimal"
+            android:background="@color/background_tv"
+            android:layout_margin="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/row1"
+        android:gravity="center_vertical"
+        android:weightSum="100">
+
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:text="@string/Price"
             android:id="@+id/tv_price"
             android:textStyle="bold"
             android:textSize="18sp"
             android:gravity="center"
-            android:background="#bbdefb" />
+            android:background="@color/background_name"
+            android:layout_weight="25"
+            android:focusable="false" />
 
         <TextView
-            android:layout_width="104dp"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:text="@string/quantity"
             android:id="@+id/tv_quantity"
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:background="#bbdefb" />
+            android:background="@color/background_name"
+            android:layout_weight="20" />
 
         <TextView
-            android:layout_width="48dp"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:text="@string/unit"
             android:id="@+id/tv_unit"
-            android:gravity="center"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:background="#bbdefb" />
+            android:background="@color/background_name"
+            android:gravity="center"
+            android:layout_weight="12" />
 
         <TextView
-            android:layout_width="88dp"
+            android:layout_width="0dp"
             android:layout_height="64dp"
-            android:text="@string/resalt"
             android:id="@+id/tv_resalt"
-            android:gravity="center"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:background="#bbdefb" />
+            android:background="@color/background_name"
+            android:gravity="center"
+            android:text="@string/resalt"
+            android:layout_weight="17" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:text="@string/economy"
+            android:id="@+id/tv_economy"
+            android:background="@color/background_name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_weight="26"
+            android:gravity="center" />
 
     </LinearLayout>
 
@@ -65,47 +109,65 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/row2"
-        android:layout_gravity="bottom">
+        android:gravity="center_vertical"
+        android:weightSum="100">
 
         <EditText
-            android:layout_width="96dp"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/et_price1"
             android:gravity="center"
             android:textSize="20sp"
-            android:background="#ffffff" />
+            android:background="@color/background_tv"
+            android:layout_weight="25"
+            android:layout_margin="4dp"
+            android:focusable="false" />
 
         <EditText
-            android:layout_width="104dp"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/et_quantity1"
             android:gravity="center"
             android:textSize="20sp"
-            android:background="#ffffff" />
+            android:background="@color/background_tv"
+            android:layout_weight="20"
+            android:layout_margin="4dp" />
 
         <Button
-            android:layout_width="48dp"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:text="@string/Button_unit"
-            android:id="@+id/button_unit1" />
+            android:id="@+id/button_unit1"
+            android:layout_weight="12" />
 
         <TextView
-            android:layout_width="88dp"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:id="@+id/tv_price_unit1"
             android:gravity="center"
             android:textSize="20sp"
-            android:background="#ffffff" />
+            android:background="@color/background_tv"
+            android:layout_weight="17"
+            android:layout_margin="4dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:id="@+id/et_economy1"
+            android:background="@color/background_tv"
+            android:layout_weight="20"
+            android:layout_margin="4dp" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/button_delete1"
-            android:layout_gravity="left" android:background="@mipmap/delete"/>
+            android:background="@mipmap/delete"
+            android:layout_weight="5" />
 
     </LinearLayout>
 
@@ -114,47 +176,65 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/row3"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical"
+        android:weightSum="100">
 
         <EditText
-            android:layout_width="96dp"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/et_price2"
             android:gravity="center"
             android:textSize="20sp"
-            android:background="#ffffff" />
+            android:background="@color/background_tv"
+            android:layout_weight="25"
+            android:layout_margin="4dp" />
 
         <EditText
-            android:layout_width="104dp"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/et_quantity2"
             android:gravity="center"
             android:textSize="20sp"
-            android:background="#ffffff" />
+            android:background="@color/background_tv"
+            android:layout_weight="20"
+            android:layout_margin="4dp" />
 
         <Button
-            android:layout_width="48dp"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:text="@string/Button_unit"
-            android:id="@+id/button_unit2" />
+            android:id="@+id/button_unit2"
+            android:layout_weight="12" />
 
         <TextView
-            android:layout_width="88dp"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:id="@+id/tv_price_unit2"
             android:gravity="center"
             android:textSize="20sp"
-            android:background="#ffffff" />
+            android:background="@color/background_tv"
+            android:layout_weight="17"
+            android:layout_margin="4dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:id="@+id/tv_economy2"
+            android:background="@color/background_tv"
+            android:layout_weight="20"
+            android:layout_margin="4dp" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/button_delete2"
-            android:layout_gravity="left" />
+            android:layout_weight="5"
+            android:background="@mipmap/delete" />
     </LinearLayout>
 
     <LinearLayout
@@ -177,30 +257,6 @@
             android:text="@string/DuttonClear"
             android:id="@+id/button_clear"
             android:layout_weight="1" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/row_top"
-        android:layout_gravity="top">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/tv_more_units"
-            android:layout_weight="2"
-            android:background="#bbdefb" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/et_more_units"
-            android:layout_weight="1"
-            android:inputType="numberDecimal"
-            android:background="#ffffff" />
     </LinearLayout>
 
 </LinearLayout>

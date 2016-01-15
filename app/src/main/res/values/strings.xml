@@ -2,9 +2,10 @@
     <string name="app_name">QuickComparison</string>
     <string name="Number">№</string>
     <string name="Price">Цена</string>
-    <string name="quantity">Количество</string>
+    <string name="quantity">Кол-во</string>
     <string name="unit">Ед. изм.</string>
-    <string name="resalt">Результат</string>
+    <string name="resalt">Цена за ед.</string>
+    <string name="economy">Экономия</string>
     <string name="one">1</string>
     <string name="Button_unit">ед.</string>
     <string name="ButtonAdd">Добавить</string>

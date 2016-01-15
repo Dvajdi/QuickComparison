@@ -3,42 +3,63 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/doprow"
-    android:background="#64b5f6">
+    android:weightSum="100"
+    android:gravity="center_vertical">
 
     <EditText
-        android:layout_width="96dp"
+        android:layout_width="0dp"
         android:layout_height="64dp"
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/et_dop_price"
         android:gravity="center"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:background="@color/background_tv"
+        android:layout_weight="25"
+        android:layout_margin="4dp" />
 
     <EditText
-        android:layout_width="104dp"
+        android:layout_width="0dp"
         android:layout_height="64dp"
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/et_dop_quantity"
         android:gravity="center"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:background="@color/background_tv"
+        android:layout_weight="20"
+        android:layout_margin="4dp" />
 
     <Button
-        android:layout_width="48dp"
+        android:layout_width="0dp"
         android:layout_height="64dp"
         android:text="@string/Button_unit"
-        android:id="@+id/button_dop_unit" />
+        android:id="@+id/button_dop_unit"
+        android:layout_weight="12"
+        android:layout_margin="4dp" />
 
     <TextView
-        android:layout_width="88dp"
+        android:layout_width="0dp"
         android:layout_height="64dp"
         android:id="@+id/tv_dop_resalt"
         android:gravity="center"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:background="@color/background_tv"
+        android:layout_weight="17"
+        android:layout_margin="4dp" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:id="@+id/tv_dop_economy"
+        android:background="@color/background_tv"
+        android:layout_weight="20"
+        android:layout_margin="4dp" />
+
+    <Button
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/iButton_dop_delete"
-        android:layout_gravity="left" />
+        android:id="@+id/button_dop_delete"
+        android:background="@mipmap/delete"
+        android:layout_weight="5" />
 </LinearLayout>
