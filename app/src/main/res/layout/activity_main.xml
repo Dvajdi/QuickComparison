@@ -142,7 +142,8 @@
             android:layout_height="64dp"
             android:text="@string/Button_unit"
             android:id="@+id/button_unit1"
-            android:layout_weight="12" />
+            android:layout_weight="12"
+            />
 
         <TextView
             android:layout_width="0dp"
