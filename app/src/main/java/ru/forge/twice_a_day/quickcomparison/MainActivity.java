@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     boolean et_price1ChangedAndGreaterThanZero, et_quantity1ChangedAndGreaterThanZero;
     double quantity1, price1;
 
-    ArrayList<LinearLayout> allDopLinearLayout;
+    ArrayList<LinearLayout> allLinearLayouts;
+    ArrayList<Integer> idDopLinearLayouts;
     ArrayList<TextView> textViewForClear;
 
 
@@ -49,8 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void findMyViews() {
         et_price1 = (EditText) findViewById(R.id.et_price1);
+        et_price1.setTag("price");
         et_quantity1 = (EditText) findViewById(R.id.et_quantity1);
+        et_quantity1.setTag("quantity");
         tv_price_unit1 =(TextView)findViewById(R.id.tv_price_unit1);
+        tv_price_unit1.setTag("price_unit");
         tv_economy1 =(TextView)findViewById(R.id.tv_economy1);
         button_unit1=(Button)findViewById(R.id.button_unit1);
         iButton_delete1=(Button)findViewById(R.id.button_delete1);
@@ -64,22 +68,23 @@ public class MainActivity extends AppCompatActivity {
         button_add=(Button)findViewById(R.id.button_add);
         button_clear=(Button)findViewById(R.id.button_clear);
         rl_main = (LinearLayout) findViewById(R.id.rl_main);
-
-
-
+        et_price2.setTag("price");
+        et_quantity2.setTag("quantity");
+        tv_price_unit2.setTag("price_unit");
         row2=(LinearLayout)findViewById(R.id.row2);
     }
 
     public void setContent() {
 
-        allDopLinearLayout=new ArrayList<LinearLayout>();
-        textViewForClear =new ArrayList<>();
+        allLinearLayouts =new ArrayList<LinearLayout>();
+        allLinearLayouts.add((LinearLayout)findViewById(R.id.row2));
+        allLinearLayouts.add((LinearLayout)findViewById(R.id.row3));
 
+        textViewForClear =new ArrayList<>();
         textViewForClear.add(et_price1);
         textViewForClear.add(et_quantity1);
         textViewForClear.add(tv_price_unit1);
         textViewForClear.add(tv_economy1);
-
         textViewForClear.add(et_price2);
         textViewForClear.add(et_quantity2);
         textViewForClear.add(tv_price_unit2);
@@ -102,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("priv", "id = " + llNew.getId());
         Log.d("priv", "R.layout.row = " + R.layout.row);
-        allDopLinearLayout.add(llNew);
+        allLinearLayouts.add(llNew);
         rl_main.addView(llNew, lp);
     }
 
@@ -121,6 +126,10 @@ public class MainActivity extends AppCompatActivity {
         button_unit1.setId(Integer.valueOf(i + "" + 5));
         iButton_delete1.setId(Integer.valueOf(i + "" + 6));
 
+        et_price1.setTag("price");
+        et_quantity1.setTag("quantity");
+        tv_price_unit1.setTag("price_unit");
+
         et_quantity1.addTextChangedListener(watcher);
         et_price1.addTextChangedListener(watcher);
 
@@ -134,35 +143,44 @@ public class MainActivity extends AppCompatActivity {
         et_quantity1.addTextChangedListener(watcher);
         et_price1.addTextChangedListener(watcher);
 
+        et_quantity2.addTextChangedListener(watcher);
+        et_price2.addTextChangedListener(watcher);
+
         button_add.setOnClickListener(onClickListener);
         button_clear.setOnClickListener(onClickListener);
     }
 
     private void go() {
 
-        try {
-            quantity1 = Double.valueOf(et_quantity1.getText().toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            quantity1 = 0;
+        for(LinearLayout linearLayout: allLinearLayouts) {
+
+            EditText et_quantity = (EditText) linearLayout.findViewWithTag("quantity");
+            EditText et_price = (EditText) linearLayout.findViewWithTag("price");
+            TextView tv_price_unit = (TextView) linearLayout.findViewWithTag("price_unit");
+
+            try {
+                quantity1 = Double.valueOf(et_quantity.getText().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+                quantity1 = 0;
+            }
+
+            try {
+                price1 = Double.valueOf(et_price.getText().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+                price1 = 0;
+            }
+            Log.d("priv", price1 + "");
+            Log.d("priv", quantity1 + "");
+
+            if (quantity1 > 0 && price1 > 0) {
+                tv_price_unit.setText(price1 / quantity1 + "");
+
+            } else {
+                tv_price_unit.setText("");
+            }
         }
-
-        try {
-            price1 = Double.valueOf(et_price1.getText().toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            price1 = 0;
-        }
-        Log.d("priv", price1 + "");
-        Log.d("priv", quantity1 + "");
-
-        if (quantity1 > 0 && price1 > 0) {
-            tv_price_unit1.setText(price1 / quantity1 + "");
-
-        } else {
-            tv_price_unit1.setText("");
-        }
-
     }
 
     TextWatcher watcher = new TextWatcher() {
@@ -185,7 +203,12 @@ public class MainActivity extends AppCompatActivity {
     };
 
 void clear(){
-    for(LinearLayout oneLinear:allDopLinearLayout){rl_main.removeView(oneLinear);};
+    for(LinearLayout oneLinear: allLinearLayouts){
+        switch(oneLinear.getId()){
+            case R.id.row2:break;
+            case R.id.row3:break;
+            default:
+                rl_main.removeView(oneLinear);}};
     for(TextView textView:textViewForClear){textView.setText("");};
 
 }
@@ -194,7 +217,7 @@ void clear(){
         @Override
         public void onClick(View v) {
         switch(v.getId()){
-            case  R.id.button_add:  makeNewRow(); Log.d("priv", "Размер = " + allDopLinearLayout.size() + "");break;
+            case  R.id.button_add:  makeNewRow(); Log.d("priv", "Размер = " + allLinearLayouts.size() + "");break;
             case  R.id.button_clear: clear();break;
         }
         }
