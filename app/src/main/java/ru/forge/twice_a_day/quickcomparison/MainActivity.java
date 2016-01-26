@@ -1,5 +1,6 @@
 package ru.forge.twice_a_day.quickcomparison;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     Button button_unit1,button_unit2,button_add,button_clear;
     Button iButton_delete1,iButton_delete2;
 
+
     LinearLayout rl_main;
     LinearLayout row2,doprow;
 
@@ -32,11 +34,12 @@ public class MainActivity extends AppCompatActivity {
     static int i;
     boolean et_price1ChangedAndGreaterThanZero, et_quantity1ChangedAndGreaterThanZero;
     double quantity1, price1;
+    double minRezult,secondMinResult;
 
     ArrayList<LinearLayout> allLinearLayouts;
     ArrayList<Integer> idDopLinearLayouts;
     ArrayList<TextView> textViewForClear;
-
+    ArrayList<Double> results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setContent() {
-
+        results=new ArrayList<>();
         allLinearLayouts =new ArrayList<LinearLayout>();
         allLinearLayouts.add((LinearLayout)findViewById(R.id.row2));
         allLinearLayouts.add((LinearLayout)findViewById(R.id.row3));
@@ -105,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
         findMyViewsInNewRowAndSetListeners(llNew);
 
-        Log.d("priv", "id = " + llNew.getId());
-        Log.d("priv", "R.layout.row = " + R.layout.row);
         allLinearLayouts.add(llNew);
         rl_main.addView(llNew, lp);
     }
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void go() {
-
+        double []mins = new double[2];
         for(LinearLayout linearLayout: allLinearLayouts) {
 
             EditText et_quantity = (EditText) linearLayout.findViewWithTag("quantity");
@@ -171,17 +172,81 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
                 price1 = 0;
             }
-            Log.d("priv", price1 + "");
-            Log.d("priv", quantity1 + "");
 
             if (quantity1 > 0 && price1 > 0) {
-                tv_price_unit.setText(price1 / quantity1 + "");
-
+                int j = (int)((price1/quantity1)*100);
+                double rez = (double)j/100;
+                results.add(rez);
+                mins=getMinimum(results);
+                minRezult=mins[0];
+                secondMinResult=mins[1];
+                tv_price_unit.setText(rez + "");
+            Log.d("priv","minRezult = "+minRezult);
             } else {
                 tv_price_unit.setText("");
             }
         }
+        paintBackGround(allLinearLayouts);
     }
+
+    public static double [] getMinimum(ArrayList<Double> values1){
+        ArrayList<Double>values = new ArrayList<>();
+        values.addAll(values1);
+        if (values.isEmpty()) return null;
+        Double min = Double.MAX_VALUE;
+
+        double [] mins=new double[2];
+
+        for(Double value : values){
+            if (min.compareTo(value)==1){
+                min = value;
+            }
+        }
+        mins[0]=min;
+
+        for (int i = 0; i <values.size() ; i++) {
+            if(values.get(i)==min){values.remove(i);}
+        }
+
+        min = Double.MAX_VALUE;
+        for(Double value : values){
+            if (min.compareTo(value)==1){
+                min = value;
+            }
+        }
+        mins[1]=min;
+
+        return mins;
+    }
+
+    void paintBackGround(ArrayList<LinearLayout> allLinearLayouts) {
+        double value = 0;
+
+        for (LinearLayout oneOfLayouts : allLinearLayouts) {
+            TextView tv = (TextView) oneOfLayouts.findViewWithTag("price_unit");
+
+            try {
+                value = Double.valueOf(tv.getText().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+                value = Double.MAX_VALUE;
+            }
+
+            if (value == minRezult) {
+                Log.d("priv2","minRezult = "+minRezult);
+                oneOfLayouts.setBackgroundColor(Color.GREEN);
+            }
+            if (value == secondMinResult) {
+                Log.d("priv2","secondMinResult = "+minRezult);
+                oneOfLayouts.setBackgroundColor(Color.YELLOW);
+            }
+            if (value != minRezult || value != secondMinResult) {
+                oneOfLayouts.setBackgroundColor(getResources().getColor(R.color.background_main_activity));
+            }
+
+        }
+    }
+
 
     TextWatcher watcher = new TextWatcher() {
         @Override
@@ -196,9 +261,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            Log.d("priv2","watcher работает");
+           go();
 
-            go();
         }
     };
 
@@ -217,7 +281,7 @@ void clear(){
         @Override
         public void onClick(View v) {
         switch(v.getId()){
-            case  R.id.button_add:  makeNewRow(); Log.d("priv", "Размер = " + allLinearLayouts.size() + "");break;
+            case  R.id.button_add:  makeNewRow();break;
             case  R.id.button_clear: clear();break;
         }
         }
