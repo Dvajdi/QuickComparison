@@ -9,4 +9,6 @@
     <color name="background_tv">#E0F2F1</color>
     <color name="background_pq">#FFFFFF</color>
     <color name="background_unit">#E0F2F1</color>
+    <color name="colorVariant1">#FFECB3</color>
+    <color name="colorVariant2">#FFD54F</color>
 </resources>
