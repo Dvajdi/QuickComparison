@@ -10,4 +10,5 @@
     <string name="Button_unit">ед.</string>
     <string name="ButtonAdd">Добавить</string>
     <string name="DuttonClear">Очистить</string>
+    <string name="quan_economy">Кол-во ед.товара для рассчета экономии</string>
 </resources>

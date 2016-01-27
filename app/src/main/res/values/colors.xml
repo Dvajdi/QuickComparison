@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#00796B</color>
+    <color name="colorPrimaryDark">#004D40</color>
     <color name="colorAccent">#FF4081</color>
     <color name="black">#a81c1c</color>
-    <color name="background_main_activity">#2196f3</color>
-    <color name="background_name">#bbdefb</color>
-    <color name="background_tv">#ffffff</color>
-
+    <color name="background_main_activity">#009688</color>
+    <color name="background_name">#B2DFDB</color>
+    <color name="background_tv">#E0F2F1</color>
+    <color name="background_pq">#FFFFFF</color>
+    <color name="background_unit">#E0F2F1</color>
 </resources>

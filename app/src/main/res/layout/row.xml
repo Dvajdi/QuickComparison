@@ -4,62 +4,64 @@
     android:layout_height="wrap_content"
     android:id="@+id/doprow"
     android:weightSum="100"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="@color/background_tv">
 
     <EditText
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="48dp"
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/et_dop_price"
         android:gravity="center"
-        android:textSize="20sp"
-        android:background="@color/background_tv"
+        android:textSize="16sp"
+        android:background="@mipmap/line"
         android:layout_weight="25"
-        android:layout_margin="4dp" />
+        android:enabled="true"
+        android:focusable="true" />
 
     <EditText
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="48dp"
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/et_dop_quantity"
         android:gravity="center"
-        android:textSize="20sp"
-        android:background="@color/background_tv"
+        android:textSize="16sp"
+        android:background="@mipmap/line"
         android:layout_weight="20"
-        android:layout_margin="4dp" />
+        android:enabled="true"
+        android:focusable="true" />
 
     <Button
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="48dp"
         android:text="@string/Button_unit"
         android:id="@+id/button_dop_unit"
         android:layout_weight="12"
-        android:layout_margin="4dp" />
+        android:background="@color/background_unit" />
 
     <TextView
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="48dp"
         android:id="@+id/tv_dop_resalt"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:background="@color/background_tv"
-        android:layout_weight="17"
-        android:layout_margin="4dp" />
+        android:layout_weight="17" />
 
     <TextView
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="48dp"
         android:id="@+id/tv_dop_economy"
         android:background="@color/background_tv"
         android:layout_weight="20"
-        android:layout_margin="4dp" />
+        android:textSize="16sp" />
 
     <Button
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/button_dop_delete"
-        android:background="@mipmap/delete"
+        android:background="@mipmap/delete_1"
         android:layout_weight="5" />
 </LinearLayout>
