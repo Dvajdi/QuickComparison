@@ -1,5 +1,6 @@
 package ru.forge.twice_a_day.quickcomparison;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     LinearLayout rl_main;
-    LinearLayout row2,doprow;
+    LinearLayout row2,row3;
 
     static int firstId, secondId;
 
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     boolean et_price1ChangedAndGreaterThanZero, et_quantity1ChangedAndGreaterThanZero;
     double quantity1, price1;
     double minRezult,secondMinResult;
-
+    int bestRowColor,secondBestRowColor,backgroundColor;
     ArrayList<LinearLayout> allLinearLayouts;
     ArrayList<Integer> idDopLinearLayouts;
     ArrayList<TextView> textViewForClear;
@@ -74,12 +75,19 @@ public class MainActivity extends AppCompatActivity {
         et_price2.setTag("price");
         et_quantity2.setTag("quantity");
         tv_price_unit2.setTag("price_unit");
+
         row2=(LinearLayout)findViewById(R.id.row2);
+        row3=(LinearLayout)findViewById(R.id.row2);
     }
 
     public void setContent() {
+
+        bestRowColor = getResources().getColor(R.color.colorVariant1);
+        secondBestRowColor=getResources().getColor(R.color.colorVariant2);
+        backgroundColor=getResources().getColor(R.color.background_tv);
+
         results=new ArrayList<>();
-        allLinearLayouts =new ArrayList<LinearLayout>();
+        allLinearLayouts =new ArrayList<>();
         allLinearLayouts.add((LinearLayout)findViewById(R.id.row2));
         allLinearLayouts.add((LinearLayout)findViewById(R.id.row3));
 
@@ -102,7 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void makeNewRow() {
         i++;
-        ViewGroup.LayoutParams lp = row2.getLayoutParams();
+        ViewGroup.LayoutParams lp = row3.getLayoutParams();
+
         LinearLayout llNew = (LinearLayout) LinearLayout.inflate(this, R.layout.row, null);
         llNew.setId(i);
 
@@ -110,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
         allLinearLayouts.add(llNew);
         rl_main.addView(llNew, lp);
+
     }
 
     private void findMyViewsInNewRowAndSetListeners(LinearLayout llNew) {
@@ -119,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
         tv_economy1 =(TextView)llNew.findViewById(R.id.tv_dop_economy);
         button_unit1=(Button)llNew.findViewById(R.id.button_dop_unit);
         iButton_delete1=(Button)llNew.findViewById(R.id.button_dop_delete);
+
+
 
         et_price1.setId(Integer.valueOf(i+""+1));
         et_quantity1.setId(Integer.valueOf(i+""+2));
@@ -152,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void go() {
-        double []mins = new double[2];
+        double []mins;
         for(LinearLayout linearLayout: allLinearLayouts) {
 
             EditText et_quantity = (EditText) linearLayout.findViewWithTag("quantity");
@@ -176,51 +188,68 @@ public class MainActivity extends AppCompatActivity {
             if (quantity1 > 0 && price1 > 0) {
                 int j = (int)((price1/quantity1)*100);
                 double rez = (double)j/100;
-                results.add(rez);
-                mins=getMinimum(results);
-                minRezult=mins[0];
-                secondMinResult=mins[1];
                 tv_price_unit.setText(rez + "");
-            Log.d("priv","minRezult = "+minRezult);
+
             } else {
                 tv_price_unit.setText("");
             }
         }
+        getMinimum2(allLinearLayouts);
         paintBackGround(allLinearLayouts);
     }
 
-    public static double [] getMinimum(ArrayList<Double> values1){
-        ArrayList<Double>values = new ArrayList<>();
-        values.addAll(values1);
-        if (values.isEmpty()) return null;
-        Double min = Double.MAX_VALUE;
 
-        double [] mins=new double[2];
 
-        for(Double value : values){
-            if (min.compareTo(value)==1){
-                min = value;
+    public void getMinimum2(ArrayList<LinearLayout> allLinearLayouts){
+        double value = 0;
+        ArrayList<Double> values = new ArrayList<>();
+
+        for (LinearLayout oneOfLayouts : allLinearLayouts) {
+            TextView tv = (TextView) oneOfLayouts.findViewWithTag("price_unit");
+
+            try {
+                value = Double.valueOf(tv.getText().toString());
+                if(value>0){values.add(value);}
+            } catch (Exception e) {
+                e.printStackTrace();
+
             }
         }
-        mins[0]=min;
+
+        Double min = Double.MAX_VALUE;
+        for(Double value1 : values){
+            if (min.compareTo(value1)==1){
+                min = value1;
+            }
+        }
+        minRezult=min;
+
+        Log.d("min", "minRezult = " + min);
 
         for (int i = 0; i <values.size() ; i++) {
             if(values.get(i)==min){values.remove(i);}
         }
 
         min = Double.MAX_VALUE;
-        for(Double value : values){
-            if (min.compareTo(value)==1){
-                min = value;
+        for(Double value2 : values){
+            if (min.compareTo(value2)==1){
+                min = value2;
             }
-        }
-        mins[1]=min;
 
-        return mins;
+
+        }
+        secondMinResult=min;
+
+
+        Log.d("min", "secondMinResult = " + secondMinResult);
+
+
     }
 
     void paintBackGround(ArrayList<LinearLayout> allLinearLayouts) {
         double value = 0;
+        Log.d("paint","minRezult = "+minRezult);
+        Log.d("paint","secondMinResult = "+secondMinResult);
 
         for (LinearLayout oneOfLayouts : allLinearLayouts) {
             TextView tv = (TextView) oneOfLayouts.findViewWithTag("price_unit");
@@ -229,20 +258,20 @@ public class MainActivity extends AppCompatActivity {
                 value = Double.valueOf(tv.getText().toString());
             } catch (Exception e) {
                 e.printStackTrace();
-                value = Double.MAX_VALUE;
+                value=0;
             }
 
+            Log.d("paint","value = "+value);
+
             if (value == minRezult) {
-                Log.d("priv2","minRezult = "+minRezult);
-                oneOfLayouts.setBackgroundColor(Color.GREEN);
+                oneOfLayouts.setBackgroundColor(bestRowColor);
             }
             if (value == secondMinResult) {
-                Log.d("priv2","secondMinResult = "+minRezult);
-                oneOfLayouts.setBackgroundColor(Color.YELLOW);
+                oneOfLayouts.setBackgroundColor(secondBestRowColor);
             }
-            if (value != minRezult || value != secondMinResult) {
-                oneOfLayouts.setBackgroundColor(getResources().getColor(R.color.background_main_activity));
-            }
+
+            if((value!=0)&&(value!=minRezult)&&(value!=secondMinResult)){oneOfLayouts.setBackgroundColor(backgroundColor);}
+
 
         }
     }
@@ -267,12 +296,15 @@ public class MainActivity extends AppCompatActivity {
     };
 
 void clear(){
-    for(LinearLayout oneLinear: allLinearLayouts){
-        switch(oneLinear.getId()){
-            case R.id.row2:break;
-            case R.id.row3:break;
-            default:
-                rl_main.removeView(oneLinear);}};
+    for (int i = 0; i < allLinearLayouts.size(); i++) {
+
+            switch(allLinearLayouts.get(i).getId()){
+            case R.id.row2:allLinearLayouts.get(i).setBackgroundColor(backgroundColor);break;
+            case R.id.row3:allLinearLayouts.get(i).setBackgroundColor(backgroundColor);break;
+            default: rl_main.removeView(allLinearLayouts.get(i));
+
+        }
+                                                };
     for(TextView textView:textViewForClear){textView.setText("");};
 
 }

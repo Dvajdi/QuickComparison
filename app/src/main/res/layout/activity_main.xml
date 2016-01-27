@@ -171,7 +171,8 @@
             android:gravity="center"
             android:textSize="16sp"
             android:layout_weight="17"
-            android:enabled="true" android:focusable="true" />
+            android:enabled="true" android:focusable="true"
+            />
 
         <TextView
             android:layout_width="0dp"
@@ -179,7 +180,7 @@
             android:id="@+id/tv_economy1"
             android:layout_weight="20"
             android:enabled="true" android:focusable="true"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <Button
             android:layout_width="0dp"
