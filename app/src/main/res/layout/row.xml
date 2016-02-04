@@ -15,10 +15,11 @@
         android:id="@+id/et_dop_price"
         android:gravity="center"
         android:textSize="16sp"
-        android:background="@mipmap/line"
-        android:layout_weight="25"
+        android:background="@drawable/rounded"
+        android:layout_weight="24"
         android:enabled="true"
-        android:focusable="true" />
+        android:focusable="true"
+        android:layout_margin="2dp" />
 
     <EditText
         android:layout_width="0dp"
@@ -28,10 +29,11 @@
         android:id="@+id/et_dop_quantity"
         android:gravity="center"
         android:textSize="16sp"
-        android:background="@mipmap/line"
-        android:layout_weight="20"
+        android:background="@drawable/rounded"
+        android:layout_weight="19"
         android:enabled="true"
-        android:focusable="true" />
+        android:focusable="true"
+        android:layout_margin="2dp" />
 
     <Button
         android:layout_width="0dp"
@@ -39,7 +41,8 @@
         android:text="@string/Button_unit"
         android:id="@+id/button_dop_unit"
         android:layout_weight="12"
-        android:background="@color/background_unit" />
+        android:background="@color/background_unit"
+        android:layout_margin="2dp" />
 
     <TextView
         android:layout_width="0dp"
@@ -47,20 +50,24 @@
         android:id="@+id/tv_dop_resalt"
         android:gravity="center"
         android:textSize="16sp"
-        android:background="@color/background_tv"
-        android:layout_weight="17" />
+        android:background="@drawable/rectangle_light"
+        android:layout_weight="17"
+        android:layout_margin="2dp"
+        android:textColor="@color/black" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:id="@+id/tv_dop_economy"
-        android:background="@color/background_tv"
-        android:layout_weight="20"
-        android:textSize="16sp" />
+        android:background="@drawable/rectangle_light"
+        android:layout_weight="22"
+        android:textSize="16sp"
+        android:layout_margin="2dp"
+        android:textColor="@color/black" />
 
     <Button
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:id="@+id/button_dop_delete"
         android:background="@mipmap/delete_1"
         android:layout_weight="5" />

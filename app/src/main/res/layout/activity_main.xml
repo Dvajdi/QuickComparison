@@ -38,9 +38,9 @@
             android:text="@string/quan_economy"
             android:id="@+id/tv_more_units"
             android:layout_weight="2"
-            android:background="@color/background_name"
+            android:background="@drawable/rectangle"
             android:textIsSelectable="false"
-            android:textSize="16sp"
+            android:textSize="17sp"
             android:textStyle="bold"
             android:gravity="center" />
 
@@ -50,7 +50,7 @@
             android:id="@+id/et_more_units"
             android:layout_weight="1"
             android:inputType="numberDecimal"
-            android:background="@mipmap/line"
+            android:background="@drawable/rounded"
             android:textSize="16sp"
             android:enabled="true"
             android:focusable="true"
@@ -71,10 +71,10 @@
             android:text="@string/Price"
             android:id="@+id/tv_price"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="17sp"
             android:gravity="center"
-            android:background="@color/background_name"
-            android:layout_weight="25"
+            android:background="@drawable/rectangle"
+            android:layout_weight="24"
             android:focusable="false" />
 
         <TextView
@@ -84,9 +84,9 @@
             android:id="@+id/tv_quantity"
             android:gravity="center"
             android:textStyle="bold"
-            android:textSize="18sp"
-            android:background="@color/background_name"
-            android:layout_weight="20" />
+            android:textSize="17sp"
+            android:background="@drawable/rectangle"
+            android:layout_weight="19" />
 
         <TextView
             android:layout_width="0dp"
@@ -94,8 +94,8 @@
             android:text="@string/unit"
             android:id="@+id/tv_unit"
             android:textStyle="bold"
-            android:textSize="18sp"
-            android:background="@color/background_name"
+            android:textSize="17sp"
+            android:background="@drawable/rectangle"
             android:gravity="center"
             android:layout_weight="12" />
 
@@ -104,8 +104,8 @@
             android:layout_height="48dp"
             android:id="@+id/tv_resalt"
             android:textStyle="bold"
-            android:textSize="18sp"
-            android:background="@color/background_name"
+            android:textSize="17sp"
+            android:background="@drawable/rectangle"
             android:gravity="center"
             android:text="@string/resalt"
             android:layout_weight="17" />
@@ -115,10 +115,10 @@
             android:layout_height="48dp"
             android:text="@string/economy"
             android:id="@+id/tv_economy"
-            android:background="@color/background_name"
-            android:textSize="18sp"
+            android:background="@drawable/rectangle"
+            android:textSize="17sp"
             android:textStyle="bold"
-            android:layout_weight="26"
+            android:layout_weight="28"
             android:gravity="center" />
 
     </LinearLayout>
@@ -138,11 +138,12 @@
             android:inputType="numberDecimal"
             android:id="@+id/et_price1"
             android:textSize="16sp"
-            android:background="@mipmap/line"
-            android:layout_weight="25"
+            android:background="@drawable/rounded"
+            android:layout_weight="24"
             android:focusable="true" android:enabled="true"
             android:selectAllOnFocus="false"
-            android:gravity="center" />
+            android:gravity="center"
+            android:layout_margin="2dp" />
 
         <EditText
             android:layout_width="0dp"
@@ -152,9 +153,10 @@
             android:id="@+id/et_quantity1"
             android:gravity="center"
             android:textSize="16sp"
-            android:background="@mipmap/line"
-            android:layout_weight="20"
-            android:enabled="true" android:focusable="true"/>
+            android:background="@drawable/rounded"
+            android:layout_weight="19"
+            android:enabled="true" android:focusable="true"
+            android:layout_margin="2dp" />
 
         <Button
             android:layout_width="0dp"
@@ -162,7 +164,8 @@
             android:text="@string/Button_unit"
             android:id="@+id/button_unit1"
             android:layout_weight="12"
-            android:background="@color/background_unit" />
+            android:background="@color/background_unit"
+            android:layout_margin="2dp" />
 
         <TextView
             android:layout_width="0dp"
@@ -172,15 +175,20 @@
             android:textSize="16sp"
             android:layout_weight="17"
             android:enabled="true" android:focusable="true"
-            />
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_light"
+            android:textColor="@color/black" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:id="@+id/tv_economy1"
-            android:layout_weight="20"
+            android:layout_weight="22"
             android:enabled="true" android:focusable="true"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_light"
+            android:textColor="@color/black" />
 
         <Button
             android:layout_width="0dp"
@@ -188,7 +196,9 @@
             android:id="@+id/button_delete1"
             android:background="@mipmap/delete_1"
             android:layout_weight="5"
-            android:gravity="top" />
+            android:gravity="top"
+            android:scaleType="centerCrop"/>
+
 
     </LinearLayout>
 
@@ -210,9 +220,10 @@
             android:id="@+id/et_price2"
             android:gravity="center"
             android:textSize="16sp"
-            android:background="@mipmap/line"
-            android:layout_weight="25"
-            android:enabled="true" android:focusable="true"/>
+            android:background="@drawable/rounded"
+            android:layout_weight="24"
+            android:enabled="true" android:focusable="true"
+            android:layout_margin="2dp" />
 
         <EditText
             android:layout_width="0dp"
@@ -222,9 +233,10 @@
             android:id="@+id/et_quantity2"
             android:gravity="center"
             android:textSize="16sp"
-            android:background="@mipmap/line"
-            android:layout_weight="20"
-            android:enabled="true" android:focusable="true"/>
+            android:background="@drawable/rounded"
+            android:layout_weight="19"
+            android:enabled="true" android:focusable="true"
+            android:layout_margin="2dp" />
 
         <Button
             android:layout_width="0dp"
@@ -232,7 +244,8 @@
             android:text="@string/Button_unit"
             android:id="@+id/button_unit2"
             android:layout_weight="12"
-            android:background="@color/background_unit" />
+            android:background="@color/background_unit"
+            android:layout_margin="2dp" />
 
         <TextView
             android:layout_width="0dp"
@@ -241,15 +254,21 @@
             android:gravity="center"
             android:textSize="16sp"
             android:layout_weight="17"
-            android:enabled="true" android:focusable="true"/>
+            android:enabled="true" android:focusable="true"
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_light"
+            android:textColor="@color/black" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:id="@+id/tv_economy2"
-            android:layout_weight="20"
+            android:layout_weight="22"
             android:enabled="true" android:focusable="true"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_light"
+            android:textColor="@color/black" />
 
         <Button
             android:layout_width="0dp"

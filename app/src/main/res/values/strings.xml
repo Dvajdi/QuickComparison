@@ -5,10 +5,10 @@
     <string name="quantity">Кол-во</string>
     <string name="unit">Ед. изм.</string>
     <string name="resalt">Цена за ед.</string>
-    <string name="economy">Экономия</string>
+    <string name="economy">Переплата</string>
     <string name="one">1</string>
     <string name="Button_unit">ед.</string>
     <string name="ButtonAdd">Добавить</string>
     <string name="DuttonClear">Очистить</string>
-    <string name="quan_economy">Кол-во ед.товара для рассчета экономии</string>
+    <string name="quan_economy">Рассчитать переплату для количества:</string>
 </resources>
