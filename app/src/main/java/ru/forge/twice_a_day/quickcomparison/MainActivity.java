@@ -20,25 +20,19 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-
     EditText et_price1, et_quantity1,et_price2, et_quantity2;
     TextView tv_price_unit1, tv_price_unit2,tv_economy1,tv_economy2;
     Button button_unit1,button_unit2,button_add,button_clear;
     Button iButton_delete1,iButton_delete2;
 
-
     LinearLayout rl_main;
     LinearLayout row2,row3;
 
-    static int firstId, secondId;
-
     static int i;
-    boolean et_price1ChangedAndGreaterThanZero, et_quantity1ChangedAndGreaterThanZero;
     double quantity1, price1;
     double minRezult,secondMinResult;
     int bestRowColor,secondBestRowColor,backgroundColor;
     ArrayList<LinearLayout> allLinearLayouts;
-    ArrayList<Integer> idDopLinearLayouts;
     ArrayList<TextView> textViewForClear;
     ArrayList<Double> results;
 
@@ -197,8 +191,6 @@ public class MainActivity extends AppCompatActivity {
         getMinimum2(allLinearLayouts);
         paintBackGround(allLinearLayouts);
     }
-
-
 
     public void getMinimum2(ArrayList<LinearLayout> allLinearLayouts){
         double value = 0;
