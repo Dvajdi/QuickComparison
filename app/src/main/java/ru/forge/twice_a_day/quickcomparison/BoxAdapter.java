@@ -1,6 +1,7 @@
 package ru.forge.twice_a_day.quickcomparison;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,12 +50,31 @@ public class BoxAdapter extends BaseAdapter {
 
         MyRow row = getRow(position);
 
+        final Button btn_choose_unit = (Button)v.findViewById(R.id.button_dop_unit);
+        final Button btn_dop_delete = (Button)v.findViewById(R.id.button_dop_delete);
+
         ((EditText)v.findViewById(R.id.et_dop_price)).setText(row.getPrice()+"");
-        ((EditText)v.findViewById(R.id.et_dop_quantity)).setText(row.getQuantity()+"");
-        ((Button)v.findViewById(R.id.button_dop_unit)).setText(row.getUnit() + "");
+        ((EditText)v.findViewById(R.id.et_dop_quantity)).setText(row.getQuantity() + "");
+        btn_choose_unit.setText(row.getUnit() + "");
+
         ((TextView)v.findViewById(R.id.tv_dop_result)).setText(row.getResult() + "");
         ((TextView)v.findViewById(R.id.tv_dop_economy)).setText(row.getEconomy() + "");
 
+        btn_choose_unit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("priv", "mmm");
+            }
+        });
+
+        btn_dop_delete.setOnClickListener(new View.OnClickListener() {
+            int position;
+
+            @Override
+            public void onClick(View v) {
+                delRow(position);
+            }
+        });
 
         return v;
     }
