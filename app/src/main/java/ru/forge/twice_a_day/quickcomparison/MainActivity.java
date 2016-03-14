@@ -48,11 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void findMyViews() {
         et_price1 = (EditText) findViewById(R.id.et_price1);
-        et_price1.setTag("price");
         et_quantity1 = (EditText) findViewById(R.id.et_quantity1);
-        et_quantity1.setTag("quantity");
         tv_price_unit1 =(TextView)findViewById(R.id.tv_price_unit1);
-        tv_price_unit1.setTag("price_unit");
         tv_economy1 =(TextView)findViewById(R.id.tv_economy1);
         button_unit1=(Button)findViewById(R.id.button_unit1);
         iButton_delete1=(Button)findViewById(R.id.button_delete1);
@@ -63,15 +60,20 @@ public class MainActivity extends AppCompatActivity {
         tv_economy2 =(TextView)findViewById(R.id.tv_economy2);
         button_unit2=(Button)findViewById(R.id.button_unit2);
         iButton_delete2=(Button)findViewById(R.id.button_delete2);
+
         button_add=(Button)findViewById(R.id.button_add);
         button_clear=(Button)findViewById(R.id.button_clear);
         rl_main = (LinearLayout) findViewById(R.id.rl_main);
+
+        et_price1.setTag("price");
+        et_quantity1.setTag("quantity");
+        tv_price_unit1.setTag("price_unit");
         et_price2.setTag("price");
         et_quantity2.setTag("quantity");
         tv_price_unit2.setTag("price_unit");
 
         row2=(LinearLayout)findViewById(R.id.row2);
-        row3=(LinearLayout)findViewById(R.id.row2);
+        row3=(LinearLayout)findViewById(R.id.row3);
     }
 
     public void setContent() {
