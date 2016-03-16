@@ -35,6 +35,10 @@ public class MyRow {
         this.economy = economy;
     }
 
+    public void setResult() {
+        operation();
+    }
+
     public double getPrice() {
         return price;
     }
@@ -55,10 +59,6 @@ public class MyRow {
         return economy;
     }
 
-    void operation(){
-        try{
-
-        result=price/quantity;}catch(Exception e){result=0;}
-    }
+    void operation(){try{result=price/quantity;}catch(Exception e){result=0;}}
 
 }

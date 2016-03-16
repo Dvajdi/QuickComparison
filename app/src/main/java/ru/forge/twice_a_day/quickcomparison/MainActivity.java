@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -20,7 +21,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
 
     Button button_add,button_clear;
@@ -48,19 +49,21 @@ public class MainActivity extends AppCompatActivity {
 
     void createRow(){
         rows.add(new MyRow("ед."));
-        Log.d("priv","ага");
+        Log.d("priv", "ага");
 
     }
     void createStartRows(){
-        rows = new ArrayList<>();
         createRow();
         createRow();
     }
 
     void setContent(){
+        rows = new ArrayList<>();
         createStartRows();
         boxAdapter=new BoxAdapter(this,rows);
         listView.setAdapter(boxAdapter);
+        button_add.setOnClickListener(this);
+        button_clear.setOnClickListener(this);
     }
 
     @Override
@@ -81,4 +84,19 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.button_add:
+                rows.add(new MyRow("ед"));
+                Log.d("priv",""+rows.size());
+                boxAdapter.notifyDataSetChanged();
+                break;
+            case R.id.button_clear:
+                rows.clear();
+                createStartRows();
+                boxAdapter.notifyDataSetChanged();
+                break;
+        }
+    }
 }

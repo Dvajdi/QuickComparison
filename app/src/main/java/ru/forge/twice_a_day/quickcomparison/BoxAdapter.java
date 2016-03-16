@@ -1,6 +1,8 @@
 package ru.forge.twice_a_day.quickcomparison;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 public class BoxAdapter extends BaseAdapter {
 
     private Context ctx;
-    ArrayList rows;
+    ArrayList <MyRow>rows;
     LayoutInflater inflater;
 
     BoxAdapter(Context ctx,ArrayList rows){
@@ -50,15 +52,23 @@ public class BoxAdapter extends BaseAdapter {
 
         MyRow row = getRow(position);
 
+
         final Button btn_choose_unit = (Button)v.findViewById(R.id.button_dop_unit);
         final Button btn_dop_delete = (Button)v.findViewById(R.id.button_dop_delete);
-
-        ((EditText)v.findViewById(R.id.et_dop_price)).setText(row.getPrice()+"");
-        ((EditText)v.findViewById(R.id.et_dop_quantity)).setText(row.getQuantity() + "");
-        btn_choose_unit.setText(row.getUnit() + "");
+        final EditText etPrice= (EditText) v.findViewById(R.id.et_dop_price);
+        final EditText etQuantity= (EditText) v.findViewById(R.id.et_dop_quantity);
 
         ((TextView)v.findViewById(R.id.tv_dop_result)).setText(row.getResult() + "");
         ((TextView)v.findViewById(R.id.tv_dop_economy)).setText(row.getEconomy() + "");
+
+
+
+        etPrice.setText(row.getPrice() + "");
+        etQuantity.setText(row.getQuantity() + "");
+        btn_choose_unit.setText(row.getUnit() + "");
+
+        etPrice.setOnTouchListener(new ClearFieldListener(etPrice));
+        etQuantity.setOnTouchListener(new ClearFieldListener(etQuantity));
 
         btn_choose_unit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,23 +77,37 @@ public class BoxAdapter extends BaseAdapter {
             }
         });
 
-        btn_dop_delete.setOnClickListener(new View.OnClickListener() {
-            int position;
-
-            @Override
-            public void onClick(View v) {
-                delRow(position);
-            }
-        });
+        btn_dop_delete.setOnClickListener(new DelClickListener(rows,position,this));
 
         return v;
     }
+
 
     public MyRow getRow(int position){
         return (MyRow)getItem(position);
     }
 
-    public ArrayList getRows() {
-        return rows;
+    public ArrayList getRows() {return rows;}
+
+
+
+    class MyWatcher implements TextWatcher{
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+
+
+        }
     }
+
 }
