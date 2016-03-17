@@ -36,7 +36,8 @@ public class MyRow {
     }
 
     public void setResult() {
-        operation();
+
+        result=operation();
     }
 
     public double getPrice() {
@@ -59,6 +60,6 @@ public class MyRow {
         return economy;
     }
 
-    void operation(){try{result=price/quantity;}catch(Exception e){result=0;}}
+    double operation(){try{result=price/quantity;}catch(Exception e){result=0;}return result;}
 
 }

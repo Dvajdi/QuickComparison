@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()){
             case R.id.button_add:
                 rows.add(new MyRow("ед"));
-                Log.d("priv",""+rows.size());
                 boxAdapter.notifyDataSetChanged();
                 break;
             case R.id.button_clear:

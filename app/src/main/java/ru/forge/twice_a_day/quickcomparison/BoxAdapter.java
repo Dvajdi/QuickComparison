@@ -48,10 +48,9 @@ public class BoxAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View v = convertView;
-        if(v==null){v=inflater.inflate(R.layout.row,parent,false);}
+        if(v==null){v=inflater.inflate(R.layout.row_2,parent,false);}
 
         MyRow row = getRow(position);
-
 
         final Button btn_choose_unit = (Button)v.findViewById(R.id.button_dop_unit);
         final Button btn_dop_delete = (Button)v.findViewById(R.id.button_dop_delete);
@@ -61,6 +60,8 @@ public class BoxAdapter extends BaseAdapter {
         ((TextView)v.findViewById(R.id.tv_dop_result)).setText(row.getResult() + "");
         ((TextView)v.findViewById(R.id.tv_dop_economy)).setText(row.getEconomy() + "");
 
+        etPrice.addTextChangedListener(new PriceWatcher(position, rows,this));
+        etQuantity.addTextChangedListener(new QuantityWatcher(position,rows,this));
 
 
         etPrice.setText(row.getPrice() + "");
@@ -88,26 +89,5 @@ public class BoxAdapter extends BaseAdapter {
     }
 
     public ArrayList getRows() {return rows;}
-
-
-
-    class MyWatcher implements TextWatcher{
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-
-
-        }
-    }
 
 }
