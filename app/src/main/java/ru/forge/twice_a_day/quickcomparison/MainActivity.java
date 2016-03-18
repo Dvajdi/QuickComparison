@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button button_add,button_clear;
     LinearLayout rl_main;
     ListView listView;
-    BoxAdapter boxAdapter;
+
     ArrayList <MyRow>rows;
 
     @Override
@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void setContent(){
         rows = new ArrayList<>();
         createStartRows();
-        boxAdapter=new BoxAdapter(this,rows);
-        listView.setAdapter(boxAdapter);
+
+
         button_add.setOnClickListener(this);
         button_clear.setOnClickListener(this);
     }
@@ -89,12 +89,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()){
             case R.id.button_add:
                 rows.add(new MyRow("ед"));
-                boxAdapter.notifyDataSetChanged();
+
                 break;
             case R.id.button_clear:
                 rows.clear();
                 createStartRows();
-                boxAdapter.notifyDataSetChanged();
+
                 break;
         }
     }
