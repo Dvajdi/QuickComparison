@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -104,14 +105,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 rows.clear();
                 createStartRows();
                 break;
+            default:
+                Toast.makeText(this,"отстань",Toast.LENGTH_SHORT).show();
         }
     }
 
     private void addNewFragment() {
         RawFragment rf = new RawFragment();
         ft=getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.rl_main,rf,"del");
+        ft.add(R.id.rl_main, rf, "del");
         ft.commit();
+       /* Button btnDel =rf.getBtnDel();
+        btnDel.setOnClickListener(this);*/
         rawFragments.add(rf);
     }
 
@@ -123,4 +128,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+
 }
