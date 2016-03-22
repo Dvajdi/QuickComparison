@@ -1,8 +1,10 @@
 package ru.forge.twice_a_day.quickcomparison;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,19 +26,25 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-
+    android.support.v4.app.FragmentTransaction ft;
     Button button_add,button_clear;
     LinearLayout rl_main;
-    ListView listView;
+    Bundle save;
 
-    ArrayList <MyRow>rows;
+    static ArrayList <MyRow>rows;
+    ArrayList<RawFragment> rawFragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
         findMyViews();
-        setContent();
+
+        rawFragments = new ArrayList<>();
+
+        if(savedInstanceState==null){setContent();}
+        else {button_add.setOnClickListener(this);
+            button_clear.setOnClickListener(this);}
 
     }
 
@@ -43,25 +52,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_add=(Button)findViewById(R.id.button_add);
         button_clear=(Button)findViewById(R.id.button_clear);
         rl_main = (LinearLayout) findViewById(R.id.rl_main);
-        listView=(ListView)findViewById(R.id.listView);
 
     }
 
     void createRow(){
         rows.add(new MyRow("ед."));
-        Log.d("priv", "ага");
+        addNewFragment();
 
     }
     void createStartRows(){
         createRow();
         createRow();
+        Log.d("priv", "пересоздался");
     }
 
     void setContent(){
         rows = new ArrayList<>();
         createStartRows();
-
-
         button_add.setOnClickListener(this);
         button_clear.setOnClickListener(this);
     }
@@ -88,14 +95,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.button_add:
-                rows.add(new MyRow("ед"));
-
+                createRow();
+                Log.d("priv", "add кликается");
                 break;
+
             case R.id.button_clear:
+                clearFragments();
                 rows.clear();
                 createStartRows();
-
                 break;
         }
+    }
+
+    private void addNewFragment() {
+        RawFragment rf = new RawFragment();
+        ft=getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.rl_main,rf,"del");
+        ft.commit();
+        rawFragments.add(rf);
+    }
+
+    private void clearFragments(){
+        for (int i = 0; i <rawFragments.size() ; i++) {
+            ft=getSupportFragmentManager().beginTransaction();
+            ft.remove(rawFragments.get(i));
+            ft.commit();
+        }
+
     }
 }
