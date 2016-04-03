@@ -1,5 +1,6 @@
 package ru.forge.twice_a_day.quickcomparison;
 
+import android.util.Log;
 import android.widget.EditText;
 
 /**
@@ -16,11 +17,14 @@ public class StaticDifferents {
 
     public static double rounded(double d,int flag){
         int parameter=1;
+        int k;
         double res;
         for (int i = 0; i <flag ; i++) {
             parameter*=10;
         }
-        res=((int)d*parameter)/parameter;
+        d=d*parameter;
+        k=(int)d;
+        res=(double)(k)/parameter;
         return res;
     }
 }

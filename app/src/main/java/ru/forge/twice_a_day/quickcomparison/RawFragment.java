@@ -23,34 +23,32 @@ public class RawFragment extends Fragment {
     EditText etPrice;
     EditText etQuantity;
     TextView tvResult;
+    double res;
 
-    RawFragment(ArrayList fragments){
-        this.fragments=fragments;
+
+    public void setFragments(ArrayList fragments) {
+        this.fragments = fragments;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
 
-        View rootView=inflater.inflate(R.layout.row,container,false);
-        etPrice = (EditText)rootView.findViewById(R.id.et_dop_price);
-        etQuantity = (EditText)rootView.findViewById(R.id.et_dop_quantity);
-        tvResult = (TextView)rootView.findViewById(R.id.tv_dop_result);
+        View rootView=inflater.inflate(R.layout.row, container, false);
+
 
         ((Button) rootView.findViewById(R.id.button_dop_delete)).setOnClickListener(new DelRawListener(this,fragments));
 
         return rootView;
     }
 
-    public void setTVResult(){
-        double price = StaticDifferents.getDoubleFromEt(etPrice);
-        double quantity = StaticDifferents.getDoubleFromEt(etQuantity);
-        Log.d("dom","price = "+price);
-        Log.d("dom","quantity = "+quantity);
-//        if(quantity>0){tvResult.setText(String.valueOf(StaticDifferents.rounded((price/quantity),1)));}else{tvResult.setText("");}
-      if(quantity>0){tvResult.setText("привет");}
+
+    public double getRes() {
+        return res;
     }
 
+    public void setRes(double res) {
 
-
+        this.res = res;
+    }
 }
