@@ -25,7 +25,7 @@ public class MyScroll extends HorizontalScrollView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        et=(EditText)findViewById(R.id.et_dop_quantity);
+        et=(EditText)findViewById(R.id.et_dop_price);
         scrollTo(et.getLeft(),0);
     }
     private ScrollViewListener scrollViewListener=null;

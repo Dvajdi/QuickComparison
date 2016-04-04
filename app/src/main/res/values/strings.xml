@@ -11,4 +11,5 @@
     <string name="ButtonAdd">Добавить</string>
     <string name="DuttonClear">Очистить</string>
     <string name="quan_economy">Рассчитать переплату для количества:</string>
+    <string name="delete"> Удалить </string>
 </resources>

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by twice on 22.03.16.
  */
-public class RawFragment extends Fragment {
+public class RawFragment extends Fragment implements ScrollViewListener{
     ArrayList fragments;
     EditText etPrice;
     EditText etQuantity;
@@ -38,9 +38,9 @@ public class RawFragment extends Fragment {
        // View rootView=inflater.inflate(R.layout.row, container, false);
         View rootView=inflater.inflate(R.layout.row_with_scroll, container, false);
 
-      //  ((MyScroll)rootView).onScrollChanged(this,)
-
-        ((Button) rootView.findViewById(R.id.button_dop_delete)).setOnClickListener(new DelRawListener(this,fragments));
+        myScroll= ((MyScroll)rootView);
+        myScroll.setScrollViewListener(this);
+        ((Button) rootView.findViewById(R.id.button_dop_delete)).setOnClickListener(new DelRawListener(this, fragments));
 
         return rootView;
     }
@@ -53,5 +53,25 @@ public class RawFragment extends Fragment {
     public void setRes(double res) {
 
         this.res = res;
+    }
+
+    @Override
+    public void onScrollChanged(MyScroll myScroll, int x, int y, int oldX, int oldY) {
+        if(x==0){
+            Log.d("qwe","x = "+x);
+            this.getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+            int number = 0;
+            for (int i = 0; i < fragments.size(); i++) {
+                if (fragments.get(i).equals(this)) {
+                    number = i;
+                }
+            }
+           try{
+            fragments.remove(number);
+               Log.d("qwe", "number = " + number);
+               Log.d("qwe", "fragments = " + fragments.size());
+
+           }catch(Exception e){}
+        }
     }
 }
