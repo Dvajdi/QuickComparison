@@ -28,6 +28,17 @@ public class MyScroll extends HorizontalScrollView {
         et=(EditText)findViewById(R.id.et_dop_price);
         scrollTo(et.getLeft(),0);
     }
+    private ScrollViewListener scrollViewListener=null;
 
+    public void setScrollViewListener(ScrollViewListener scrollViewListener) {
+        this.scrollViewListener = scrollViewListener;
+    }
 
+    @Override
+    protected void onScrollChanged(int x, int y, int oldx, int oldy) {
+        super.onScrollChanged(x, y, oldx, oldy);
+        if(scrollViewListener != null) {
+            scrollViewListener.onScrollChanged(this, x, y, oldx, oldy);
+        }
+    }
 }

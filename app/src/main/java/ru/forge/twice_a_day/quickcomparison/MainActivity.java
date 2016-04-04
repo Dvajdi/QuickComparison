@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ft.remove(rawFragments.get(i));
             ft.commit();
         }
-        Log.d("dom", "кол-во фрагментов = " + rawFragments.size());
         rawFragments.clear();
     }
 
@@ -143,7 +142,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     tv.setText((String) msg.obj);
                 }
                 v.setBackgroundColor(msg.arg1);
-            }catch(IndexOutOfBoundsException e){e.printStackTrace();}
+            }
+            catch(IndexOutOfBoundsException e){e.printStackTrace();}
+            catch(NullPointerException e){e.printStackTrace();}
+
         }
     }
     static class OwnRunnable implements Runnable {
