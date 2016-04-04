@@ -24,6 +24,7 @@ public class RawFragment extends Fragment {
     EditText etQuantity;
     TextView tvResult;
     double res;
+    MyScroll myScroll;
 
 
     public void setFragments(ArrayList fragments) {
@@ -34,8 +35,10 @@ public class RawFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
 
-        View rootView=inflater.inflate(R.layout.row, container, false);
+       // View rootView=inflater.inflate(R.layout.row, container, false);
+        View rootView=inflater.inflate(R.layout.row_with_scroll, container, false);
 
+      //  ((MyScroll)rootView).onScrollChanged(this,)
 
         ((Button) rootView.findViewById(R.id.button_dop_delete)).setOnClickListener(new DelRawListener(this,fragments));
 

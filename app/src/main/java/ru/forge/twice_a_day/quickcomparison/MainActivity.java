@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.handleMessage(msg);
             try {
                 rf = rawFragments.get(msg.what);
-                v = rf.getView();
+                v = rf.getView().findViewById(R.id.doprow);
                 if (v != null) {
                     tv = (TextView) v.findViewById(R.id.tv_dop_result);
                     tv.setText((String) msg.obj);
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             double value;
             for (int i = 0; i <rawFragments.size(); i++) {
                 value=rawFragments.get(i).getRes();
-                if(min>value){min=value;}
+                if(min>value&&value!=0){min=value;}
             }
             return min;
         }
