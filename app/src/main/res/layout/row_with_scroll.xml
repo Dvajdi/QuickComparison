@@ -24,6 +24,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/delete"
         android:id="@+id/textView" android:background="#c8ff0000" android:layout_gravity="center"
+        android:visibility="invisible"
         android:gravity="center"/>
     <EditText
         android:layout_width="0dp"
