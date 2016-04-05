@@ -58,6 +58,7 @@ public class RawFragment extends Fragment implements ScrollViewListener{
     @Override
     public void onScrollChanged(MyScroll myScroll, int x, int y, int oldX, int oldY) {
         if(x==0){
+
             Log.d("qwe","x = "+x);
             this.getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
             int number = 0;
@@ -69,6 +70,7 @@ public class RawFragment extends Fragment implements ScrollViewListener{
            try{
             fragments.remove(number);
                Log.d("qwe", "number = " + number);
+               Log.d("qwe", "fragments = " + fragments.size());
                Log.d("qwe", "fragments = " + fragments.size());
 
            }catch(Exception e){}
