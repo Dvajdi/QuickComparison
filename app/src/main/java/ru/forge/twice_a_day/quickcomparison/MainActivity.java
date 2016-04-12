@@ -201,8 +201,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 value=rawFragments.get(i).getRes();
                 if(min>value&&value!=0){min=value;}
             }
-            Log.d("mini","min = "+min);
-            Log.d("raws","size = "+rawFragments.size());
+
             return min;
         }
     }

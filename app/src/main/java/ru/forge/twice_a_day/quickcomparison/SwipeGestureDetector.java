@@ -7,19 +7,12 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-/**
- * Created by twice on 12.04.16.
- */
-
-
-
-
 class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
         private static final int SWIPE_MIN_DISTANCE = 50;
         private static final int SWIPE_MAX_OFF_PATH = 200;
         private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-        Fragment fragment;
-        ArrayList fragments;
+        private final Fragment fragment;
+        private final ArrayList fragments;
 
     public SwipeGestureDetector(Fragment fragment,ArrayList fragments) {
         this.fragment = fragment;
@@ -58,13 +51,13 @@ class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
             return false;
         }
 
-    void onRightSwipe(){
+    private void onRightSwipe(){
         Log.d("poi","работает");
         removeMySelf();
     }
 
 
-    void removeMySelf(){
+    private void removeMySelf(){
         fragments.remove(fragment);
         fragment.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
