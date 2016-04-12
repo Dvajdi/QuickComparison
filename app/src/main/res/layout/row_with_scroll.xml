@@ -38,7 +38,10 @@
         android:layout_weight="24"
         android:enabled="true"
         android:focusable="true"
-        android:layout_margin="2dp" />
+        android:layout_margin="2dp"
+        >
+        <requestFocus/>
+    </EditText>
 
     <EditText
         android:layout_width="0dp"
