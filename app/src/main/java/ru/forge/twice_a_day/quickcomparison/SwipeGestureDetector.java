@@ -65,7 +65,7 @@ class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
 
     void removeMySelf(){
-        fragments.remove(this);
+        fragments.remove(fragment);
         fragment.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
 }
