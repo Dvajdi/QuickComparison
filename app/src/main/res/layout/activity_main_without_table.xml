@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ru.forge.twice_a_day.quickcomparison.MainActivity"
-    tools:showIn="@layout/material_activity"
+    tools:showIn="@layout/material_activity_without_table"
     android:background="@color/background_main_activity"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -59,71 +59,6 @@
                     android:gravity="center" />
             </LinearLayout>
 
-            <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/row1"
-        android:gravity="center_vertical"
-        android:weightSum="100">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:text="@string/Price"
-            android:id="@+id/tv_price"
-            android:textStyle="bold"
-            android:textSize="17sp"
-            android:gravity="center"
-            android:background="@drawable/rectangle"
-            android:layout_weight="24"
-            android:focusable="false" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:text="@string/quantity"
-            android:id="@+id/tv_quantity"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="17sp"
-            android:background="@drawable/rectangle"
-            android:layout_weight="24" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:text="@string/unit"
-            android:id="@+id/tv_unit"
-            android:textStyle="bold"
-            android:textSize="17sp"
-            android:background="@drawable/rectangle"
-            android:gravity="center"
-            android:layout_weight="12" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:id="@+id/tv_resalt"
-            android:textStyle="bold"
-            android:textSize="17sp"
-            android:background="@drawable/rectangle"
-            android:gravity="center"
-            android:text="@string/resalt"
-            android:layout_weight="20" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:text="@string/economy"
-            android:id="@+id/tv_economy"
-            android:background="@drawable/rectangle"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:layout_weight="20"
-            android:gravity="center" />
-
-    </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

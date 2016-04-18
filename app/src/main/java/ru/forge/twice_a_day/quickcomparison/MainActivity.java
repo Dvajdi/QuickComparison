@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
-        setContentView(R.layout.material_activity);
+        //setContentView(R.layout.material_activity);
+        setContentView(R.layout.material_activity_without_table);
         findMyViews();
         setListeners();
         isStopped=false;

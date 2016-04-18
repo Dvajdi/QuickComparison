@@ -53,8 +53,8 @@ public class RawFragment extends Fragment implements ScrollViewListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
-        //View rootView=inflater.inflate(R.layout.row_material, container, false);
-        View rootView=inflater.inflate(R.layout.row, container, false);
+        View rootView=inflater.inflate(R.layout.material_row, container, false);
+        //View rootView=inflater.inflate(R.layout.row, container, false);
         findViewsInFragment(rootView);
         return rootView;
     }
