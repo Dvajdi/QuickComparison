@@ -31,9 +31,6 @@ public class RawFragment extends Fragment implements ScrollViewListener{
     MyScroll myScroll;
     Activity ctx;
 
-
-
-
     public void setFragments(ArrayList fragments) {
         this.fragments = fragments;
         ctx=getActivity();
@@ -53,21 +50,23 @@ public class RawFragment extends Fragment implements ScrollViewListener{
         };
         v.setOnTouchListener(gestureListener);
     }
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
-        View rootView=inflater.inflate(R.layout.row_with_scroll, container, false);
-        myScroll= ((MyScroll)rootView);
-        etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
-        myScroll.setScrollViewListener(this);
-
-        setSwipeListener(myScroll);
-        setSwipeListener(etPrice);
+        //View rootView=inflater.inflate(R.layout.row_material, container, false);
+        View rootView=inflater.inflate(R.layout.row, container, false);
+        findViewsInFragment(rootView);
         return rootView;
+    }
+
+    void findViewsInFragment(View rootView){
+        LinearLayout linLay= ((LinearLayout)rootView);
+        etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
+        etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
+        etQuantity=(EditText)rootView.findViewById(R.id.et_dop_quantity);
+        setSwipeListener(linLay);
+        setSwipeListener(etPrice);
+        setSwipeListener(etQuantity);
     }
 
     public double getRes() {

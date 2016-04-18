@@ -13,13 +13,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
+    FloatingActionButton fab;
+    Toolbar toolbar;
     android.support.v4.app.FragmentTransaction ft;
-    Button button_add,button_clear;
     LinearLayout rl_main;
 
     static ArrayList <MyRow>rows;
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
+        setContentView(R.layout.material_activity);
         findMyViews();
         setListeners();
         isStopped=false;
@@ -46,13 +48,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void findMyViews() {
-        button_add=(Button)findViewById(R.id.button_add);
-        button_clear=(Button)findViewById(R.id.button_clear);
+        fab=(FloatingActionButton)findViewById(R.id.fab2);
+        toolbar=(Toolbar)findViewById(R.id.tool_bar);
         rl_main = (LinearLayout) findViewById(R.id.rl_main);
     }
     private void setListeners(){
-        button_add.setOnClickListener(this);
-        button_clear.setOnClickListener(this);
+        fab.setOnClickListener(this);
+        setSupportActionBar(toolbar);
     }
 
     void createRow(){
@@ -84,11 +86,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.add) {
 
-        }
-        if (item.getItemId() == R.id.remove) {
-
+        if (item.getItemId() == R.id.clear_all) {
+            clearAll();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -96,17 +96,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.button_add:
+
+            case R.id.fab2:
                 createRow();
-                break;
-            case R.id.button_clear:
-                clearFragments();
-                rows.clear();
-                createStartRows();
                 break;
             default:
                 Toast.makeText(this,"отстань",Toast.LENGTH_SHORT).show();
         }
+    }
+    protected void clearAll(){
+        clearFragments();
+        rows.clear();
+        createStartRows();
     }
 
     private void addNewFragment() {
