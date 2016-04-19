@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -74,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void setContent(){
         rows = new ArrayList<>();
         createStartRows();
-        COLOR_BEST=getResources().getColor(R.color.colorVariant1);
-        COLOR_MAIN=getResources().getColor(R.color.background_main_activity);
+        COLOR_BEST=getResources().getColor(R.color.colorAccent);
+        COLOR_MAIN=getResources().getColor(R.color.colorPrimary);
     }
 
     @Override
@@ -146,7 +147,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     tv = (TextView) v.findViewById(R.id.tv_dop_result);
                     tv.setText((String) msg.obj);
                 }
-                v.setBackgroundColor(msg.arg1);
+               // v.setBackgroundColor(msg.arg1);
+                ((CardView)v).setCardBackgroundColor(msg.arg1);
+
             }
             catch(IndexOutOfBoundsException e){e.printStackTrace();}
             catch(NullPointerException e){e.printStackTrace();}

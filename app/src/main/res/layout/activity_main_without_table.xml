@@ -11,7 +11,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ru.forge.twice_a_day.quickcomparison.MainActivity"
     tools:showIn="@layout/material_activity_without_table"
-    android:background="@color/background_main_activity"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ScrollView android:layout_width="match_parent"
@@ -40,7 +39,6 @@
                     android:text="@string/quan_economy"
                     android:id="@+id/tv_more_units"
                     android:layout_weight="2"
-                    android:background="@drawable/rectangle"
                     android:textIsSelectable="false"
                     android:textSize="17sp"
                     android:textStyle="bold"
@@ -65,8 +63,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-    android:id="@+id/rl_main"
-    android:background="@color/background_main_activity">
+    android:id="@+id/rl_main">
 
         </LinearLayout>
     <LinearLayout
