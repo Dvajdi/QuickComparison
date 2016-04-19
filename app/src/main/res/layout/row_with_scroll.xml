@@ -17,14 +17,15 @@
         android:layout_height="match_parent"
         android:id="@+id/imageView"
         android:background="@android:drawable/ic_delete"
-        android:contentDescription="@string/delete"/>
+        android:contentDescription="@string/delete"
+        android:visibility="gone"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/delete"
         android:id="@+id/textView" android:background="#c8ff0000" android:layout_gravity="center"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:gravity="center"/>
     <EditText
         android:layout_width="0dp"
