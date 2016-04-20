@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.CardView;
@@ -31,6 +32,7 @@ public class RawFragment extends Fragment implements ScrollViewListener{
     MyScroll myScroll;
     Activity ctx;
     CardView cv;
+    LinearLayout layout;
 
     public void setFragments(ArrayList fragments) {
         this.fragments = fragments;
@@ -54,21 +56,20 @@ public class RawFragment extends Fragment implements ScrollViewListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
-        View rootView=inflater.inflate(R.layout.material_row_2, container, false);
+        View rootView=inflater.inflate(R.layout.material_row_3, container, false);
         //View rootView=inflater.inflate(R.layout.row, container, false);
         findViewsInFragment(rootView);
         return rootView;
     }
 
     void findViewsInFragment(View rootView){
-       // LinearLayout linLay= ((LinearLayout)rootView);
-        cv= ((CardView) rootView);
 
-        etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
+        cv= ((CardView) rootView);
+        layout= ((LinearLayout) cv.findViewById(R.id.layout));
         etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
         etQuantity=(EditText)rootView.findViewById(R.id.et_dop_quantity);
         setSwipeListener(cv);
-        //setSwipeListener(linLay);
+        setSwipeListener(layout);
         setSwipeListener(etPrice);
         setSwipeListener(etQuantity);
     }

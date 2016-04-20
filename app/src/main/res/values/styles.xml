@@ -18,7 +18,12 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="SmallText" parent="TextAppearance.AppCompat.Small">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="CardView.MyCardView" parent="@style/CardView">
+
+
     </style>
 </resources>

@@ -23,6 +23,7 @@ public class StaticDifferents {
             parameter*=10;
         }
         d=d*parameter;
+        d=Math.round(d);
         k=(int)d;
         res=(double)(k)/parameter;
         return res;

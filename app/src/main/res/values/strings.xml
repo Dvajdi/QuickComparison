@@ -1,15 +1,19 @@
 <resources>
-    <string name="app_name">QuickComparison</string>
+    <string name="app_name">Быстрое сравнение цен</string>
     <string name="Number">№</string>
     <string name="Price">Цена</string>
     <string name="quantity">Кол-во</string>
     <string name="unit">Ед. изм.</string>
     <string name="resalt">Цена за ед.</string>
-    <string name="economy">Переплата</string>
+    <string name="economy">Переплата </string>
     <string name="one">1</string>
-    <string name="Button_unit">ед.</string>
+    <string name="Button_unit">/ед.</string>
     <string name="ButtonAdd">Добавить</string>
     <string name="DuttonClear">Очистить</string>
     <string name="quan_economy">Рассчитать переплату для количества:</string>
     <string name="delete"> Удалить </string>
+    <string name="percent"> % </string>
+    <string name="economy_percent"> , </string>
+    <string name="best_result">Лучшая цена</string>
+    <string name="rub">р.</string>
 </resources>

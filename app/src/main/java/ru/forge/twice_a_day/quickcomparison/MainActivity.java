@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Toolbar toolbar;
     android.support.v4.app.FragmentTransaction ft;
     LinearLayout rl_main;
+    static String MES_ECONOMY,MES_ECONOMY_PERCENT,MES_PERCENT,BEST_RESULT,MES_RUB;;
 
     static ArrayList <MyRow>rows;
     static ArrayList<RawFragment> rawFragments;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static OwnHandler h;
     static Thread t;
     static int COLOR_BEST,COLOR_MAIN;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         createStartRows();
         COLOR_BEST=getResources().getColor(R.color.colorAccent);
         COLOR_MAIN=getResources().getColor(R.color.colorPrimary);
+        MES_ECONOMY =getResources().getString(R.string.economy);
+        MES_ECONOMY_PERCENT =getResources().getString(R.string.economy_percent);
+        MES_PERCENT =getResources().getString(R.string.percent);
+        BEST_RESULT=getResources().getString(R.string.best_result);
+        MES_RUB=getResources().getString(R.string.rub);
+
     }
 
     @Override
@@ -135,17 +143,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     static class OwnHandler extends Handler{
         View v;
-        TextView tv;
+        TextView tv_res,tv_res_economy;
         RawFragment rf;
+        double res,economy,minRes,economyPercent;
+        int minIndex;
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             try {
+                minRes=rawFragments.get(msg.arg2).getRes();
+
                 rf = rawFragments.get(msg.what);
                 v = rf.getView().findViewById(R.id.doprow);
                 if (v != null) {
-                    tv = (TextView) v.findViewById(R.id.tv_dop_result);
-                    tv.setText((String) msg.obj);
+                    tv_res = (TextView) v.findViewById(R.id.tv_dop_result);
+                    res=(Double)msg.obj;
+                    tv_res.setText(String.valueOf(res)+" "+MES_RUB);
+
+                    tv_res_economy=(TextView)v.findViewById(R.id.tv_dop_economy);
+                    economyPercent=StaticDifferents.rounded((res/minRes-1)*100,2);
+                    economy=StaticDifferents.rounded(res-minRes,2);
+                    if((economy>=0)&&(res>0)) {
+                        if (economy == 0) {
+                            tv_res_economy.setText(BEST_RESULT);
+                        } else {
+                            tv_res_economy.setText(MES_ECONOMY +" "+ String.valueOf(economy) + MES_ECONOMY_PERCENT +"  "+ String.valueOf(economyPercent) + MES_PERCENT);
+                        }
+                    }
                 }
                // v.setBackgroundColor(msg.arg1);
                 ((CardView)v).setCardBackgroundColor(msg.arg1);
@@ -163,7 +187,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View v;
         String strPrice,strQuantity;
         double price,quantity,res;
-        int arg1;
+        Double result;
+        int arg1,minIndex;
+        String str;
         @Override
         public void run() {
             while(!isStopped){
@@ -188,11 +214,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         res = StaticDifferents.rounded(price / quantity,2);
 
                             rf.setRes(res);
-                        if (res ==findMin(rawFragments)){arg1=COLOR_BEST;}else{arg1=COLOR_MAIN;}
+                        if (res ==findMin(rawFragments)){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}
 
-                            Sleeper.sleep(10);
-                        String strRes = String.valueOf(res);
-                        Message msg = h.obtainMessage(i, arg1, 0, strRes);
+                            Sleeper.sleep(15);
+                        //str = String.valueOf(res);
+                        result=res;
+                        Message msg = h.obtainMessage(i, arg1, minIndex, result);
+
                         h.sendMessage(msg);
                     }
                 }
