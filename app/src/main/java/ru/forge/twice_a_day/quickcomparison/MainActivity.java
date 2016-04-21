@@ -9,35 +9,35 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    FloatingActionButton fab;
-    Toolbar toolbar;
-    android.support.v4.app.FragmentTransaction ft;
-    LinearLayout rl_main;
-    static String MES_ECONOMY,MES_ECONOMY_PERCENT,MES_PERCENT,BEST_RESULT,MES_RUB;;
+    private FloatingActionButton fab;
+    private Toolbar toolbar;
+    private android.support.v4.app.FragmentTransaction ft;
+    private static String BEST_RESULT;
+    private static String MES_RUB;
+    private static String ECONOMY_STR;
+    private static String RES_STR;
 
-    static ArrayList <MyRow>rows;
-    static ArrayList<RawFragment> rawFragments;
-    static boolean isStopped;
-    static OwnHandler h;
-    static Thread t;
-    static int COLOR_BEST,COLOR_MAIN;
+    private static ArrayList <MyRow>rows;
+    private static ArrayList<RawFragment> rawFragments;
+    private static boolean isStopped;
+    private static OwnHandler h;
+    private static Thread t;
+    private static int COLOR_BEST;
+    private static int COLOR_MAIN;
 
-
+static int potok;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
-        //setContentView(R.layout.material_activity);
         setContentView(R.layout.material_activity_without_table);
         findMyViews();
         setListeners();
@@ -51,132 +51,128 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void findMyViews() {
+    private void findMyViews() {
         fab=(FloatingActionButton)findViewById(R.id.fab2);
         toolbar=(Toolbar)findViewById(R.id.tool_bar);
-        rl_main = (LinearLayout) findViewById(R.id.rl_main);
     }
     private void setListeners(){
         fab.setOnClickListener(this);
         setSupportActionBar(toolbar);
     }
 
-    void createRow(){
-        rows.add(new MyRow("ед."));
-        addNewFragment();
-
+    private void createRow(boolean isNotWhenStart){
+        addNewFragment(isNotWhenStart);
     }
 
-    void createStartRows(){
-        createRow();
-        createRow();
-
-
+    private void createStartRows(){
+        createRow(true);
+        createRow(false);
     }
 
-    void setContent(){
+    private void setContent(){
         rows = new ArrayList<>();
         createStartRows();
         COLOR_BEST=getResources().getColor(R.color.colorAccent);
         COLOR_MAIN=getResources().getColor(R.color.colorPrimary);
-        MES_ECONOMY =getResources().getString(R.string.economy);
-        MES_ECONOMY_PERCENT =getResources().getString(R.string.economy_percent);
-        MES_PERCENT =getResources().getString(R.string.percent);
         BEST_RESULT=getResources().getString(R.string.best_result);
         MES_RUB=getResources().getString(R.string.rub);
-
+        ECONOMY_STR = getResources().getString(R.string.economyStr);
+        RES_STR=getResources().getString(R.string.resStr);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        if(item.getItemId()==R.id.debug){doDebug();}
         if (item.getItemId() == R.id.clear_all) {
             clearAll();
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void doDebug() {
+        isStopped=true;
+    }
+
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-
             case R.id.fab2:
-                createRow();
+                createRow(true);
                 break;
             default:
                 Toast.makeText(this,"отстань",Toast.LENGTH_SHORT).show();
         }
     }
-    protected void clearAll(){
+    private void clearAll(){
         clearFragments();
         rows.clear();
         createStartRows();
     }
 
-    private void addNewFragment() {
+    private void addNewFragment(boolean isNotFirstTwoRows) {
+
         RawFragment rf = new RawFragment();
-        ft=getSupportFragmentManager().beginTransaction();
-        rf.setFragments(rawFragments);
-        ft.add(R.id.rl_main, rf);
-        ft.commit();
+
+        rf.setFragments(rawFragments,isNotFirstTwoRows);
+        getSupportFragmentManager().beginTransaction().add(R.id.rl_main, rf).commit();
+
         rawFragments.add(rf);
+
     }
 
     private void clearFragments(){
         for (int i = 0; i <rawFragments.size() ; i++) {
-            ft=getSupportFragmentManager().beginTransaction();
-            ft.remove(rawFragments.get(i));
-            ft.commit();
+            getSupportFragmentManager().beginTransaction().remove(rawFragments.get(i)).commit();
         }
         rawFragments.clear();
     }
 
-
-
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return super.onRetainCustomNonConfigurationInstance();
+    }
 
     static class OwnHandler extends Handler{
         View v;
         TextView tv_res,tv_res_economy;
         RawFragment rf;
         double res,economy,minRes,economyPercent;
-        int minIndex;
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             try {
-                minRes=rawFragments.get(msg.arg2).getRes();
+                minRes = rawFragments.get(msg.arg2).getRes();
 
                 rf = rawFragments.get(msg.what);
-                v = rf.getView().findViewById(R.id.doprow);
+                v = rf.getView();
+                v = v != null ? rf.getView().findViewById(R.id.doprow) : null;
+
                 if (v != null) {
                     tv_res = (TextView) v.findViewById(R.id.tv_dop_result);
-                    res=(Double)msg.obj;
-                    tv_res.setText(String.valueOf(res)+" "+MES_RUB);
-
-                    tv_res_economy=(TextView)v.findViewById(R.id.tv_dop_economy);
-                    economyPercent=StaticDifferents.rounded((res/minRes-1)*100,2);
-                    economy=StaticDifferents.rounded(res-minRes,2);
-                    if((economy>=0)&&(res>0)) {
+                    StaticNeedSupplement.ScaleLongStringsInTextView(tv_res);
+                    res = (Double) msg.obj;
+                    tv_res.setText(String.format(Locale.ROOT, RES_STR, res, MES_RUB));
+                    tv_res_economy = (TextView) v.findViewById(R.id.tv_dop_economy);
+                    economyPercent = StaticNeedSupplement.rounded((res / minRes - 1) * 100, 2);
+                    economy = StaticNeedSupplement.rounded(res - minRes, 2);
+                    if ((economy >= 0) && (res > 0)) {
                         if (economy == 0) {
                             tv_res_economy.setText(BEST_RESULT);
                         } else {
-                            tv_res_economy.setText(MES_ECONOMY +" "+ String.valueOf(economy) + MES_ECONOMY_PERCENT +"  "+ String.valueOf(economyPercent) + MES_PERCENT);
+                            tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, economy, economyPercent, "%"));
                         }
                     }
-                }
-               // v.setBackgroundColor(msg.arg1);
-                ((CardView)v).setCardBackgroundColor(msg.arg1);
 
+                ((CardView) v).setCardBackgroundColor(msg.arg1);
             }
-            catch(IndexOutOfBoundsException e){e.printStackTrace();}
-            catch(NullPointerException e){e.printStackTrace();}
+            }
+            catch(NullPointerException | IndexOutOfBoundsException e){e.printStackTrace();}
 
         }
     }
@@ -189,16 +185,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         double price,quantity,res;
         Double result;
         int arg1,minIndex;
-        String str;
+
         @Override
         public void run() {
+
             while(!isStopped){
+                Log.d("potok","i "+(potok++));
+                Sleeper.sleep(50);
                 for (int i = 0; i <rawFragments.size() ; i++) {
                     rf = rawFragments.get(i);
                     v=rf.getView();
                     if(v!=null) {
                         etPrice = (EditText) v.findViewById(R.id.et_dop_price);
                         etQuantity = (EditText) v.findViewById(R.id.et_dop_quantity);
+                        StaticNeedSupplement.ScaleLongStringsInTextView(etPrice);
+                        StaticNeedSupplement.ScaleLongStringsInTextView(etQuantity);
+
                         strPrice = etPrice.getText().toString();
                         strQuantity = etQuantity.getText().toString();
                         try {
@@ -211,16 +213,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         } catch (Exception e) {
                             quantity = 1;
                         }
-                        res = StaticDifferents.rounded(price / quantity,2);
+                        res = StaticNeedSupplement.rounded(price / quantity,2);
 
                             rf.setRes(res);
-                        if (res ==findMin(rawFragments)){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}
+                        //if (res ==findMin(rawFragments)){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}
+                        if (res ==findMin(rawFragments)){arg1=COLOR_MAIN;minIndex=i;}else{arg1=COLOR_BEST;}
 
-                            Sleeper.sleep(15);
-                        //str = String.valueOf(res);
+                            Sleeper.sleep(10);
                         result=res;
                         Message msg = h.obtainMessage(i, arg1, minIndex, result);
-
                         h.sendMessage(msg);
                     }
                 }
@@ -234,9 +235,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 value=rawFragments.get(i).getRes();
                 if(min>value&&value!=0){min=value;}
             }
-
             return min;
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        isStopped=true;
+        super.onDestroy();
+
+    }
 }

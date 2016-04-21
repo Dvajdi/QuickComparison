@@ -6,6 +6,8 @@
     <string name="unit">Ед. изм.</string>
     <string name="resalt">Цена за ед.</string>
     <string name="economy">Переплата </string>
+    <string name="economyStr">Переплата %1$.2fруб  \t %2$.2f%3$s </string>
+    <string name="resStr">%1$.2f%2$s </string>
     <string name="one">1</string>
     <string name="Button_unit">/ед.</string>
     <string name="ButtonAdd">Добавить</string>
@@ -15,5 +17,5 @@
     <string name="percent"> % </string>
     <string name="economy_percent"> , </string>
     <string name="best_result">Лучшая цена</string>
-    <string name="rub">р.</string>
+    <string name="rub">р</string>
 </resources>

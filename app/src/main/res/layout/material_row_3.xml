@@ -21,26 +21,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="10">
+            android:weightSum="15">
             <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 app:hintTextAppearance="@style/SmallText"
                 android:id="@+id/etLay1"
-                android:layout_weight="3"
+                android:layout_weight="4"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp">
-               <!-- <android.support.design.widget.TextInputEditText
-                    android:id="@+id/et_dop_price"
-                    android:gravity="center"
-                    android:textSize="24sp"
-                    android:inputType="numberDecimal"
-                    android:ems="8"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:hint="@string/Price"
-                    />-->
+
                 <EditText
                     android:imeOptions="flagNavigateNext"
                     android:id="@+id/et_dop_price"
@@ -50,7 +41,8 @@
                     android:ems="8"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/Price" />
+                    android:hint="@string/Price"
+                    android:maxLength="10"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -59,24 +51,13 @@
                 android:layout_height="match_parent"
                 app:hintTextAppearance="@style/SmallText"
                 android:id="@+id/etLay2"
-                android:layout_weight="3"
+                android:layout_weight="4"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp">
-                <!--<android.support.design.widget.TextInputEditText
-                    android:id="@+id/et_dop_quantity"
-                    android:gravity="center"
-                    android:textSize="24sp"
-                    android:inputType="numberDecimal"
-                    android:ems="8"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:hint="@string/quantity"
-                    />-->
 
                 <EditText
                     android:imeOptions="actionDone"
-
                     android:id="@+id/et_dop_quantity"
                     android:gravity="center_horizontal"
                     android:textSize="22sp"
@@ -84,7 +65,8 @@
                     android:ems="8"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/quantity"/>
+                    android:hint="@string/quantity"
+                    android:maxLength="10"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -95,7 +77,7 @@
                 android:gravity="center"
                 android:textSize="22sp"
                 android:background="@drawable/rectangle_light"
-                android:layout_weight="3"
+                android:layout_weight="6"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp" />
@@ -110,19 +92,17 @@
                 android:gravity="left|center_vertical"
                 android:textSize="16sp"
                 android:textScaleX="0.8"
-
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="1dp"
                 android:layout_marginLeft="1dp" />
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="15dp"
+            android:layout_height="21dp"
             android:id="@+id/tv_dop_economy"
-            android:textSize="12sp"
+            android:textSize="16sp"
             android:layout_margin="2dp"
-            android:gravity="center" />
-
+            android:gravity="center_horizontal" />
 
     </LinearLayout>
 

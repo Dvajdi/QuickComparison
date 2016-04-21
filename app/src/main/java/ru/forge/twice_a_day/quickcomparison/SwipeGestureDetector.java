@@ -26,6 +26,7 @@ class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
                 float diffAbs = Math.abs(e1.getY() - e2.getY());
                 float diff = e1.getX() - e2.getX();
+                Log.d("poi","diff = "+diff);
 
                 if (diffAbs > SWIPE_MAX_OFF_PATH)
                     return false;
@@ -33,10 +34,7 @@ class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
                 // Left swipe
                 if (diff > SWIPE_MIN_DISTANCE
                         && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-
-
                     //onLeftSwipe();
-
                 }
                 // Right swipe
                 else if (-diff > SWIPE_MIN_DISTANCE

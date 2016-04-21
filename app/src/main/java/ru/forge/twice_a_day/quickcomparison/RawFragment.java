@@ -33,10 +33,12 @@ public class RawFragment extends Fragment implements ScrollViewListener{
     Activity ctx;
     CardView cv;
     LinearLayout layout;
+    boolean isNotWhenStart;
 
-    public void setFragments(ArrayList fragments) {
+    public void setFragments(ArrayList fragments,boolean isNotWhenStart) {
         this.fragments = fragments;
         ctx=getActivity();
+        this.isNotWhenStart=isNotWhenStart;
     }
 
     private GestureDetector gestureDetector;
@@ -57,13 +59,12 @@ public class RawFragment extends Fragment implements ScrollViewListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
         View rootView=inflater.inflate(R.layout.material_row_3, container, false);
-        //View rootView=inflater.inflate(R.layout.row, container, false);
         findViewsInFragment(rootView);
+        if(isNotWhenStart){etPrice.requestFocus();}
         return rootView;
     }
 
     void findViewsInFragment(View rootView){
-
         cv= ((CardView) rootView);
         layout= ((LinearLayout) cv.findViewById(R.id.layout));
         etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
@@ -72,6 +73,7 @@ public class RawFragment extends Fragment implements ScrollViewListener{
         setSwipeListener(layout);
         setSwipeListener(etPrice);
         setSwipeListener(etQuantity);
+
     }
 
     public double getRes() {
@@ -93,4 +95,6 @@ public class RawFragment extends Fragment implements ScrollViewListener{
             fragments.remove(this);
             this.getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
+
+
 }
