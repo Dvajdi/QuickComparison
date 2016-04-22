@@ -18,7 +18,7 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,View.OnTouchListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private static String BEST_RESULT;
@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static Thread t;
     private static int COLOR_BEST;
     private static int COLOR_MAIN;
+
+    int i=1;
 
 static int potok;
     @Override
@@ -95,7 +97,10 @@ static int potok;
     }
 
     private void doDebug() {
-        isStopped=true;
+        if(i%2==0){
+        isStopped=true;}else{isStopped=false;restartThread();}
+        Log.d("iii","i = "+i%2);
+        i++;
     }
 
     @Override
@@ -108,20 +113,23 @@ static int potok;
                 Toast.makeText(this,"отстань",Toast.LENGTH_SHORT).show();
         }
     }
+
     private void clearAll(){
+
         clearFragments();
         createStartRows();
-    }
+
+        }
+
+
+    void stopThread(){isStopped=true;}
+    void restartThread(){isStopped=false;t =new Thread(new OwnRunnable());t.start();}
 
     private void addNewFragment(boolean isNotFirstTwoRows) {
-
         RawFragment rf = new RawFragment();
-
         rf.setFragments(rawFragments,isNotFirstTwoRows);
         getSupportFragmentManager().beginTransaction().add(R.id.rl_main, rf).commit();
-
         rawFragments.add(rf);
-
     }
 
     private void clearFragments(){
@@ -136,35 +144,22 @@ static int potok;
         return super.onRetainCustomNonConfigurationInstance();
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if(event.getAction()==MotionEvent.ACTION_SCROLL){
-            try{
-            t.wait();}catch(InterruptedException e){e.printStackTrace();}
-        }
-        notifyAll();
-        return false;
-    }
+
 
     static class OwnHandler extends Handler{
         View v;
         TextView tv_res,tv_res_economy;
         RawFragment rf;
         double res,economy,minRes,economyPercent;
-        RawFragment bestFragment;
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             try {
-                bestFragment=rawFragments.get(msg.arg2);
-
-                minRes = bestFragment.getRes();
-
+                minRes = rawFragments.get(msg.arg2).getRes();
                 rf = rawFragments.get(msg.what);
                 v = rf.getView();
                 v = v != null ? rf.getView().findViewById(R.id.doprow) : null;
-
                 if (v != null) {
                     tv_res = (TextView) v.findViewById(R.id.tv_dop_result);
                     StaticNeedSupplement.ScaleLongStringsInTextView(tv_res);
@@ -181,7 +176,6 @@ static int potok;
                         }
                     }
                 rf.setCardColor(msg.arg1);
-                //((CardView) v).setCardBackgroundColor(msg.arg1);
             }
             }
             catch(NullPointerException | IndexOutOfBoundsException e){e.printStackTrace();}
@@ -235,8 +229,6 @@ static int potok;
             }
         }
 
-
-
         public double findMin(ArrayList<RawFragment> rawFragments){
             double min=Double.MAX_VALUE;
             double value;
@@ -248,10 +240,6 @@ static int potok;
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
 
     @Override
     protected void onDestroy() {
