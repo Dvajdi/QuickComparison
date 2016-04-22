@@ -8,6 +8,7 @@ import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,16 +18,14 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,View.OnTouchListener{
     private FloatingActionButton fab;
     private Toolbar toolbar;
-    private android.support.v4.app.FragmentTransaction ft;
     private static String BEST_RESULT;
     private static String MES_RUB;
     private static String ECONOMY_STR;
     private static String RES_STR;
 
-    private static ArrayList <MyRow>rows;
     private static ArrayList<RawFragment> rawFragments;
     private static boolean isStopped;
     private static OwnHandler h;
@@ -58,6 +57,7 @@ static int potok;
     private void setListeners(){
         fab.setOnClickListener(this);
         setSupportActionBar(toolbar);
+
     }
 
     private void createRow(boolean isNotWhenStart){
@@ -70,9 +70,8 @@ static int potok;
     }
 
     private void setContent(){
-        rows = new ArrayList<>();
         createStartRows();
-        COLOR_BEST=getResources().getColor(R.color.colorAccent);
+        COLOR_BEST=getResources().getColor(R.color.colorVariant3);
         COLOR_MAIN=getResources().getColor(R.color.colorPrimary);
         BEST_RESULT=getResources().getString(R.string.best_result);
         MES_RUB=getResources().getString(R.string.rub);
@@ -111,7 +110,6 @@ static int potok;
     }
     private void clearAll(){
         clearFragments();
-        rows.clear();
         createStartRows();
     }
 
@@ -138,16 +136,30 @@ static int potok;
         return super.onRetainCustomNonConfigurationInstance();
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if(event.getAction()==MotionEvent.ACTION_SCROLL){
+            try{
+            t.wait();}catch(InterruptedException e){e.printStackTrace();}
+        }
+        notifyAll();
+        return false;
+    }
+
     static class OwnHandler extends Handler{
         View v;
         TextView tv_res,tv_res_economy;
         RawFragment rf;
         double res,economy,minRes,economyPercent;
+        RawFragment bestFragment;
+
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             try {
-                minRes = rawFragments.get(msg.arg2).getRes();
+                bestFragment=rawFragments.get(msg.arg2);
+
+                minRes = bestFragment.getRes();
 
                 rf = rawFragments.get(msg.what);
                 v = rf.getView();
@@ -168,8 +180,8 @@ static int potok;
                             tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, economy, economyPercent, "%"));
                         }
                     }
-
-                ((CardView) v).setCardBackgroundColor(msg.arg1);
+                rf.setCardColor(msg.arg1);
+                //((CardView) v).setCardBackgroundColor(msg.arg1);
             }
             }
             catch(NullPointerException | IndexOutOfBoundsException e){e.printStackTrace();}
@@ -191,7 +203,6 @@ static int potok;
 
             while(!isStopped){
                 Log.d("potok","i "+(potok++));
-                Sleeper.sleep(50);
                 for (int i = 0; i <rawFragments.size() ; i++) {
                     rf = rawFragments.get(i);
                     v=rf.getView();
@@ -200,7 +211,6 @@ static int potok;
                         etQuantity = (EditText) v.findViewById(R.id.et_dop_quantity);
                         StaticNeedSupplement.ScaleLongStringsInTextView(etPrice);
                         StaticNeedSupplement.ScaleLongStringsInTextView(etQuantity);
-
                         strPrice = etPrice.getText().toString();
                         strQuantity = etQuantity.getText().toString();
                         try {
@@ -214,11 +224,8 @@ static int potok;
                             quantity = 1;
                         }
                         res = StaticNeedSupplement.rounded(price / quantity,2);
-
                             rf.setRes(res);
-                        //if (res ==findMin(rawFragments)){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}
-                        if (res ==findMin(rawFragments)){arg1=COLOR_MAIN;minIndex=i;}else{arg1=COLOR_BEST;}
-
+                        if (res ==findMin(rawFragments)){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}
                             Sleeper.sleep(10);
                         result=res;
                         Message msg = h.obtainMessage(i, arg1, minIndex, result);
@@ -227,6 +234,8 @@ static int potok;
                 }
             }
         }
+
+
 
         public double findMin(ArrayList<RawFragment> rawFragments){
             double min=Double.MAX_VALUE;
@@ -241,7 +250,6 @@ static int potok;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-
         super.onSaveInstanceState(outState);
     }
 
@@ -249,6 +257,5 @@ static int potok;
     protected void onDestroy() {
         isStopped=true;
         super.onDestroy();
-
     }
 }

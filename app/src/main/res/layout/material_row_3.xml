@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="15">
+            android:weightSum="14">
             <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -36,13 +36,13 @@
                     android:imeOptions="flagNavigateNext"
                     android:id="@+id/et_dop_price"
                     android:gravity="center_horizontal"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:inputType="numberDecimal"
-                    android:ems="8"
+                    android:ems="10"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/Price"
-                    android:maxLength="10"/>
+                    android:maxLength="9"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -60,13 +60,13 @@
                     android:imeOptions="actionDone"
                     android:id="@+id/et_dop_quantity"
                     android:gravity="center_horizontal"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:inputType="numberDecimal"
-                    android:ems="8"
+                    android:ems="10"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/quantity"
-                    android:maxLength="10"/>
+                    android:maxLength="9"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -75,9 +75,9 @@
                 android:layout_height="match_parent"
                 android:id="@+id/tv_dop_result"
                 android:gravity="center"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:background="@drawable/rectangle_light"
-                android:layout_weight="6"
+                android:layout_weight="5"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp" />
@@ -87,7 +87,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/Button_unit"
                 android:id="@+id/button_dop_unit"
-                android:background="@color/background_unit"
+                android:background="@drawable/rectangle_light"
                 android:layout_weight="1"
                 android:gravity="left|center_vertical"
                 android:textSize="16sp"

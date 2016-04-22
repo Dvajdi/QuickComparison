@@ -34,6 +34,7 @@ public class RawFragment extends Fragment implements ScrollViewListener{
     CardView cv;
     LinearLayout layout;
     boolean isNotWhenStart;
+    int cardColor;
 
     public void setFragments(ArrayList fragments,boolean isNotWhenStart) {
         this.fragments = fragments;
@@ -91,10 +92,8 @@ public class RawFragment extends Fragment implements ScrollViewListener{
         }
     }
 
-    void removeMySelf(){
-            fragments.remove(this);
-            this.getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+    public void setCardColor(int color){
+        if(color!=cardColor){cardColor=color;cv.setCardBackgroundColor(color);
+        Log.d("paint","перерисовался");}
     }
-
-
 }
