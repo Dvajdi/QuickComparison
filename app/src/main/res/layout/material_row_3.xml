@@ -10,6 +10,7 @@
         android:layout_gravity="center"
         app:cardCornerRadius="12dp"
         style="@style/CardView.MyCardView"
+        app:cardBackgroundColor="@color/colorPrimary"
         >
 
     <LinearLayout

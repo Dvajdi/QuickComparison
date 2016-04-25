@@ -33,9 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static int COLOR_BEST;
     private static int COLOR_MAIN;
 
-    int i=1;
+    int i=1,j=1;
 
-static int potok;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +42,14 @@ static int potok;
         findMyViews();
         setListeners();
         isStopped=false;
-        if(rawFragments==null){rawFragments = new ArrayList<>();}
+        rawFragments=(ArrayList<RawFragment>) getLastCustomNonConfigurationInstance();
+
+        if(rawFragments==null){rawFragments = new ArrayList<>();}else{Log.d("life","не ноль");}
         if(savedInstanceState==null){setContent();}
         h=new OwnHandler();
-
-        t =new Thread(new OwnRunnable());
+        t =new Thread(new OwnRunnable(),"РАСЧЕТЫ");
         t.start();
-
+        Log.d("life","onCreate");
     }
 
     private void findMyViews() {
@@ -63,7 +63,9 @@ static int potok;
     }
 
     private void createRow(boolean isNotWhenStart){
+
         addNewFragment(isNotWhenStart);
+
     }
 
     private void createStartRows(){
@@ -98,10 +100,19 @@ static int potok;
 
     private void doDebug() {
         if(i%2==0){
-        isStopped=true;}else{isStopped=false;restartThread();}
+        isStopped=true;}else{isStopped=false;
+            restartThread();
+        }
         Log.d("iii","i = "+i%2);
         i++;
     }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return rawFragments;
+    }
+
+
 
     @Override
     public void onClick(View v) {
@@ -115,15 +126,23 @@ static int potok;
     }
 
     private void clearAll(){
-
+        stopThread();
         clearFragments();
         createStartRows();
+        restartThread();
+    }
 
+    void stopThread(){
+        isStopped=true;
+        if(t!=null){try{if(t.isAlive()){t.join();}}catch(InterruptedException e){e.printStackTrace();}
         }
+    }
 
-
-    void stopThread(){isStopped=true;}
-    void restartThread(){isStopped=false;t =new Thread(new OwnRunnable());t.start();}
+    void restartThread(){isStopped=false;
+        j++;
+        t =new Thread(new OwnRunnable(),"РАСЧЕТЫ"+j);
+        t.start();
+    }
 
     private void addNewFragment(boolean isNotFirstTwoRows) {
         RawFragment rf = new RawFragment();
@@ -138,13 +157,6 @@ static int potok;
         }
         rawFragments.clear();
     }
-
-    @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-        return super.onRetainCustomNonConfigurationInstance();
-    }
-
-
 
     static class OwnHandler extends Handler{
         View v;
@@ -164,15 +176,19 @@ static int potok;
                     tv_res = (TextView) v.findViewById(R.id.tv_dop_result);
                     StaticNeedSupplement.ScaleLongStringsInTextView(tv_res);
                     res = (Double) msg.obj;
-                    tv_res.setText(String.format(Locale.ROOT, RES_STR, res, MES_RUB));
-                    tv_res_economy = (TextView) v.findViewById(R.id.tv_dop_economy);
-                    economyPercent = StaticNeedSupplement.rounded((res / minRes - 1) * 100, 2);
-                    economy = StaticNeedSupplement.rounded(res - minRes, 2);
-                    if ((economy >= 0) && (res > 0)) {
-                        if (economy == 0) {
-                            tv_res_economy.setText(BEST_RESULT);
-                        } else {
-                            tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, economy, economyPercent, "%"));
+                    if(res==Double.MAX_VALUE){tv_res.setText("");tv_res_economy.setText("");}
+                    else{
+                        tv_res.setText(String.format(Locale.ROOT, RES_STR, res, MES_RUB));
+                        tv_res_economy = (TextView) v.findViewById(R.id.tv_dop_economy);
+                        economyPercent = StaticNeedSupplement.rounded((res / minRes - 1) * 100, 2);
+                        economy = StaticNeedSupplement.rounded(res - minRes, 2);
+
+                        if ((economy >= 0)) {
+                            if (economy == 0) {
+                                tv_res_economy.setText(BEST_RESULT);
+                            } else {
+                                tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, economy, economyPercent, "%"));
+                            }
                         }
                     }
                 rf.setCardColor(msg.arg1);
@@ -194,9 +210,7 @@ static int potok;
 
         @Override
         public void run() {
-
             while(!isStopped){
-                Log.d("potok","i "+(potok++));
                 for (int i = 0; i <rawFragments.size() ; i++) {
                     rf = rawFragments.get(i);
                     v=rf.getView();
@@ -207,6 +221,7 @@ static int potok;
                         StaticNeedSupplement.ScaleLongStringsInTextView(etQuantity);
                         strPrice = etPrice.getText().toString();
                         strQuantity = etQuantity.getText().toString();
+
                         try {
                             price = Double.valueOf(strPrice);
                         } catch (Exception e) {
@@ -217,15 +232,22 @@ static int potok;
                         } catch (Exception e) {
                             quantity = 1;
                         }
-                        res = StaticNeedSupplement.rounded(price / quantity,2);
+
+                        if(price==0){
+                            res=Double.MAX_VALUE;
                             rf.setRes(res);
-                        if (res ==findMin(rawFragments)){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}
-                            Sleeper.sleep(10);
+                            arg1=COLOR_MAIN;
+                        }else
+                        {res = StaticNeedSupplement.rounded(price / quantity,2);
+                            rf.setRes(res);
+                        if (res ==findMin(rawFragments)){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}}
                         result=res;
                         Message msg = h.obtainMessage(i, arg1, minIndex, result);
                         h.sendMessage(msg);
                     }
                 }
+                Sleeper.sleep(20);
+                Log.d("stop","thread is Stopped");
             }
         }
 
@@ -234,16 +256,17 @@ static int potok;
             double value;
             for (int i = 0; i <rawFragments.size(); i++) {
                 value=rawFragments.get(i).getRes();
-                if(min>value&&value!=0){min=value;}
+                if(min>value){min=value;}
             }
             return min;
         }
     }
 
-
     @Override
     protected void onDestroy() {
-        isStopped=true;
+        stopThread();
+        Log.d("life","onDestroy");
         super.onDestroy();
+
     }
 }
