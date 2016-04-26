@@ -4,11 +4,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -41,30 +39,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.material_activity_without_table);
         findMyViews();
         setListeners();
-        isStopped=false;
-        rawFragments=(ArrayList<RawFragment>) getLastCustomNonConfigurationInstance();
 
+        rawFragments=(ArrayList<RawFragment>) getLastCustomNonConfigurationInstance();
         if(rawFragments==null){rawFragments = new ArrayList<>();}else{Log.d("life","не ноль");}
         if(savedInstanceState==null){setContent();}
-        h=new OwnHandler();
-        t =new Thread(new OwnRunnable(),"РАСЧЕТЫ");
-        t.start();
-        Log.d("life","onCreate");
+
+        startThread();
+
     }
 
     private void findMyViews() {
         fab=(FloatingActionButton)findViewById(R.id.fab2);
         toolbar=(Toolbar)findViewById(R.id.tool_bar);
     }
+    private void setContent(){
+        createStartRows();
+        h=new OwnHandler();
+        COLOR_BEST=getResources().getColor(R.color.colorVariant3);
+        COLOR_MAIN=getResources().getColor(R.color.colorPrimary);
+        BEST_RESULT=getResources().getString(R.string.best_result);
+        MES_RUB=getResources().getString(R.string.rub);
+        ECONOMY_STR = getResources().getString(R.string.economyStr);
+        RES_STR=getResources().getString(R.string.resStr);
+    }
     private void setListeners(){
         fab.setOnClickListener(this);
         setSupportActionBar(toolbar);
-
-    }
-
-    private void createRow(boolean isNotWhenStart){
-
-        addNewFragment(isNotWhenStart);
 
     }
 
@@ -73,14 +73,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         createRow(false);
     }
 
-    private void setContent(){
-        createStartRows();
-        COLOR_BEST=getResources().getColor(R.color.colorVariant3);
-        COLOR_MAIN=getResources().getColor(R.color.colorPrimary);
-        BEST_RESULT=getResources().getString(R.string.best_result);
-        MES_RUB=getResources().getString(R.string.rub);
-        ECONOMY_STR = getResources().getString(R.string.economyStr);
-        RES_STR=getResources().getString(R.string.resStr);
+    private void createRow(boolean isNotWhenStart){
+
+        addNewFragment(isNotWhenStart);
+
     }
 
     @Override
@@ -98,21 +94,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    private void doDebug() {
-        if(i%2==0){
-        isStopped=true;}else{isStopped=false;
-            restartThread();
-        }
-        Log.d("iii","i = "+i%2);
-        i++;
-    }
 
     @Override
     public Object onRetainCustomNonConfigurationInstance() {
         return rawFragments;
     }
-
-
 
     @Override
     public void onClick(View v) {
@@ -129,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stopThread();
         clearFragments();
         createStartRows();
-        restartThread();
+        startThread();
     }
 
     void stopThread(){
@@ -137,8 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(t!=null){try{if(t.isAlive()){t.join();}}catch(InterruptedException e){e.printStackTrace();}
         }
     }
-
-    void restartThread(){isStopped=false;
+    void startThread(){isStopped=false;
         j++;
         t =new Thread(new OwnRunnable(),"РАСЧЕТЫ"+j);
         t.start();
@@ -150,13 +135,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSupportFragmentManager().beginTransaction().add(R.id.rl_main, rf).commit();
         rawFragments.add(rf);
     }
-
     private void clearFragments(){
         for (int i = 0; i <rawFragments.size() ; i++) {
             getSupportFragmentManager().beginTransaction().remove(rawFragments.get(i)).commit();
         }
         rawFragments.clear();
     }
+
 
     static class OwnHandler extends Handler{
         View v;
@@ -269,4 +254,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
 
     }
+
+    private void doDebug() {
+        if(i%2==0){
+            isStopped=true;}else{isStopped=false;
+            startThread();
+        }
+        Log.d("iii","i = "+i%2);
+        i++;
+    }
+
 }
