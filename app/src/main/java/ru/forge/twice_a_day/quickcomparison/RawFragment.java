@@ -62,6 +62,7 @@ public class RawFragment extends Fragment implements ScrollViewListener{
         View rootView=inflater.inflate(R.layout.material_row_3, container, false);
         findViewsInFragment(rootView);
         if(isNotWhenStart){etPrice.requestFocus();}
+        if(cardColor!=0){cv.setCardBackgroundColor(cardColor);}
         return rootView;
     }
 
@@ -70,11 +71,15 @@ public class RawFragment extends Fragment implements ScrollViewListener{
         layout= ((LinearLayout) cv.findViewById(R.id.layout));
         etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
         etQuantity=(EditText)rootView.findViewById(R.id.et_dop_quantity);
-        setSwipeListener(cv);
+        RawDeleter rawDeleter=new RawDeleter(this);
+
+        cv.setOnTouchListener(rawDeleter);
+        etPrice.setOnTouchListener(rawDeleter);
+        etQuantity.setOnTouchListener(rawDeleter);
+        /*setSwipeListener(cv);
         setSwipeListener(layout);
         setSwipeListener(etPrice);
-        setSwipeListener(etQuantity);
-
+        setSwipeListener(etQuantity);*/
     }
 
     public double getRes() {
@@ -95,5 +100,10 @@ public class RawFragment extends Fragment implements ScrollViewListener{
     public void setCardColor(int color){
         if(color!=cardColor){cardColor=color;cv.setCardBackgroundColor(color);
         Log.d("paint","перерисовался");}
+    }
+
+    public void removeMySelf(){
+        fragments.remove(this);
+        this.getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
 }

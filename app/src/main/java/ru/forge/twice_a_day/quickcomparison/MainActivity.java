@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static String MES_RUB;
     private static String ECONOMY_STR;
     private static String RES_STR;
-
     private static ArrayList<RawFragment> rawFragments;
     private static boolean isStopped;
     private static OwnHandler h;
@@ -106,10 +105,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.fab2:
                 createRow(true);
                 break;
+
             default:
                 Toast.makeText(this,"отстань",Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
 
     private void clearAll(){
         stopThread();
@@ -159,12 +162,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 v = v != null ? rf.getView().findViewById(R.id.doprow) : null;
                 if (v != null) {
                     tv_res = (TextView) v.findViewById(R.id.tv_dop_result);
+                    tv_res_economy = (TextView) v.findViewById(R.id.tv_dop_economy);
+
                     StaticNeedSupplement.ScaleLongStringsInTextView(tv_res);
-                    res = (Double) msg.obj;
+                    res = (double) msg.obj;
+
+                    Log.d("res","res = "+res);
+
                     if(res==Double.MAX_VALUE){tv_res.setText("");tv_res_economy.setText("");}
                     else{
+
                         tv_res.setText(String.format(Locale.ROOT, RES_STR, res, MES_RUB));
-                        tv_res_economy = (TextView) v.findViewById(R.id.tv_dop_economy);
                         economyPercent = StaticNeedSupplement.rounded((res / minRes - 1) * 100, 2);
                         economy = StaticNeedSupplement.rounded(res - minRes, 2);
 
@@ -183,6 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
+
     static class OwnRunnable implements Runnable {
         RawFragment rf;
         EditText etPrice;
@@ -222,17 +231,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             res=Double.MAX_VALUE;
                             rf.setRes(res);
                             arg1=COLOR_MAIN;
-                        }else
-                        {res = StaticNeedSupplement.rounded(price / quantity,2);
+                        }
+                        else{
+                            res = StaticNeedSupplement.rounded(price / quantity,2);
                             rf.setRes(res);
-                        if (res ==findMin(rawFragments)){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}}
-                        result=res;
-                        Message msg = h.obtainMessage(i, arg1, minIndex, result);
+
+                            if (res ==findMin(rawFragments)){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}}
+                            result=res;
+                            Message msg = h.obtainMessage(i, arg1, minIndex, result);
                         h.sendMessage(msg);
                     }
                 }
                 Sleeper.sleep(20);
-                Log.d("stop","thread is Stopped");
+
             }
         }
 
@@ -262,6 +273,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         Log.d("iii","i = "+i%2);
         i++;
+
+        /*for (int i = 0; i <rawFragments.size() ; i++) {
+            Log.d("qwe","color "+i+" "+rawFragments.get(i).cardColor);
+        }*/
     }
 
 }

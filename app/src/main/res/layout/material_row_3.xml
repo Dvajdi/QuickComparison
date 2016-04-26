@@ -90,12 +90,12 @@
                 android:id="@+id/button_dop_unit"
                 android:background="@drawable/rectangle_light"
                 android:layout_weight="1"
-                android:gravity="left|center_vertical"
                 android:textSize="16sp"
                 android:textScaleX="0.8"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="1dp"
-                android:layout_marginLeft="1dp" />
+                android:layout_marginLeft="1dp"
+                android:gravity="center" />
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"
