@@ -11,10 +11,10 @@ class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
         private static final int SWIPE_MIN_DISTANCE = 50;
         private static final int SWIPE_MAX_OFF_PATH = 200;
         private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-        private final Fragment fragment;
+        private final RawFragment fragment;
         private final ArrayList fragments;
 
-    public SwipeGestureDetector(Fragment fragment,ArrayList fragments) {
+    public SwipeGestureDetector(RawFragment fragment,ArrayList fragments) {
         this.fragment = fragment;
         this.fragments=fragments;
     }
@@ -57,6 +57,6 @@ class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
     private void removeMySelf(){
         fragments.remove(fragment);
-        fragment.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        fragment.removeMySelf();
     }
 }

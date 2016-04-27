@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,6 +35,7 @@ public class RawFragment extends Fragment implements ScrollViewListener,TextWatc
     MyScroll myScroll;
     Activity ctx;
     CardView cv;
+    TextInputLayout etLay1,etLay2;
     LinearLayout layout;
     boolean isNotWhenStart;
     int cardColor;
@@ -73,6 +75,9 @@ public class RawFragment extends Fragment implements ScrollViewListener,TextWatc
         layout= ((LinearLayout) cv.findViewById(R.id.layout));
         etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
         etQuantity=(EditText)rootView.findViewById(R.id.et_dop_quantity);
+        etLay1=(TextInputLayout)rootView.findViewById(R.id.etLay1);
+        etLay2=(TextInputLayout)rootView.findViewById(R.id.etLay2);
+
         RawDeleter rawDeleter=new RawDeleter(this);
 
         etPrice.addTextChangedListener(this);
@@ -81,6 +86,10 @@ public class RawFragment extends Fragment implements ScrollViewListener,TextWatc
         cv.setOnTouchListener(rawDeleter);
         etPrice.setOnTouchListener(rawDeleter);
         etQuantity.setOnTouchListener(rawDeleter);
+        etLay1.setOnTouchListener(rawDeleter);
+        etLay2.setOnTouchListener(rawDeleter);
+
+
         /*setSwipeListener(cv);
         setSwipeListener(layout);
         setSwipeListener(etPrice);
@@ -110,6 +119,7 @@ public class RawFragment extends Fragment implements ScrollViewListener,TextWatc
     public void removeMySelf(){
         fragments.remove(this);
         this.getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+        ((MainActivity)this.getActivity()).startThread();
     }
 
     @Override

@@ -223,7 +223,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             return min;
         }
-
         void setResult(){
             RawFragment rf;
             EditText etPrice;

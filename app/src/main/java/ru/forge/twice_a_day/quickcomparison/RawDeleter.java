@@ -1,8 +1,13 @@
 package ru.forge.twice_a_day.quickcomparison;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 /**
  * Created by twice on 26.04.16.
@@ -13,9 +18,12 @@ public class RawDeleter implements View.OnTouchListener{
     float top, bottom,left,right;
     float x,y,oldX,oldY;
     int priznak;
+    InputMethodManager imm;
+    Activity act;
 
     public RawDeleter(RawFragment rf) {
         this.rf = rf;
+        act=rf.getActivity();
 
     }
     void setCoordinates(){
@@ -37,6 +45,13 @@ public class RawDeleter implements View.OnTouchListener{
                 oldX=event.getX();
                 oldY=event.getY();
 
+                if(v.getClass().equals(android.support.v7.widget.AppCompatEditText.class)){
+                    InputMethodManager imm = (InputMethodManager) act.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,1);
+                    //imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
+
+        }
+
                 Log.d("zxc","oldX= "+oldX);
                 Log.d("zxc","oldY= "+oldY);
                 break;
@@ -45,6 +60,7 @@ public class RawDeleter implements View.OnTouchListener{
                 y=event.getY();
                 Log.d("zxc","x= "+x);
                 Log.d("zxc","y= "+y);
+
                 break;
 
             case MotionEvent.ACTION_UP:
@@ -54,15 +70,19 @@ public class RawDeleter implements View.OnTouchListener{
                 Log.d("zxc","y= "+y);
                 break;
         }
-        if(top>=left&&y<bottom){
+
                 float razn =x-oldX;
-            if(razn>((right-left)*2/3)){
+            if(razn>((right-left)*0.5)){
 
                 rf.removeMySelf();
+                InputMethodManager imm = (InputMethodManager) rf.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(),0);
 
             }
-        }
+
         v.requestFocus();
         return true;
     }
+
+
 }
