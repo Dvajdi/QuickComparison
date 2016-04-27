@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by twice on 26.04.16.
@@ -71,10 +72,12 @@ public class RawDeleter implements View.OnTouchListener{
                 break;
         }
 
-                float razn =x-oldX;
-            if(razn>((right-left)*0.5)){
 
-                rf.removeMySelf();
+                float razn =x-oldX;
+               if(razn>((right-left)*0.5)){
+                   Log.d("delete"," да = "+razn);
+                   Log.d("delete"," да = "+razn);
+                //rf.removeMySelf();
                 InputMethodManager imm = (InputMethodManager) rf.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(),0);
 

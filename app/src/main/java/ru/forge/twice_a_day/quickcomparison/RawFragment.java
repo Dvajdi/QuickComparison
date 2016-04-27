@@ -77,7 +77,7 @@ public class RawFragment extends Fragment implements ScrollViewListener,TextWatc
         etQuantity=(EditText)rootView.findViewById(R.id.et_dop_quantity);
         etLay1=(TextInputLayout)rootView.findViewById(R.id.etLay1);
         etLay2=(TextInputLayout)rootView.findViewById(R.id.etLay2);
-
+        layout=(LinearLayout)rootView.findViewById(R.id.layout);
         RawDeleter rawDeleter=new RawDeleter(this);
 
         etPrice.addTextChangedListener(this);
@@ -88,6 +88,7 @@ public class RawFragment extends Fragment implements ScrollViewListener,TextWatc
         etQuantity.setOnTouchListener(rawDeleter);
         etLay1.setOnTouchListener(rawDeleter);
         etLay2.setOnTouchListener(rawDeleter);
+        layout.setOnTouchListener(rawDeleter);
 
 
         /*setSwipeListener(cv);
