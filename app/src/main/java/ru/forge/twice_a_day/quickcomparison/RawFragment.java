@@ -5,6 +5,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by twice on 22.03.16.
  */
-public class RawFragment extends Fragment implements ScrollViewListener{
+public class RawFragment extends Fragment implements ScrollViewListener,TextWatcher{
     ArrayList fragments;
     EditText etPrice;
     EditText etQuantity;
@@ -73,6 +75,9 @@ public class RawFragment extends Fragment implements ScrollViewListener{
         etQuantity=(EditText)rootView.findViewById(R.id.et_dop_quantity);
         RawDeleter rawDeleter=new RawDeleter(this);
 
+        etPrice.addTextChangedListener(this);
+        etQuantity.addTextChangedListener(this);
+
         cv.setOnTouchListener(rawDeleter);
         etPrice.setOnTouchListener(rawDeleter);
         etQuantity.setOnTouchListener(rawDeleter);
@@ -105,5 +110,20 @@ public class RawFragment extends Fragment implements ScrollViewListener{
     public void removeMySelf(){
         fragments.remove(this);
         this.getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        ((MainActivity)getActivity()).startThread();
     }
 }

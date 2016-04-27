@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             try {
-                minRes = rawFragments.get(msg.arg2).getRes();
+                minRes = (double) msg.obj;
                 rf = rawFragments.get(msg.what);
                 v = rf.getView();
                 v = v != null ? rf.getView().findViewById(R.id.doprow) : null;
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     tv_res_economy = (TextView) v.findViewById(R.id.tv_dop_economy);
 
                     StaticNeedSupplement.ScaleLongStringsInTextView(tv_res);
-                    res = (double) msg.obj;
+                    res = rf.getRes();
 
                     Log.d("res","res = "+res);
 
@@ -194,67 +194,75 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     static class OwnRunnable implements Runnable {
         RawFragment rf;
-        EditText etPrice;
-        EditText etQuantity;
-        View v;
-        String strPrice,strQuantity;
-        double price,quantity,res;
+
+        double res,min;
         Double result;
         int arg1,minIndex;
 
         @Override
         public void run() {
-            while(!isStopped){
+            setResult();
+            min=findMin();
                 for (int i = 0; i <rawFragments.size() ; i++) {
-                    rf = rawFragments.get(i);
-                    v=rf.getView();
-                    if(v!=null) {
-                        etPrice = (EditText) v.findViewById(R.id.et_dop_price);
-                        etQuantity = (EditText) v.findViewById(R.id.et_dop_quantity);
-                        StaticNeedSupplement.ScaleLongStringsInTextView(etPrice);
-                        StaticNeedSupplement.ScaleLongStringsInTextView(etQuantity);
-                        strPrice = etPrice.getText().toString();
-                        strQuantity = etQuantity.getText().toString();
-
-                        try {
-                            price = Double.valueOf(strPrice);
-                        } catch (Exception e) {
-                            price = 0;
-                        }
-                        try {
-                            quantity = Double.valueOf(strQuantity);
-                        } catch (Exception e) {
-                            quantity = 1;
-                        }
-
-                        if(price==0){
-                            res=Double.MAX_VALUE;
-                            rf.setRes(res);
-                            arg1=COLOR_MAIN;
-                        }
-                        else{
-                            res = StaticNeedSupplement.rounded(price / quantity,2);
-                            rf.setRes(res);
-
-                            if (res ==findMin(rawFragments)){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}}
-                            result=res;
+                    rf=rawFragments.get(i);
+                        res=rf.getRes();
+                            if (res ==min){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}
+                            result=min;
                             Message msg = h.obtainMessage(i, arg1, minIndex, result);
                         h.sendMessage(msg);
                     }
-                }
-                Sleeper.sleep(20);
-
-            }
         }
 
-        public double findMin(ArrayList<RawFragment> rawFragments){
+        public double findMin(){
             double min=Double.MAX_VALUE;
             double value;
             for (int i = 0; i <rawFragments.size(); i++) {
                 value=rawFragments.get(i).getRes();
-                if(min>value){min=value;}
+                if(value!=0){
+                if(min>value){min=value;}}
             }
             return min;
+        }
+
+        void setResult(){
+            RawFragment rf;
+            EditText etPrice;
+            EditText etQuantity;
+            View v;
+            String strPrice,strQuantity;
+            double price,quantity,res;
+
+            for (int i = 0; i <rawFragments.size() ; i++) {
+                rf = rawFragments.get(i);
+                v=rf.getView();
+                if(v!=null) {
+                    etPrice = (EditText) v.findViewById(R.id.et_dop_price);
+                    etQuantity = (EditText) v.findViewById(R.id.et_dop_quantity);
+
+                    strPrice = etPrice.getText().toString();
+                    strQuantity = etQuantity.getText().toString();
+
+                    try {
+                        price = Double.valueOf(strPrice);
+                    } catch (Exception e) {
+                        price = 0;
+                    }
+                    try {
+                        quantity = Double.valueOf(strQuantity);
+                    } catch (Exception e) {
+                        quantity = 1;
+                    }
+
+                    if(price==0){
+                        res=Double.MAX_VALUE;
+                    }
+                    else{
+                        res = StaticNeedSupplement.rounded(price / quantity,2);
+                       }
+                    rf.setRes(res);
+                    Log.d("res","res = "+res);
+                }
+            }
         }
     }
 
