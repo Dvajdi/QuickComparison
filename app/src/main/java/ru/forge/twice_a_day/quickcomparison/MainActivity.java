@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.design.widget.FloatingActionButton;
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     int i=1,j=1;
 
+
+    LinearLayout rl_main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void findMyViews() {
         fab=(FloatingActionButton)findViewById(R.id.fab2);
         toolbar=(Toolbar)findViewById(R.id.tool_bar);
+        rl_main=(LinearLayout)findViewById(R.id.rl_main);
     }
     private void setContent(){
         createStartRows();
@@ -285,5 +290,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("qwe","color "+i+" "+rawFragments.get(i).cardColor);
         }*/
     }
+
 
 }

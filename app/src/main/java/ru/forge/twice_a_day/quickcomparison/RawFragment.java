@@ -26,19 +26,20 @@ import java.util.ArrayList;
 /**
  * Created by twice on 22.03.16.
  */
-public class RawFragment extends Fragment implements ScrollViewListener,TextWatcher{
+public class RawFragment extends Fragment implements TextWatcher{
     ArrayList fragments;
     EditText etPrice;
     EditText etQuantity;
     TextView tvResult;
     double res;
-    MyScroll myScroll;
+
     Activity ctx;
     CardView cv;
     TextInputLayout etLay1,etLay2;
     LinearLayout layout;
     boolean isNotWhenStart;
     int cardColor;
+    Button btn;
 
     public void setFragments(ArrayList fragments,boolean isNotWhenStart) {
         this.fragments = fragments;
@@ -46,20 +47,8 @@ public class RawFragment extends Fragment implements ScrollViewListener,TextWatc
         this.isNotWhenStart=isNotWhenStart;
     }
 
-    private GestureDetector gestureDetector;
-    View.OnTouchListener gestureListener;
 
-    public void setSwipeListener(View v) {
-        if (v == null)
-            return;
-        gestureDetector = new GestureDetector(ctx, new SwipeGestureDetector(this,fragments));
-        gestureListener = new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
-            }
-        };
-        v.setOnTouchListener(gestureListener);
-    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
@@ -78,24 +67,14 @@ public class RawFragment extends Fragment implements ScrollViewListener,TextWatc
         etLay1=(TextInputLayout)rootView.findViewById(R.id.etLay1);
         etLay2=(TextInputLayout)rootView.findViewById(R.id.etLay2);
         layout=(LinearLayout)rootView.findViewById(R.id.layout);
-        RawDeleter rawDeleter=new RawDeleter(this);
+        tvResult=(TextView)rootView.findViewById(R.id.tv_dop_result);
+        btn=(Button)rootView.findViewById(R.id.button_dop_unit);
+
 
         etPrice.addTextChangedListener(this);
         etQuantity.addTextChangedListener(this);
 
-        cv.setOnTouchListener(rawDeleter);
-        etPrice.setOnTouchListener(rawDeleter);
-        etQuantity.setOnTouchListener(rawDeleter);
-        etLay1.setOnTouchListener(rawDeleter);
-        etLay2.setOnTouchListener(rawDeleter);
-        layout.setOnTouchListener(rawDeleter);
-
-
-        /*setSwipeListener(cv);
-        setSwipeListener(layout);
-        setSwipeListener(etPrice);
-        setSwipeListener(etQuantity);*/
-    }
+                   }
 
     public double getRes() {
         return res;
@@ -105,12 +84,6 @@ public class RawFragment extends Fragment implements ScrollViewListener,TextWatc
         this.res = res;
     }
 
-    @Override
-    public void onScrollChanged(MyScroll myScroll, int x, int y, int oldX, int oldY) {
-        if(x==0){
-            //removeMySelf();
-        }
-    }
 
     public void setCardColor(int color){
         if(color!=cardColor){cardColor=color;cv.setCardBackgroundColor(color);
