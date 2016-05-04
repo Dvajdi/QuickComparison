@@ -26,20 +26,21 @@ import java.util.ArrayList;
 /**
  * Created by twice on 22.03.16.
  */
-public class RawFragment extends Fragment implements TextWatcher{
+public class RawFragment extends Fragment implements TextWatcher,View.OnTouchListener{
     ArrayList fragments;
     EditText etPrice;
     EditText etQuantity;
-    TextView tvResult;
+    TextView tvResult,tv_dop_economy;
     double res;
 
     Activity ctx;
     CardView cv;
     TextInputLayout etLay1,etLay2;
-    LinearLayout layout;
+    LinearLayout layout,lay2;
     boolean isNotWhenStart;
     int cardColor;
     Button btn;
+    View rootView;
 
     public void setFragments(ArrayList fragments,boolean isNotWhenStart) {
         this.fragments = fragments;
@@ -52,7 +53,7 @@ public class RawFragment extends Fragment implements TextWatcher{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
-        View rootView=inflater.inflate(R.layout.material_row_3, container, false);
+        rootView=inflater.inflate(R.layout.material_row_3, container, false);
         findViewsInFragment(rootView);
         if(isNotWhenStart){etPrice.requestFocus();}
         if(cardColor!=0){cv.setCardBackgroundColor(cardColor);}
@@ -62,19 +63,33 @@ public class RawFragment extends Fragment implements TextWatcher{
     void findViewsInFragment(View rootView){
         cv= ((CardView) rootView);
         layout= ((LinearLayout) cv.findViewById(R.id.layout));
+        lay2= ((LinearLayout) cv.findViewById(R.id.lay2));
         etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
         etQuantity=(EditText)rootView.findViewById(R.id.et_dop_quantity);
         etLay1=(TextInputLayout)rootView.findViewById(R.id.etLay1);
         etLay2=(TextInputLayout)rootView.findViewById(R.id.etLay2);
         layout=(LinearLayout)rootView.findViewById(R.id.layout);
         tvResult=(TextView)rootView.findViewById(R.id.tv_dop_result);
+        tv_dop_economy=(TextView)rootView.findViewById(R.id.tv_dop_economy);
         btn=(Button)rootView.findViewById(R.id.button_dop_unit);
 
+        StaticNeedSupplement.ScaleLongStringsInTextView(etPrice);
+        StaticNeedSupplement.ScaleLongStringsInTextView(etQuantity);
 
         etPrice.addTextChangedListener(this);
         etQuantity.addTextChangedListener(this);
+        if(lay2==null){Log.d("touch","null");}
+        cv.setOnTouchListener(this);
+        lay2.setOnTouchListener(this);
+        layout.setOnTouchListener(this);
+        etLay1.setOnTouchListener(this);
+        etLay2.setOnTouchListener(this);
+        etQuantity.setOnTouchListener(this);
+        etPrice.setOnTouchListener(this);
+        tv_dop_economy.setOnTouchListener(this);
+        tvResult.setOnTouchListener(this);
 
-                   }
+    }
 
     public double getRes() {
         return res;
@@ -96,6 +111,7 @@ public class RawFragment extends Fragment implements TextWatcher{
         ((MainActivity)this.getActivity()).startThread();
     }
 
+
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -109,5 +125,23 @@ public class RawFragment extends Fragment implements TextWatcher{
     @Override
     public void afterTextChanged(Editable s) {
         ((MainActivity)getActivity()).startThread();
+
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if(v.getId()==R.id.et_dop_price){
+
+
+            if(event.getAction()==MotionEvent.ACTION_DOWN)
+            {Log.d("touch","down");return true;}
+
+            if(event.getAction()==MotionEvent.ACTION_CANCEL)
+            {Log.d("touch","cancel");return true;}
+
+            if(event.getAction()==MotionEvent.ACTION_UP)
+            {Log.d("touch","pointerUP");return true;}}
+
+        return false;
     }
 }
