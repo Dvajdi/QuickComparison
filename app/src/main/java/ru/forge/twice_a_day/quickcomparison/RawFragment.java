@@ -1,5 +1,6 @@
 package ru.forge.twice_a_day.quickcomparison;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 /**
  * Created by twice on 22.03.16.
  */
-public class RawFragment extends Fragment implements TextWatcher{
+public class RawFragment extends Fragment implements TextWatcher,Animation.AnimationListener{
     ArrayList fragments;
     EditText etPrice;
     EditText etQuantity;
@@ -101,14 +102,13 @@ public class RawFragment extends Fragment implements TextWatcher{
     }
 
     public void removeMySelf(){
-        //anim= AnimationUtils.loadAnimation(getActivity(),R.anim.anim);
-        //rootView.startAnimation(anim);
-        fragments.remove(this);
-        FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.anim.anim,R.anim.anim);
-        ft.remove(this).commit();
+        /*anim= AnimationUtils.loadAnimation(getActivity(),R.anim.anim);
+        rootView.startAnimation(anim);*/
+         anim = AnimationUtils.loadAnimation(getContext(),R.anim.anim);
+        anim.setAnimationListener(this);
+        rootView.startAnimation(anim);
 
-        ((MainActivity)getActivity()).startThread();
+
     }
 
 
@@ -129,5 +129,23 @@ public class RawFragment extends Fragment implements TextWatcher{
     }
 
 
+    @Override
+    public void onAnimationStart(Animation animation) {
 
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        fragments.remove(this);
+        FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
+        ft.remove(this).commit();
+
+        ((MainActivity)getActivity()).startThread();
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
+    }
 }
