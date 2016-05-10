@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -149,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         rawFragments.clear();
     }
+
 
 
     static class OwnHandler extends Handler{
