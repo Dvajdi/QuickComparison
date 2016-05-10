@@ -71,7 +71,7 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
     }
 
     void findViewsInFragment(View rootView){
-
+        cv=(CardView)rootView.findViewById(R.id.doprow) ;
         etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
         etQuantity=(EditText)rootView.findViewById(R.id.et_dop_quantity);
 
@@ -102,13 +102,9 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
     }
 
     public void removeMySelf(){
-        /*anim= AnimationUtils.loadAnimation(getActivity(),R.anim.anim);
-        rootView.startAnimation(anim);*/
-         anim = AnimationUtils.loadAnimation(getContext(),R.anim.anim);
+        anim = AnimationUtils.loadAnimation(getContext(),R.anim.anim);
         anim.setAnimationListener(this);
         rootView.startAnimation(anim);
-
-
     }
 
 
@@ -139,9 +135,7 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
         fragments.remove(this);
         FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
         ft.remove(this).commit();
-
         ((MainActivity)getActivity()).startThread();
-
     }
 
     @Override

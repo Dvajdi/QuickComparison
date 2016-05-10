@@ -3,6 +3,7 @@ package ru.forge.twice_a_day.quickcomparison;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.HorizontalScrollView;
 
@@ -40,12 +41,20 @@ public class MyHorizontalScrollView extends HorizontalScrollView{
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        if(ev.getAction()==MotionEvent.ACTION_DOWN){oldX=ev.getX();}
-        if(ev.getAction()==MotionEvent.ACTION_MOVE){
-            rez=Math.abs(oldX-ev.getX());
 
+        if(ev.getAction()==MotionEvent.ACTION_DOWN){oldX=ev.getX(); Log.d("poi","OldX = "+ev.getX());return true;}
+        if(ev.getAction()==MotionEvent.ACTION_MOVE){
+            rez=ev.getX()-oldX;
             if(rez>400){
                 f.removeMySelf();
+                Log.d("poi","x = "+ev.getX());
+                return true;
+            }
+        }
+        if(ev.getAction()==MotionEvent.ACTION_CANCEL){
+            rez=ev.getX()-oldX;
+            if(rez>400){
+                f.removeMySelf(); return true;
             }
         }
 

@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setContent(){
         createStartRows();
         h=new OwnHandler();
-        COLOR_BEST=getResources().getColor(R.color.colorVariant3);
-        COLOR_MAIN=getResources().getColor(R.color.colorPrimary);
+        COLOR_BEST=getResources().getColor(R.color.colorPrimary);
+        COLOR_MAIN=getResources().getColor(R.color.colorVariant3);
         BEST_RESULT=getResources().getString(R.string.best_result);
         MES_RUB=getResources().getString(R.string.rub);
         ECONOMY_STR = getResources().getString(R.string.economyStr);
