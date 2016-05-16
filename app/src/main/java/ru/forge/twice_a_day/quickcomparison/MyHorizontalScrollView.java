@@ -5,12 +5,13 @@ import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 
 /**
  * Created by twice on 10.05.16.
  */
-public class MyHorizontalScrollView extends HorizontalScrollView{
+public class MyHorizontalScrollView extends FrameLayout{
     RawFragment f;
     float maxLength;
 
@@ -54,7 +55,8 @@ public class MyHorizontalScrollView extends HorizontalScrollView{
         if(ev.getAction()==MotionEvent.ACTION_CANCEL){
             rez=ev.getX()-oldX;
             if(rez>400){
-                f.removeMySelf(); return true;
+                f.removeMySelf();
+                return true;
             }
         }
 

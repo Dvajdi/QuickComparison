@@ -4,14 +4,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +22,11 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private FloatingActionButton fab;
     private Toolbar toolbar;
+
+    RecyclerView recyclerView;
+    ArrayList<Sale>sales;
+    RVAdapter adapter;
+
     private static String BEST_RESULT;
     private static String MES_RUB;
     private static String ECONOMY_STR;
@@ -44,11 +49,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findMyViews();
         setListeners();
 
-        rawFragments=(ArrayList<RawFragment>) getLastCustomNonConfigurationInstance();
-        if(rawFragments==null){rawFragments = new ArrayList<>();}else{Log.d("life","не ноль");}
-        if(savedInstanceState==null){setContent();}
+       // rawFragments=(ArrayList<RawFragment>) getLastCustomNonConfigurationInstance();
+        //if(rawFragments==null){rawFragments = new ArrayList<>();}else{Log.d("life","не ноль");}
+        if(savedInstanceState==null){
+            init();}
 
-        startThread();
+       // startThread();
 
     }
 
@@ -56,9 +62,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab=(FloatingActionButton)findViewById(R.id.fab2);
         toolbar=(Toolbar)findViewById(R.id.tool_bar);
         rl_main=(LinearLayout)findViewById(R.id.rl_main);
+        recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
     }
-    private void setContent(){
-        createStartRows();
+    private void setListeners(){
+        fab.setOnClickListener(this);
+        setSupportActionBar(toolbar);
+
+    }
+    private void init(){
+       // createStartRows();
         h=new OwnHandler();
         COLOR_BEST=getResources().getColor(R.color.colorPrimary);
         COLOR_MAIN=getResources().getColor(R.color.colorVariant3);
@@ -66,12 +78,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MES_RUB=getResources().getString(R.string.rub);
         ECONOMY_STR = getResources().getString(R.string.economyStr);
         RES_STR=getResources().getString(R.string.resStr);
-    }
-    private void setListeners(){
-        fab.setOnClickListener(this);
-        setSupportActionBar(toolbar);
+        setUpRecyclerView();
+
 
     }
+
+    void setUpRecyclerView(){
+        sales= new ArrayList<>();
+        sales.add(new Sale(0,0));
+        sales.add(new Sale(0,0));
+        adapter = new RVAdapter(sales);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+    }
+
 
     private void createStartRows(){
         createRow(true);
@@ -79,8 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void createRow(boolean isNotWhenStart){
-
-        addNewFragment(isNotWhenStart);
+        sales.add(new Sale(0,0));
+        adapter.notifyDataSetChanged();
+        //addNewFragment(isNotWhenStart);
 
     }
 
@@ -117,14 +139,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-
-
     private void clearAll(){
-        stopThread();
-        clearFragments();
+       // stopThread();
+       // clearFragments();
+        sales.clear();
+        adapter.notifyDataSetChanged();
         createStartRows();
-        startThread();
+       // startThread();
     }
 
     void stopThread(){

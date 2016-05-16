@@ -61,7 +61,7 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
         rootView=inflater.inflate(R.layout.material_row_3, container, false);
-        ((MyHorizontalScrollView)rootView).setFragment(this);
+
         findViewsInFragment(rootView);
         if(isNotWhenStart){etPrice.requestFocus();}
         if(cardColor!=0){cv.setCardBackgroundColor(cardColor);}
@@ -71,7 +71,7 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
     }
 
     void findViewsInFragment(View rootView){
-        cv=(CardView)rootView.findViewById(R.id.doprow) ;
+        cv=(CardView)rootView;
         etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
         etQuantity=(EditText)rootView.findViewById(R.id.et_dop_quantity);
 
