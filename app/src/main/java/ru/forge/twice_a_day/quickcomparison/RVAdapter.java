@@ -4,6 +4,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyHolder> {
 
 
     ArrayList<Sale> sales;
+    MyHolder mh;
+
+    EditText etPrice,etQuantity;
+    TextView tvRes,tvEconomy;
 
     public RVAdapter(ArrayList<Sale> sales) {
         this.sales = sales;
@@ -28,24 +33,29 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyHolder> {
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.material_row_3,parent,false);
-        MyHolder mh = new MyHolder(v);
+        mh = new MyHolder(v);
         return mh;
     }
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
 
-
-        double price=getDoubleFromET(holder.etPrice);
-        double quantity=getDoubleFromET(holder.etQuantity);
-
-
-        sales.get(position).result=price/quantity;
-        sales.get(position).economy=price/quantity;
-
-
+        holder.etQuantity.setText(String.valueOf(sales.get(position).quantity));
+        holder.etPrice.setText(String.valueOf(sales.get(position).price));
         holder.tvRes.setText(String.valueOf(sales.get(position).result));
         holder.tvEconomy.setText(String.valueOf(sales.get(position).economy));
+
+        etPrice=holder.etPrice;
+        etQuantity=holder.etQuantity;
+        tvRes=holder.tvRes;
+        tvEconomy=holder.tvEconomy;
+
+
+
+        etPrice.addTextChangedListener(new PriceWatcher(tvRes,tvEconomy,etPrice,etQuantity,position));
+        etQuantity.addTextChangedListener(new PriceWatcher(tvRes,tvEconomy,etPrice,etQuantity,position));
+
+
 
     }
 
@@ -61,6 +71,42 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyHolder> {
     }
 
 
+    public class PriceWatcher implements TextWatcher{
+        double price,quantity,result;
+        TextView tvRes,tvEconomy;
+        EditText etPrice,etQuantity;
+        int position;
+
+        public PriceWatcher(TextView tvRes, TextView tvEconomy, EditText etPrice, EditText etQuantity,int position) {
+            this.tvRes = tvRes;
+            this.tvEconomy = tvEconomy;
+            this.etPrice = etPrice;
+            this.etQuantity = etQuantity;
+            this.position=position;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            price = getDoubleFromET(etPrice);
+            quantity=getDoubleFromET(etQuantity);
+
+            /*sales.get(position).price=price;
+            sales.get(position).quantity=quantity;
+            sales.get(position).result=price/quantity;*/
+            tvRes.setText(""+price/quantity);
+            for(Sale sale:sales){Log.d("watcher","position = "+position +" : "+sale.price);}
+        }
+    }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
 
