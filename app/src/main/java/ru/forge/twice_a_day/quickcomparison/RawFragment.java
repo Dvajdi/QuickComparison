@@ -62,7 +62,7 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
         rootView=inflater.inflate(R.layout.material_row_3, container, false);
-        //((MyHorizontalScrollView)rootView).setFragment(this);
+
         findViewsInFragment(rootView);
         cv.setRf(this);
         cv.setScrollView((ScrollView) getActivity().findViewById(R.id.scrollView));

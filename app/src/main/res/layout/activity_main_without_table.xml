@@ -13,7 +13,7 @@
     tools:showIn="@layout/material_activity_without_table"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <ru.forge.twice_a_day.quickcomparison.MyScrollView
+    <ScrollView
         android:layout_width="match_parent"
                 android:layout_height="match_parent"
         android:id="@+id/scrollView">
@@ -78,6 +78,6 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ru.forge.twice_a_day.quickcomparison.MyScrollView>
+    </ScrollView>
 
 </LinearLayout>
