@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.CardView;
@@ -39,7 +40,7 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
     double res;
 
     Activity ctx;
-    CardView cv;
+    MyCardView cv;
     TextInputLayout etLay1,etLay2;
     LinearLayout layout,lay2;
     boolean isNotWhenStart;
@@ -61,8 +62,10 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
         rootView=inflater.inflate(R.layout.material_row_3, container, false);
-        ((MyHorizontalScrollView)rootView).setFragment(this);
+        //((MyHorizontalScrollView)rootView).setFragment(this);
         findViewsInFragment(rootView);
+        cv.setRf(this);
+        cv.setScrollView((ScrollView) getActivity().findViewById(R.id.scrollView));
         if(isNotWhenStart){etPrice.requestFocus();}
         if(cardColor!=0){cv.setCardBackgroundColor(cardColor);}
 
@@ -71,7 +74,7 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
     }
 
     void findViewsInFragment(View rootView){
-        cv=(CardView)rootView.findViewById(R.id.doprow) ;
+        cv=(MyCardView) rootView;
         etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
         etQuantity=(EditText)rootView.findViewById(R.id.et_dop_quantity);
 
@@ -133,8 +136,9 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
     @Override
     public void onAnimationEnd(Animation animation) {
         fragments.remove(this);
+        if(this!=null){
         FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
-        ft.remove(this).commit();
+        ft.remove(this).commit();}
         ((MainActivity)getActivity()).startThread();
     }
 
