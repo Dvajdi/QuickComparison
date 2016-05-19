@@ -6,7 +6,6 @@
     android:id="@+id/doprow"
     android:weightSum="100"
     android:gravity="center_vertical"
-    android:background="@color/background_tv"
     android:clickable="true">
 
     <EditText
@@ -17,7 +16,6 @@
         android:id="@+id/et_dop_price"
         android:gravity="center"
         android:textSize="16sp"
-        android:background="@drawable/rounded"
         android:layout_weight="24"
         android:enabled="true"
         android:focusable="true"
@@ -31,7 +29,6 @@
         android:id="@+id/et_dop_quantity"
         android:gravity="center"
         android:textSize="16sp"
-        android:background="@drawable/rounded"
         android:layout_weight="24"
         android:enabled="true"
         android:focusable="true"
@@ -43,7 +40,6 @@
         android:text="@string/Button_unit"
         android:id="@+id/button_dop_unit"
         android:layout_weight="12"
-        android:background="@color/background_unit"
         android:layout_margin="2dp"
         android:enabled="true"
         android:focusable="true" />
@@ -54,7 +50,6 @@
         android:id="@+id/tv_dop_result"
         android:gravity="center"
         android:textSize="16sp"
-        android:background="@drawable/rectangle_light"
         android:layout_weight="17"
         android:layout_margin="2dp"
         android:textColor="@color/black" />
@@ -63,7 +58,6 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:id="@+id/tv_dop_economy"
-        android:background="@drawable/rectangle_light"
         android:layout_weight="17"
         android:textSize="16sp"
         android:layout_margin="2dp"

@@ -13,75 +13,71 @@
     tools:showIn="@layout/material_activity_without_table"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <ScrollView android:layout_width="match_parent"
-                android:layout_height="match_parent">
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical">
+    <ru.forge.twice_a_day.quickcomparison.MyScrollView
+        android:layout_width="match_parent"
+                android:layout_height="match_parent"
+        android:id="@+id/scrollView">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/row_top"
-                android:layout_gravity="top"
-                android:layout_margin="4dp"
-                android:gravity="center_vertical">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:text="@string/quan_economy"
-                    android:id="@+id/tv_more_units"
-                    android:layout_weight="4"
-                    android:textIsSelectable="false"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:gravity="center" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/row_top"
+                    android:layout_gravity="top"
+                    android:layout_margin="4dp"
+                    android:gravity="center_vertical">
 
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:id="@+id/et_more_units"
-                    android:layout_weight="2"
-                    android:inputType="numberDecimal"
-                    android:background="@drawable/rounded"
-                    android:textSize="16sp"
-                    android:enabled="true"
-                    android:focusable="true"
-                    android:gravity="center" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:text="@string/quan_economy"
+                        android:id="@+id/tv_more_units"
+                        android:layout_weight="4"
+                        android:textIsSelectable="false"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:gravity="center" />
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:text="@string/Button_unit"
-                    android:id="@+id/btnPrimaryEd"
-                    android:layout_weight="1" />
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:id="@+id/et_more_units"
+                        android:layout_weight="2"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/rounded"
+                        android:textSize="16sp"
+                        android:enabled="true"
+                        android:focusable="true"
+                        android:gravity="center" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:text="@string/Button_unit"
+                        android:id="@+id/btnPrimaryEd"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                android:id="@+id/rl_main">
+
             </LinearLayout>
 
         </LinearLayout>
+    </ru.forge.twice_a_day.quickcomparison.MyScrollView>
 
-        <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-    android:id="@+id/rl_main">
-
-        </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/row_bottom"
-        android:layout_gravity="bottom">
-
-    </LinearLayout>
-
-    </LinearLayout>
-    </ScrollView>
 </LinearLayout>

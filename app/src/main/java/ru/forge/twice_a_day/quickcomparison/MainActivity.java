@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.design.widget.FloatingActionButton;
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     int i=1,j=1;
 
+
+    LinearLayout rl_main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +55,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void findMyViews() {
         fab=(FloatingActionButton)findViewById(R.id.fab2);
         toolbar=(Toolbar)findViewById(R.id.tool_bar);
+        rl_main=(LinearLayout)findViewById(R.id.rl_main);
     }
     private void setContent(){
         createStartRows();
         h=new OwnHandler();
-        COLOR_BEST=getResources().getColor(R.color.colorVariant3);
-        COLOR_MAIN=getResources().getColor(R.color.colorPrimary);
+        COLOR_BEST=getResources().getColor(R.color.colorPrimary);
+        COLOR_MAIN=getResources().getColor(R.color.colorVariant3);
         BEST_RESULT=getResources().getString(R.string.best_result);
         MES_RUB=getResources().getString(R.string.rub);
         ECONOMY_STR = getResources().getString(R.string.economyStr);
@@ -144,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         rawFragments.clear();
     }
+
 
 
     static class OwnHandler extends Handler{
@@ -285,5 +292,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("qwe","color "+i+" "+rawFragments.get(i).cardColor);
         }*/
     }
+
 
 }
