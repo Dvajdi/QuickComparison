@@ -14,8 +14,6 @@ public class ClearFieldListener implements View.OnTouchListener {
         this.et = et;
     }
 
-
-
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if(et.getId()==v.getId()){et.setText("");}

@@ -7,17 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private FloatingActionButton fab;
@@ -33,9 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static int COLOR_BEST;
     private static int COLOR_MAIN;
 
-    int j=1;
-
-    LinearLayout rl_main;
+    private int j=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findMyViews();
         setListeners();
 
+        //noinspection unchecked
         rawFragments=(ArrayList<RawFragment>) getLastCustomNonConfigurationInstance();
         if(rawFragments==null){rawFragments = new ArrayList<>();}else{Log.d("life","не ноль");}
         if(savedInstanceState==null){setContent();}
@@ -55,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void findMyViews() {
         fab=(FloatingActionButton)findViewById(R.id.fab2);
         toolbar=(Toolbar)findViewById(R.id.tool_bar);
-        rl_main=(LinearLayout)findViewById(R.id.rl_main);
     }
     private void setContent(){
         createStartRows();
@@ -119,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startThread();
     }
 
-    void stopThread(){
+    private void stopThread(){
         if(t!=null){try{if(t.isAlive()){t.join();}}catch(InterruptedException e){e.printStackTrace();}
         }
     }
@@ -272,6 +267,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void doDebug() {
 
     }
-
-
 }

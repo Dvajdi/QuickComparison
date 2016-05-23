@@ -7,14 +7,14 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
 
-/**
- * Created by twice on 19.05.16.
- */
+
 public class MyCardView extends CardView {
-    RawFragment rf;
-    ScrollView scrollView;
-    float x,moveX;
-    float y,moveY;
+    private RawFragment rf;
+    private ScrollView scrollView;
+    private float x;
+    private float moveX;
+    private float y;
+    private float moveY;
 
     public void setRf(RawFragment rf) {
         this.rf = rf;
@@ -43,7 +43,7 @@ public class MyCardView extends CardView {
         if(ev.getAction()==MotionEvent.ACTION_MOVE){moveX=Math.abs(ev.getX()-x);moveY=Math.abs(ev.getY()-y);}
         Log.d("watcher","x  = "+moveX+" ; "+" y = "+Math.abs(moveY));
         if(moveX>300){rf.removeMySelf();return super.dispatchTouchEvent(ev);}
-        if(moveX>30||moveY<70){/*scrollView.requestDisallowInterceptTouchEvent(true);*/
+        if(moveX>30||moveY<70){
             Log.d("watcher","запретил INTERCEPT");
             scrollView.requestDisallowInterceptTouchEvent(true);
             }else{scrollView.requestDisallowInterceptTouchEvent(false);}
@@ -51,9 +51,5 @@ public class MyCardView extends CardView {
         return super.dispatchTouchEvent(ev);
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
 
-        return super.onInterceptTouchEvent(ev);
-    }
 }

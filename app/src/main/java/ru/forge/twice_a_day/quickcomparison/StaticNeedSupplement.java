@@ -4,10 +4,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.TextView;
 
-/**
- * Created by twice on 23.03.16.
- * тут статические расчеты
- */
+
 public class StaticNeedSupplement {
 
     public static double rounded(double d,int flag){
