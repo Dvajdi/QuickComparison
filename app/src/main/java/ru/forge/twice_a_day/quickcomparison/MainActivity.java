@@ -23,20 +23,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private static String BEST_RESULT;
+    private static String THREAD_NAME;
     private static String MES_RUB;
     private static String ECONOMY_STR;
     private static String RES_STR;
     private static ArrayList<RawFragment> rawFragments;
-    private static boolean isStopped;
     private static OwnHandler h;
     private static Thread t;
     private static int COLOR_BEST;
     private static int COLOR_MAIN;
 
-    int i=1,j=1;
-
+    int j=1;
 
     LinearLayout rl_main;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MES_RUB=getResources().getString(R.string.rub);
         ECONOMY_STR = getResources().getString(R.string.economyStr);
         RES_STR=getResources().getString(R.string.resStr);
+        THREAD_NAME = getResources().getString(R.string.thread_name);
     }
     private void setListeners(){
         fab.setOnClickListener(this);
@@ -79,9 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void createRow(boolean isNotWhenStart){
-
         addNewFragment(isNotWhenStart);
-
     }
 
     @Override
@@ -99,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public Object onRetainCustomNonConfigurationInstance() {
         return rawFragments;
@@ -111,14 +109,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.fab2:
                 createRow(true);
                 break;
-
-            default:
-                Toast.makeText(this,"отстань",Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
 
     private void clearAll(){
         stopThread();
@@ -128,13 +120,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void stopThread(){
-        isStopped=true;
         if(t!=null){try{if(t.isAlive()){t.join();}}catch(InterruptedException e){e.printStackTrace();}
         }
     }
-    void startThread(){isStopped=false;
+    void startThread(){
         j++;
-        t =new Thread(new OwnRunnable(),"РАСЧЕТЫ"+j);
+        t =new Thread(new OwnRunnable(),THREAD_NAME+j);
         t.start();
     }
 
@@ -150,8 +141,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         rawFragments.clear();
     }
-
-
 
     static class OwnHandler extends Handler{
         View v;
@@ -275,22 +264,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         stopThread();
-        Log.d("life","onDestroy");
+
         super.onDestroy();
 
     }
 
     private void doDebug() {
-        if(i%2==0){
-            isStopped=true;}else{isStopped=false;
-            startThread();
-        }
-        Log.d("iii","i = "+i%2);
-        i++;
 
-        /*for (int i = 0; i <rawFragments.size() ; i++) {
-            Log.d("qwe","color "+i+" "+rawFragments.get(i).cardColor);
-        }*/
     }
 
 
