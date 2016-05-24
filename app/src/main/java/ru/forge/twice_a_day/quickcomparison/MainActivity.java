@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
@@ -31,11 +32,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static Thread t;
     private static int COLOR_BEST;
     private static int COLOR_MAIN;
-    double goalQuantity;
+
     private int j=1;
 
 
     static EditText etGoalQuantity;
+    static double  goalQuantity;
+    static Button btnGoalUnit;
+    static String goalUnit;
 
     public static MainTextWatcher textWatcher;
     public static GoalQuantityTextWatcher goalTextWatcher;
@@ -59,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab=(FloatingActionButton)findViewById(R.id.fab2);
         toolbar=(Toolbar)findViewById(R.id.tool_bar);
         etGoalQuantity = (EditText)findViewById(R.id.et_goal_quantity);
+        btnGoalUnit = (Button)findViewById(R.id.btnGoalUnit);
     }
     private void setContent(){
         createStartRows();
@@ -77,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab.setOnClickListener(this);
         setSupportActionBar(toolbar);
         etGoalQuantity.addTextChangedListener(textWatcher);
+        StaticNeedSupplement.ScaleLongStringsInTextView(etGoalQuantity);
         }
 
     private void createStartRows(){
@@ -155,7 +161,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         RawFragment rf;
         double res,resPac,economy,minRes,economyPercent;
 
-
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -176,13 +181,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     else{
                         tv_res.setText(String.format(Locale.ROOT, RES_STR, StaticNeedSupplement.rounded(res,2), MES_RUB));
                         economyPercent = StaticNeedSupplement.rounded((res / minRes - 1) * 100, 2);
-                        economy = res - minRes;
+                        economy = (res - minRes)*goalQuantity;
 
                         if ((economy >= 0)) {
                             if (economy == 0) {
                                 tv_res_economy.setText(BEST_RESULT);
                             } else {
-                                tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, StaticNeedSupplement.rounded(economy,2), economyPercent, "%"));
+                               // tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, StaticNeedSupplement.rounded(economy,2), economyPercent, "%"));
+                                tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, StaticNeedSupplement.rounded(economy,2), economyPercent, "%",goalQuantity,goalUnit));
                             }
                         }
                     }
@@ -198,7 +204,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         RawFragment rf;
         double res,min;
         int arg1,minIndex;
-        double goalQuantity;
 
         @Override
         public void run() {
@@ -233,9 +238,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             double price,quantity,res;
 
 
-          double  goalQuantity=StaticNeedSupplement.getDoubleFromET(etGoalQuantity);
-
+            goalQuantity=StaticNeedSupplement.getDoubleFromET(etGoalQuantity);
             if(goalQuantity==0){goalQuantity=1;}
+
+            goalUnit = btnGoalUnit.getText().toString();
 
             for (int i = 0; i <rawFragments.size() ; i++) {
                 rf = rawFragments.get(i);
@@ -266,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         res = price / quantity;
                         if(res<0.001&&res>0){res=0.001;}
                        }
-                    rf.setResPac(res*goalQuantity);
+
                     rf.setRes(res);
                 }
             }

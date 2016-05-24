@@ -6,10 +6,10 @@
     <string name="unit">Ед. изм.</string>
     <string name="resalt">Цена за ед.</string>
     <string name="economy">Переплата </string>
-    <string name="economyStr">Переплата %1$.2fруб  \t %2$.0f%3$s </string>
+    <string name="economyStr">Переплата %1$.2fруб на %4$.2f%5$s \t %2$.0f%3$s </string>
     <string name="resStr">%1$.2f%2$s </string>
     <string name="one">1</string>
-    <string name="Button_unit">/ед</string>
+    <string name="Button_unit">ед</string>
     <string name="ButtonAdd">Добавить</string>
     <string name="DuttonClear">Очистить</string>
     <string name="quan_economy">Рассчитать переплату на:</string>

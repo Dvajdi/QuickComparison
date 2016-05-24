@@ -44,7 +44,7 @@ public class StaticNeedSupplement {
         });
     }
 
-     public static double getDoubleFromET(EditText et){
+     synchronized public static double getDoubleFromET(EditText et){
         double value;
         String strValue =et.getText().toString();
         Log.d("myRun",strValue);

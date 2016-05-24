@@ -25,6 +25,9 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
     private View rootView;
     MainActivity ctx;
 
+
+
+
     public void setFragments(ArrayList fragments,boolean isNotWhenStart) {
         this.fragments = fragments;
         this.isNotWhenStart=isNotWhenStart;
