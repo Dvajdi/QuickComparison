@@ -11,7 +11,7 @@
         app:cardElevation="8dp"
         app:cardCornerRadius="12dp"
         style="@style/CardView.MyCardView"
-        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardBackgroundColor="@color/colorVariant3"
     android:clickable="true">
 
     <LinearLayout

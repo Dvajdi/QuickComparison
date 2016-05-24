@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,20 +31,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static Thread t;
     private static int COLOR_BEST;
     private static int COLOR_MAIN;
-
+    double goalQuantity;
     private int j=1;
+
+
+    static EditText etGoalQuantity;
+
+    public static MainTextWatcher textWatcher;
+    public static GoalQuantityTextWatcher goalTextWatcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.material_activity_without_table);
         findMyViews();
-        setListeners();
-
-        //noinspection unchecked
         rawFragments=(ArrayList<RawFragment>) getLastCustomNonConfigurationInstance();
         if(rawFragments==null){rawFragments = new ArrayList<>();}else{Log.d("life","не ноль");}
         if(savedInstanceState==null){setContent();}
+
+        setListeners();
 
         startThread();
 
@@ -51,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void findMyViews() {
         fab=(FloatingActionButton)findViewById(R.id.fab2);
         toolbar=(Toolbar)findViewById(R.id.tool_bar);
+        etGoalQuantity = (EditText)findViewById(R.id.et_goal_quantity);
     }
     private void setContent(){
         createStartRows();
@@ -62,12 +70,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ECONOMY_STR = getResources().getString(R.string.economyStr);
         RES_STR=getResources().getString(R.string.resStr);
         THREAD_NAME = getResources().getString(R.string.thread_name);
+
+        textWatcher = new MainTextWatcher(this);
     }
     private void setListeners(){
         fab.setOnClickListener(this);
         setSupportActionBar(toolbar);
-
-    }
+        etGoalQuantity.addTextChangedListener(textWatcher);
+        }
 
     private void createStartRows(){
         createRow(true);
@@ -137,11 +147,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rawFragments.clear();
     }
 
+
+
     static class OwnHandler extends Handler{
         View v;
         TextView tv_res,tv_res_economy;
         RawFragment rf;
-        double res,economy,minRes,economyPercent;
+        double res,resPac,economy,minRes,economyPercent;
+
 
         @Override
         public void handleMessage(Message msg) {
@@ -157,21 +170,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     StaticNeedSupplement.ScaleLongStringsInTextView(tv_res);
                     res = rf.getRes();
+                    resPac = rf.getResPac();
 
-                    Log.d("res","res = "+res);
-
-                    if(res==Double.MAX_VALUE){tv_res.setText("");tv_res_economy.setText("");}
+                    if(res==Double.MAX_VALUE){tv_res.setText(String.format(Locale.ROOT,RES_STR,0.0,MES_RUB));tv_res_economy.setText("");}
                     else{
-
-                        tv_res.setText(String.format(Locale.ROOT, RES_STR, res, MES_RUB));
+                        tv_res.setText(String.format(Locale.ROOT, RES_STR, StaticNeedSupplement.rounded(res,2), MES_RUB));
                         economyPercent = StaticNeedSupplement.rounded((res / minRes - 1) * 100, 2);
-                        economy = StaticNeedSupplement.rounded(res - minRes, 2);
+                        economy = res - minRes;
 
                         if ((economy >= 0)) {
                             if (economy == 0) {
                                 tv_res_economy.setText(BEST_RESULT);
                             } else {
-                                tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, economy, economyPercent, "%"));
+                                tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, StaticNeedSupplement.rounded(economy,2), economyPercent, "%"));
                             }
                         }
                     }
@@ -185,10 +196,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     static class OwnRunnable implements Runnable {
         RawFragment rf;
-
         double res,min;
-        Double result;
         int arg1,minIndex;
+        double goalQuantity;
 
         @Override
         public void run() {
@@ -197,15 +207,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for (int i = 0; i <rawFragments.size() ; i++) {
                     rf=rawFragments.get(i);
                         res=rf.getRes();
+                            Log.d("color","min = "+min +" ; "+"res = "+res);
                             if (res ==min){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}
-                            result=min;
-                            Message msg = h.obtainMessage(i, arg1, minIndex, result);
+                            Message msg = h.obtainMessage(i, arg1, minIndex, min);
                         h.sendMessage(msg);
                     }
         }
 
         public double findMin(){
-            double min=Double.MAX_VALUE;
+            double min=Double.MAX_VALUE-1000;
             double value;
             for (int i = 0; i <rawFragments.size(); i++) {
                 value=rawFragments.get(i).getRes();
@@ -221,6 +231,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             View v;
             String strPrice,strQuantity;
             double price,quantity,res;
+
+
+          double  goalQuantity=StaticNeedSupplement.getDoubleFromET(etGoalQuantity);
+
+            if(goalQuantity==0){goalQuantity=1;}
 
             for (int i = 0; i <rawFragments.size() ; i++) {
                 rf = rawFragments.get(i);
@@ -244,13 +259,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                     if(price==0){
-                        res=Double.MAX_VALUE;
+                        res=0;
                     }
                     else{
-                        res = StaticNeedSupplement.rounded(price / quantity,2);
+
+                        res = price / quantity;
+                        if(res<0.001&&res>0){res=0.001;}
                        }
+                    rf.setResPac(res*goalQuantity);
                     rf.setRes(res);
-                    Log.d("res","res = "+res);
                 }
             }
         }

@@ -2,12 +2,14 @@ package ru.forge.twice_a_day.quickcomparison;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
 public class StaticNeedSupplement {
 
-    public static double rounded(double d,int flag){
+    synchronized public static double rounded(double d,int flag){
         int parameter=1;
         long k;
         double res;
@@ -21,7 +23,7 @@ public class StaticNeedSupplement {
         return res;
     }
 
-    public static void ScaleLongStringsInTextView(TextView tv) {
+    synchronized public static void ScaleLongStringsInTextView(TextView tv) {
         final TextView textView=tv;
 
         tv.addTextChangedListener(new TextWatcher() {
@@ -40,5 +42,24 @@ public class StaticNeedSupplement {
                 textView.setTextScaleX(scale);
             }
         });
+    }
+
+     public static double getDoubleFromET(EditText et){
+        double value;
+        String strValue =et.getText().toString();
+        Log.d("myRun",strValue);
+            try{
+            value=Double.valueOf(strValue);
+                Log.d("myRun",value+"");
+            }catch(Exception e){value=0;}
+
+        return value;
+    }
+
+    public static double returnSomeResult(){
+
+        double value =5;
+        Log.d("myRun",value+"");
+        return value;
     }
 }

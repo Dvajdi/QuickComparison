@@ -1,10 +1,10 @@
 package ru.forge.twice_a_day.quickcomparison;
 
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,21 +15,22 @@ import android.widget.ScrollView;
 
 import java.util.ArrayList;
 
-public class RawFragment extends Fragment implements TextWatcher,Animation.AnimationListener{
+public class RawFragment extends Fragment implements Animation.AnimationListener{
     private ArrayList fragments;
     private EditText etPrice,etQuantity;
-    private double res;
+    private double res,resPac;
     private MyCardView cv;
     private boolean isNotWhenStart;
     private int cardColor;
     private View rootView;
+    MainActivity ctx;
 
     public void setFragments(ArrayList fragments,boolean isNotWhenStart) {
         this.fragments = fragments;
         this.isNotWhenStart=isNotWhenStart;
     }
 
-    @Override
+     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
         rootView=inflater.inflate(R.layout.material_row_3, container, false);
@@ -38,6 +39,8 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
         cv.setScrollView((ScrollView) getActivity().findViewById(R.id.scrollView));
         if(isNotWhenStart){etPrice.requestFocus();}
         if(cardColor!=0){cv.setCardBackgroundColor(cardColor);}
+
+        ctx = (MainActivity)getActivity();
         return rootView;
     }
 
@@ -49,8 +52,8 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
         StaticNeedSupplement.ScaleLongStringsInTextView(etPrice);
         StaticNeedSupplement.ScaleLongStringsInTextView(etQuantity);
 
-        etPrice.addTextChangedListener(this);
-        etQuantity.addTextChangedListener(this);
+        etPrice.addTextChangedListener(ctx.textWatcher);
+        etQuantity.addTextChangedListener(ctx.textWatcher);
 
     }
 
@@ -60,6 +63,14 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
 
     public void setRes(double res) {
         this.res = res;
+    }
+
+    public void setResPac(double resPac) {
+        this.resPac = resPac;
+    }
+
+    public double getResPac() {
+        return resPac;
     }
 
     public void setCardColor(int color){
@@ -74,36 +85,17 @@ public class RawFragment extends Fragment implements TextWatcher,Animation.Anima
     }
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        ((MainActivity)getActivity()).startThread();
-
-    }
-
-    @Override
     public void onAnimationStart(Animation animation) {
 
     }
-
     @Override
     public void onAnimationEnd(Animation animation) {
         fragments.remove(this);
-        FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft =ctx.getSupportFragmentManager().beginTransaction();
         ft.remove(this).commit();
-        ((MainActivity)getActivity()).startThread();
+        ctx.startThread();
     }
-
     @Override
     public void onAnimationRepeat(Animation animation) {
-
     }
 }

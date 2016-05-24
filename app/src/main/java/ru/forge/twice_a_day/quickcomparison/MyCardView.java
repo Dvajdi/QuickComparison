@@ -15,9 +15,15 @@ public class MyCardView extends CardView {
     private float moveX;
     private float y;
     private float moveY;
+    float width,hight;
 
     public void setRf(RawFragment rf) {
         this.rf = rf;
+        setWidthAndHight();
+    }
+    private void setWidthAndHight(){
+        width = rf.getActivity().getWindowManager().getDefaultDisplay().getWidth();
+        hight = rf.getActivity().getWindowManager().getDefaultDisplay().getHeight();
     }
 
     public void setScrollView(ScrollView scrollView) {
@@ -42,8 +48,8 @@ public class MyCardView extends CardView {
         if(ev.getAction()==MotionEvent.ACTION_DOWN){x=ev.getX();y=ev.getY();}
         if(ev.getAction()==MotionEvent.ACTION_MOVE){moveX=Math.abs(ev.getX()-x);moveY=Math.abs(ev.getY()-y);}
         Log.d("watcher","x  = "+moveX+" ; "+" y = "+Math.abs(moveY));
-        if(moveX>300){rf.removeMySelf();return super.dispatchTouchEvent(ev);}
-        if(moveX>30||moveY<70){
+        if(moveX>(width/3)){rf.removeMySelf();return super.dispatchTouchEvent(ev);}
+        if(moveX>(width/10)||moveY<(hight/10)){
             Log.d("watcher","запретил INTERCEPT");
             scrollView.requestDisallowInterceptTouchEvent(true);
             }else{scrollView.requestDisallowInterceptTouchEvent(false);}
