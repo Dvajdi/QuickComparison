@@ -1,5 +1,6 @@
 package ru.forge.twice_a_day.quickcomparison;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     static EditText etGoalQuantity;
     static double  goalQuantity;
-    static Button btnGoalUnit;
+    public static Button btnGoalUnit;
     static String goalUnit;
 
     public static MainTextWatcher textWatcher;
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         setContentView(R.layout.material_activity_without_table);
         findMyViews();
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     private void setListeners(){
         fab.setOnClickListener(this);
+        btnGoalUnit.setOnClickListener(this);
         setSupportActionBar(toolbar);
         etGoalQuantity.addTextChangedListener(textWatcher);
         StaticNeedSupplement.ScaleLongStringsInTextView(etGoalQuantity);
@@ -121,10 +126,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()){
             case R.id.fab2:
                 createRow(true);
-
+                break;
+            case R.id.btnGoalUnit:
+                setGoalUnit();
                 break;
         }
     }
+
+    void setGoalUnit(){
+        Intent intent = new Intent(this,ListUnits.class);
+        startActivityForResult(intent,5000);
+    }
+
 
     private void clearAll(){
         stopThread();

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="unitsWeight">
-        <item name = "кг" />
-        <item name = "г" />
+    <string-array name="unit_weight">
+        <item>кг</item>
+        <item>г</item>
     </string-array>
-    <string-array name="unitCapacity">
-        <item name = "литр"/>
-        <item name = "милилитр"/>
+    <string-array name="unit_capacity">
+        <item>литр</item>
+        <item>м3</item>
+        <item>милилитр</item>
     </string-array>
 </resources>

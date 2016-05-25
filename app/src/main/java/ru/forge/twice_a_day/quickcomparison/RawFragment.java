@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -109,7 +111,17 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(ctx,ListUnits.class);
-        startActivity(intent);
-       // startActivityForResult(intent);
+
+        Log.d("list","id = "+fragments.indexOf(this));
+       startActivityForResult(intent,fragments.indexOf(this));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==fragments.indexOf(this)){
+        btnUnit.setText(data.getStringExtra("name"));}
+        if(requestCode==5000){
+            Toast.makeText(getActivity(),data.getStringExtra("name"),Toast.LENGTH_SHORT).show();
+            }
     }
 }
