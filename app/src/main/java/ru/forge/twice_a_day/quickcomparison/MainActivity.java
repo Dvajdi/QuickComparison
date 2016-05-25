@@ -44,9 +44,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static MainTextWatcher textWatcher;
     public static GoalQuantityTextWatcher goalTextWatcher;
 
+    Runtime r;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.material_activity_without_table);
         findMyViews();
         rawFragments=(ArrayList<RawFragment>) getLastCustomNonConfigurationInstance();
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setListeners();
 
         startThread();
-
+        r =Runtime.getRuntime();
     }
 
     private void findMyViews() {
@@ -119,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()){
             case R.id.fab2:
                 createRow(true);
+
                 break;
         }
     }
@@ -288,6 +291,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void doDebug() {
-
+        Log.d("myRunTime","runTime = "+r.totalMemory());
+        Log.d("myRunTime","free = "+r.freeMemory());
+        r.gc();
+        Log.d("myRunTime","free after= "+r.freeMemory());
     }
 }

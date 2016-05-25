@@ -57,7 +57,6 @@ public class StaticNeedSupplement {
     }
 
     public static double returnSomeResult(){
-
         double value =5;
         Log.d("myRun",value+"");
         return value;

@@ -1,6 +1,7 @@
 package ru.forge.twice_a_day.quickcomparison;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,12 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 
 import java.util.ArrayList;
 
-public class RawFragment extends Fragment implements Animation.AnimationListener{
+public class RawFragment extends Fragment implements Animation.AnimationListener,View.OnClickListener{
     private ArrayList fragments;
     private EditText etPrice,etQuantity;
     private double res,resPac;
@@ -25,7 +27,7 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
     private View rootView;
     MainActivity ctx;
 
-
+    private Button btnUnit;
 
 
     public void setFragments(ArrayList fragments,boolean isNotWhenStart) {
@@ -51,10 +53,12 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
         cv=(MyCardView) rootView;
         etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
         etQuantity=(EditText)rootView.findViewById(R.id.et_dop_quantity);
+        btnUnit = (Button)rootView.findViewById(R.id.button_dop_unit);
 
         StaticNeedSupplement.ScaleLongStringsInTextView(etPrice);
         StaticNeedSupplement.ScaleLongStringsInTextView(etQuantity);
 
+        btnUnit.setOnClickListener(this);
         etPrice.addTextChangedListener(ctx.textWatcher);
         etQuantity.addTextChangedListener(ctx.textWatcher);
 
@@ -100,5 +104,12 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
     }
     @Override
     public void onAnimationRepeat(Animation animation) {
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(ctx,ListUnits.class);
+        startActivity(intent);
+       // startActivityForResult(intent);
     }
 }
