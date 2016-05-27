@@ -5,8 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,8 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -134,10 +132,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void setGoalUnit(){
-        Intent intent = new Intent(this,ListUnits.class);
+        Intent intent = new Intent(this,ListUnitsActivity.class);
         startActivityForResult(intent,5000);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==5000){
+
+            btnGoalUnit.setText(data.getStringExtra("name"));}
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     private void clearAll(){
         stopThread();
@@ -193,9 +199,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     res = rf.getRes();
                     resPac = rf.getResPac();
 
-                    if(res==Double.MAX_VALUE){tv_res.setText(String.format(Locale.ROOT,RES_STR,0.0,MES_RUB));tv_res_economy.setText("");}
+                    if(res==Double.MAX_VALUE){tv_res.setText(String.format(Locale.ROOT,RES_STR,"0",MES_RUB));tv_res_economy.setText("");}
                     else{
-                        tv_res.setText(String.format(Locale.ROOT, RES_STR, StaticNeedSupplement.rounded(res,2), MES_RUB));
+                        tv_res.setText(String.format(Locale.ROOT, RES_STR, StaticNeedSupplement.formatter(res), MES_RUB));
+
                         economyPercent = StaticNeedSupplement.rounded((res / minRes - 1) * 100, 2);
                         economy = (res - minRes)*goalQuantity;
 
@@ -203,8 +210,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             if (economy == 0) {
                                 tv_res_economy.setText(BEST_RESULT);
                             } else {
-                               // tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, StaticNeedSupplement.rounded(economy,2), economyPercent, "%"));
-                                tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, StaticNeedSupplement.rounded(economy,2), economyPercent, "%",goalQuantity,goalUnit));
+
+                                tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, StaticNeedSupplement.formatter(economy), StaticNeedSupplement.formatter(economyPercent), "%",StaticNeedSupplement.formatter(goalQuantity),goalUnit));
                             }
                         }
                     }
@@ -215,6 +222,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
+
+
+
 
     static class OwnRunnable implements Runnable {
         RawFragment rf;

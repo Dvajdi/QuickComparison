@@ -6,6 +6,8 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 
 public class StaticNeedSupplement {
 
@@ -60,5 +62,20 @@ public class StaticNeedSupplement {
         double value =5;
         Log.d("myRun",value+"");
         return value;
+    }
+
+    public static String formatter(double d){
+        d=rounded(d,2);
+
+        String s="";
+        if(d==(int)d){
+            int k= (int) d;
+            s=String.valueOf(k);
+        }else{
+            DecimalFormat df = new DecimalFormat("################.#################");
+            s =df.format(d);
+        //    s=String.valueOf(d);
+        }
+        return s;
     }
 }

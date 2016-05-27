@@ -58,7 +58,8 @@
                         android:enabled="true"
                         android:focusable="true"
                         android:gravity="center"
-                        android:maxLength="9" />
+                        android:maxLength="9"
+                        android:imeOptions="actionDone"/>
 
                     <Button
                         android:layout_width="0dp"

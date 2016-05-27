@@ -17,12 +17,14 @@ import android.widget.SimpleAdapter;
 import java.util.ArrayList;
 
 
-public class ListUnits extends Activity {
+public class ListUnitsActivity extends Activity {
     public Context ctx;
     ListView listViewWeight,listViewCapacity;
     Button btnED;
     String [] unitsWeight;
     String [] unitsCapacity;
+    String [] unitsWeightValues;
+    String [] unitsCapacityValues;
 
     ArrayAdapter <String>arrayAdapterWeight,arrayAdapterCapacity;
 
@@ -49,6 +51,8 @@ public class ListUnits extends Activity {
         ctx=this;
         unitsWeight=getResources().getStringArray(R.array.unit_weight);
         unitsCapacity=getResources().getStringArray(R.array.unit_capacity);
+        unitsWeightValues=getResources().getStringArray(R.array.unit_weight_value);
+        unitsCapacityValues=getResources().getStringArray(R.array.unit_capacity_value);
 
         arrayAdapterWeight  = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,unitsWeight);
         arrayAdapterCapacity  = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,unitsCapacity);
@@ -61,7 +65,7 @@ public class ListUnits extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent= new Intent();
-                intent.putExtra("name",unitsWeight[position]);
+                intent.putExtra("name",unitsWeightValues[position]);
                 setResult(RESULT_OK,intent);
                 finish();
             }
@@ -71,7 +75,7 @@ public class ListUnits extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                intent.putExtra("name",unitsCapacity[position]);
+                intent.putExtra("name",unitsCapacityValues[position]);
                 setResult(RESULT_OK,intent);
                 finish();
             }

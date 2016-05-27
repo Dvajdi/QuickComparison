@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListUnits">
+        <activity android:name=".ListUnitsActivity">
 
         </activity>
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for

@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="unit_weight">
-        <item>кг</item>
-        <item>г</item>
+        <item>Милиграмм (мг)</item>
+        <item>Грамм (г)</item>
+        <item>Килограмм (кг)</item>
+
+
     </string-array>
+
+    <string-array name="unit_weight_value">
+        <item>мг</item>
+        <item>г</item>
+        <item>кг</item>
+
+
+    </string-array>
+
     <string-array name="unit_capacity">
-        <item>литр</item>
-        <item>м3</item>
-        <item>милилитр</item>
+        <item>Милилитр (мл)</item>
+        <item>Литр (л)</item>
+        <item>Кубический метр (куб.м)</item>
+    </string-array>
+
+    <string-array name="unit_capacity_value">
+        <item>мл</item>
+        <item>л</item>
+        <item>куб.м</item>
     </string-array>
 </resources>

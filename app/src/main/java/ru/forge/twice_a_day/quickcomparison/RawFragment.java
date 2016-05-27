@@ -110,7 +110,7 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(ctx,ListUnits.class);
+        Intent intent = new Intent(ctx,ListUnitsActivity.class);
 
         Log.d("list","id = "+fragments.indexOf(this));
        startActivityForResult(intent,fragments.indexOf(this));
@@ -120,8 +120,6 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==fragments.indexOf(this)){
         btnUnit.setText(data.getStringExtra("name"));}
-        if(requestCode==5000){
-            Toast.makeText(getActivity(),data.getStringExtra("name"),Toast.LENGTH_SHORT).show();
-            }
+        ctx.startThread();
     }
 }
