@@ -76,6 +76,7 @@ public class ListUnitsActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
                 intent.putExtra("name",unitsCapacityValues[position]);
+                Log.d("fragments",""+RESULT_OK);
                 setResult(RESULT_OK,intent);
                 finish();
             }

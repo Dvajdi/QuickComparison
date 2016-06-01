@@ -118,8 +118,10 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==ctx.RESULT_OK){
         if(requestCode==fragments.indexOf(this)){
         btnUnit.setText(data.getStringExtra("name"));}
-        ctx.startThread();
+        ctx.startThread();}
+
     }
 }

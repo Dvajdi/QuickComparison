@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d("fragments","onCreate");
 
         setContentView(R.layout.material_activity_without_table);
         findMyViews();
@@ -138,9 +138,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==RESULT_OK){
         if(requestCode==5000){
 
-            btnGoalUnit.setText(data.getStringExtra("name"));}
+            btnGoalUnit.setText(data.getStringExtra("name"));}}
 
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -308,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         stopThread();
-
+        Log.d("fragments","onDestroy");
         super.onDestroy();
 
     }
