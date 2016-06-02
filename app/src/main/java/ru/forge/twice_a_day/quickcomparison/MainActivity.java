@@ -15,9 +15,11 @@ import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import ru.forge.twice_a_day.quickcomparison.about_units.AllUnits;
+import ru.forge.twice_a_day.quickcomparison.about_units.UnitsType;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -41,9 +43,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static double  goalQuantity;
     public static Button btnGoalUnit;
     static String goalUnit;
+    static double goalUnitValue;
+
 
     public static MainTextWatcher textWatcher;
     public static GoalQuantityTextWatcher goalTextWatcher;
+
+    static AllUnits allUnits;
+
+    static UnitsType goalUnitType = UnitsType.all;
+    static public boolean isFirstChange=true;
 
     Runtime r;
     @Override
@@ -79,8 +88,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ECONOMY_STR = getResources().getString(R.string.economyStr);
         RES_STR=getResources().getString(R.string.resStr);
         THREAD_NAME = getResources().getString(R.string.thread_name);
-
+        allUnits = new AllUnits(this);
         textWatcher = new MainTextWatcher(this);
+
     }
     private void setListeners(){
         fab.setOnClickListener(this);
@@ -132,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void setGoalUnit(){
+        isFirstChange = true;
         Intent intent = new Intent(this,ListUnitsActivity.class);
         startActivityForResult(intent,5000);
     }
@@ -140,10 +151,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode==RESULT_OK){
         if(requestCode==5000){
-
-            btnGoalUnit.setText(data.getStringExtra("name"));}}
+            btnGoalUnit.setText(data.getStringExtra("name"));
+            goalUnitValue=data.getDoubleExtra("value",1);
+            changeUnitsInFragments();
+        }}
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void changeUnitsInFragments() {
+
     }
 
     private void clearAll(){

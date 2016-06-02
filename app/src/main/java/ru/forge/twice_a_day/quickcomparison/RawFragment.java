@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import ru.forge.twice_a_day.quickcomparison.about_units.UnitsType;
+
 public class RawFragment extends Fragment implements Animation.AnimationListener,View.OnClickListener{
     private ArrayList fragments;
     private EditText etPrice,etQuantity;
@@ -28,8 +30,11 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
     private int cardColor;
     private View rootView;
     MainActivity ctx;
-
+    private double unitValue=1;
     private Button btnUnit;
+    boolean isFirstChange;
+
+    public static UnitsType rawUnitType;
 
 
     public void setFragments(ArrayList fragments,boolean isNotWhenStart) {
@@ -111,8 +116,6 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(ctx,ListUnitsActivity.class);
-
-        Log.d("list","id = "+fragments.indexOf(this));
        startActivityForResult(intent,fragments.indexOf(this));
     }
 
@@ -120,8 +123,21 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode==ctx.RESULT_OK){
         if(requestCode==fragments.indexOf(this)){
-        btnUnit.setText(data.getStringExtra("name"));}
+        btnUnit.setText(data.getStringExtra("name"));
+        unitValue = data.getDoubleExtra("value",1);
+
+
+        }
         ctx.startThread();}
 
+    }
+
+    public double getUnitValue() {
+        return unitValue;
+    }
+
+    void debugger(){
+        if(btnUnit.getText().equals("кг")){rawUnitType=UnitsType.weight;}
+        if(btnUnit.getText().equals("л")){rawUnitType=UnitsType.capacity;}
     }
 }

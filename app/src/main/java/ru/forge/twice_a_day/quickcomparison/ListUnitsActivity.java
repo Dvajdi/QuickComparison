@@ -4,17 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
-import java.util.ArrayList;
+import ru.forge.twice_a_day.quickcomparison.about_units.AllUnits;
+import ru.forge.twice_a_day.quickcomparison.about_units.UnitsType;
 
 
 public class ListUnitsActivity extends Activity {
@@ -27,7 +25,11 @@ public class ListUnitsActivity extends Activity {
     String [] unitsCapacityValues;
 
     ArrayAdapter <String>arrayAdapterWeight,arrayAdapterCapacity;
+    static AllUnits allUnits;
 
+    boolean isFirstChange;
+
+    UnitsType whatShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,6 @@ public class ListUnitsActivity extends Activity {
 
 
     void findMyViews(){
-
         listViewWeight = (ListView)findViewById(R.id.listViewWieght);
         listViewCapacity = (ListView)findViewById(R.id.listViewCapacity);
         btnED = (Button)findViewById(R.id.btnED);
@@ -49,13 +50,19 @@ public class ListUnitsActivity extends Activity {
 
     void initValues(){
         ctx=this;
-        unitsWeight=getResources().getStringArray(R.array.unit_weight);
-        unitsCapacity=getResources().getStringArray(R.array.unit_capacity);
-        unitsWeightValues=getResources().getStringArray(R.array.unit_weight_value);
-        unitsCapacityValues=getResources().getStringArray(R.array.unit_capacity_value);
+        isFirstChange=MainActivity.isFirstChange;
 
-        arrayAdapterWeight  = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,unitsWeight);
-        arrayAdapterCapacity  = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,unitsCapacity);
+        if(isFirstChange){whatShow=UnitsType.all;}else{whatShow=RawFragment.rawUnitType;}
+
+        allUnits = MainActivity.allUnits;
+        switch(whatShow){
+            case all: Log.d("show","all");break;
+            case ed:Log.d("show","ed");break;
+            case weight:Log.d("show","weight");break;
+            case capacity:Log.d("show","capacity");break;
+        }
+        arrayAdapterWeight  = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, allUnits.units_names_weight);
+        arrayAdapterCapacity  = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, allUnits.units_names_capacity);
         listViewCapacity.setAdapter(arrayAdapterCapacity);
         listViewWeight.setAdapter(arrayAdapterWeight);
     }
@@ -65,8 +72,11 @@ public class ListUnitsActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent= new Intent();
-                intent.putExtra("name",unitsWeightValues[position]);
+                intent.putExtra("name", allUnits.weight_units[position].getShortName());
+                intent.putExtra("value", allUnits.weight_units[position].getValue());
                 setResult(RESULT_OK,intent);
+                RawFragment.rawUnitType=UnitsType.weight;
+                isFirstChange=false;
                 finish();
             }
         });
@@ -75,9 +85,11 @@ public class ListUnitsActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                intent.putExtra("name",unitsCapacityValues[position]);
-                Log.d("fragments",""+RESULT_OK);
+                intent.putExtra("name", allUnits.capacity_units[position].getShortName());
+                intent.putExtra("value", allUnits.capacity_units[position].getValue());
                 setResult(RESULT_OK,intent);
+                isFirstChange=false;
+                RawFragment.rawUnitType=UnitsType.capacity;
                 finish();
             }
         });

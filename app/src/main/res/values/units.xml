@@ -1,32 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="unit_weight">
+    <string-array name="unit_weight_names">
         <item>Милиграмм (мг)</item>
         <item>Грамм (г)</item>
         <item>Килограмм (кг)</item>
         <item>Пуд (пуд)</item>
-        <item>анг.фунт (пуд)</item>
-
-
+        <item>рус.фунт (р.ф.)</item>
+        <item>анг.фунт (а.ф.)</item>
+        <item>Тонна (т)</item>
+        <item>Центнер (ц)</item>
+        <item>Унция (унция)</item>
     </string-array>
 
-    <string-array name="unit_weight_value">
+    <string-array name="unit_weight_short_names">
         <item>мг</item>
         <item>г</item>
         <item>кг</item>
-
-
+        <item>пуд</item>
+        <item>р.ф.</item>
+        <item>а.ф.</item>
+        <item>т</item>
+        <item>ц</item>
+        <item>унция</item>
     </string-array>
 
-    <string-array name="unit_capacity">
+    <string-array name="unit_weight_value">
+        <item>0.001</item>
+        <item>1</item>
+        <item>1000</item>
+        <item>16380</item>
+        <item>409.5</item>
+        <item>453.59</item>
+        <item>1000000</item>
+        <item>100000</item>
+        <item>28.35</item>
+    </string-array>
+
+    <string-array name="unit_capacity_names">
         <item>Милилитр (мл)</item>
         <item>Литр (л)</item>
         <item>Кубический метр (куб.м)</item>
+        <item>Чайная ложка (ч.лож)</item>
+        <item>Столовая ложка (ст.лож)</item>
+        <item>Стакан (ст)</item>
+        <item>Английский галон (анг.гал)</item>
+        <item>Американский галон(ам.гал)</item>
+        <item>Баррель (бар)</item>
     </string-array>
 
-    <string-array name="unit_capacity_value">
+    <string-array name="unit_capacity_short_names">
         <item>мл</item>
         <item>л</item>
         <item>куб.м</item>
+        <item>ч.лож</item>
+        <item>ст.лож</item>
+        <item>ст</item>
+        <item>анг.гал</item>
+        <item>ам.гал</item>
+        <item>бар</item>
+    </string-array>
+
+    <string-array name="unit_capacity_values">
+        <item>0.001</item>
+        <item>1</item>
+        <item>1000</item>
+        <item>0.005</item>
+        <item>0.015</item>
+        <item>0.2</item>
+        <item>4.55</item>
+        <item>3.79</item>
+        <item>158.99</item>
     </string-array>
 </resources>
