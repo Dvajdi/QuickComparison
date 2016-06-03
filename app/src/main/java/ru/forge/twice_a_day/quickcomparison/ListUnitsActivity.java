@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import ru.forge.twice_a_day.quickcomparison.about_units.AllUnits;
 import ru.forge.twice_a_day.quickcomparison.about_units.UnitsType;
@@ -27,7 +29,7 @@ public class ListUnitsActivity extends Activity {
     ArrayAdapter <String>arrayAdapterWeight,arrayAdapterCapacity;
     static AllUnits allUnits;
 
-    boolean isFirstChange;
+    static boolean isFirstChange;
 
     UnitsType whatShow;
 
@@ -52,17 +54,29 @@ public class ListUnitsActivity extends Activity {
         ctx=this;
         isFirstChange=MainActivity.isFirstChange;
 
-        if(isFirstChange){whatShow=UnitsType.all;}else{whatShow=RawFragment.rawUnitType;}
+        if(isFirstChange){whatShow=UnitsType.all;}else{Log.d("show","else");whatShow=RawFragment.rawUnitType;}
 
         allUnits = MainActivity.allUnits;
         switch(whatShow){
-            case all: Log.d("show","all");break;
+            case all: Log.d("show","all");
+                listViewCapacity.setVisibility(View.VISIBLE);
+                listViewWeight.setVisibility(View.VISIBLE);
+                break;
             case ed:Log.d("show","ed");break;
-            case weight:Log.d("show","weight");break;
-            case capacity:Log.d("show","capacity");break;
+            case weight:Log.d("show","weight");
+                listViewCapacity.setVisibility(View.GONE);
+                listViewWeight.setVisibility(View.VISIBLE);
+                break;
+            case capacity:Log.d("show","capacity");
+                listViewCapacity.setVisibility(View.VISIBLE);
+                listViewWeight.setVisibility(View.GONE);
+                break;
         }
-        arrayAdapterWeight  = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, allUnits.units_names_weight);
-        arrayAdapterCapacity  = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, allUnits.units_names_capacity);
+        arrayAdapterWeight  = new ArrayAdapter<String>(this,R.layout.unit_raw, allUnits.units_names_weight);
+        arrayAdapterCapacity  = new ArrayAdapter<String>(this,R.layout.unit_raw, allUnits.units_names_capacity);
+
+
+
         listViewCapacity.setAdapter(arrayAdapterCapacity);
         listViewWeight.setAdapter(arrayAdapterWeight);
     }
@@ -76,7 +90,7 @@ public class ListUnitsActivity extends Activity {
                 intent.putExtra("value", allUnits.weight_units[position].getValue());
                 setResult(RESULT_OK,intent);
                 RawFragment.rawUnitType=UnitsType.weight;
-                isFirstChange=false;
+                MainActivity.isFirstChange=false;
                 finish();
             }
         });
@@ -88,7 +102,7 @@ public class ListUnitsActivity extends Activity {
                 intent.putExtra("name", allUnits.capacity_units[position].getShortName());
                 intent.putExtra("value", allUnits.capacity_units[position].getValue());
                 setResult(RESULT_OK,intent);
-                isFirstChange=false;
+                MainActivity.isFirstChange=false;
                 RawFragment.rawUnitType=UnitsType.capacity;
                 finish();
             }

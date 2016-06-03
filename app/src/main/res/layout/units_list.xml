@@ -19,14 +19,17 @@
             android:layout_height="wrap_content"
             android:id="@+id/listViewWieght"
             android:layout_weight="1"
-            android:choiceMode="singleChoice" />
+            android:choiceMode="singleChoice"
+            android:headerDividersEnabled="false"
+            android:padding="5dp" />
 
         <ListView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/listViewCapacity"
             android:layout_weight="1"
-            android:choiceMode="singleChoice" />
+            android:choiceMode="singleChoice"
+            android:padding="5dp" />
     </LinearLayout>
 
 </LinearLayout>
