@@ -67,7 +67,7 @@
             <Button
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:text="@string/Button_unit"
+                android:text="@string/default_unit"
                 android:id="@+id/button_dop_unit"
                 android:background="@color/background_unit"
                 android:layout_margin="2dp"

@@ -64,9 +64,10 @@
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="48dp"
-                        android:text="@string/Button_unit"
+                        android:text="@string/default_unit"
                         android:id="@+id/btnGoalUnit"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:background="@drawable/rectangle_light" />
                 </LinearLayout>
 
             </LinearLayout>

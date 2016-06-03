@@ -9,7 +9,7 @@
     <string name="economyStr">Переплата %1$s руб на %4$s %5$s \t %2$s%3$s </string>
     <string name="resStr">%1$s %2$s </string>
     <string name="one">1</string>
-    <string name="Button_unit">ед</string>
+    <string name="default_unit">ед</string>
     <string name="ButtonAdd">Добавить</string>
     <string name="DuttonClear">Очистить</string>
     <string name="quan_economy">Рассчитать переплату на:</string>

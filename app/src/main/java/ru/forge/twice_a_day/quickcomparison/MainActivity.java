@@ -151,7 +151,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode==RESULT_OK){
         if(requestCode==5000){
-            btnGoalUnit.setText(data.getStringExtra("name"));
+            String s= data.getStringExtra("name");
+
+            btnGoalUnit.setText(s);
             goalUnitValue=data.getDoubleExtra("value",1);
             changeUnitsInFragments();
         }}

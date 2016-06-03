@@ -23,6 +23,8 @@ public class AllUnits {
     public String [] units_value_capacity_str;
     public double [] units_value_capacity;
 
+    public String defaultUnit;
+
     public AllUnits(Activity act) {
         this.act = act;
         loadResources();
@@ -31,6 +33,8 @@ public class AllUnits {
     }
 
     void loadResources(){
+        defaultUnit=act.getResources().getString(R.string.default_unit);
+
         units_names_weight=act.getResources().getStringArray(R.array.unit_weight_names);
         units_short_names_weight=act.getResources().getStringArray(R.array.unit_weight_short_names);
         units_value_weight_str =act.getResources().getStringArray(R.array.unit_weight_value);

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="unit_weight_names">
-        <item>Милиграмм (мг)</item>
-        <item>Грамм (г)</item>
-        <item>Килограмм (кг)</item>
-        <item>Пуд (пуд)</item>
-        <item>рус.фунт (р.ф.)</item>
-        <item>анг.фунт (а.ф.)</item>
-        <item>Тонна (т)</item>
-        <item>Центнер (ц)</item>
-        <item>Унция (унция)</item>
+        <item>Милиграмм</item>
+        <item>Грамм</item>
+        <item>Килограмм</item>
+        <item>Пуд</item>
+        <item>Рус.фунт</item>
+        <item>Анг.фунт</item>
+        <item>Тонна</item>
+        <item>Центнер</item>
+        <item>Унция</item>
     </string-array>
 
     <string-array name="unit_weight_short_names">
@@ -37,15 +37,15 @@
     </string-array>
 
     <string-array name="unit_capacity_names">
-        <item>Милилитр (мл)</item>
-        <item>Литр (л)</item>
-        <item>Кубический метр (куб.м)</item>
-        <item>Чайная ложка (ч.лож)</item>
-        <item>Столовая ложка (ст.лож)</item>
-        <item>Стакан (ст)</item>
-        <item>Английский галон (анг.гал)</item>
-        <item>Американский галон(ам.гал)</item>
-        <item>Баррель (бар)</item>
+        <item>Милилитр</item>
+        <item>Литр</item>
+        <item>Кубический метр</item>
+        <item>Чайная ложка</item>
+        <item>Столовая ложка</item>
+        <item>Стакан</item>
+        <item>Английский галон</item>
+        <item>Американский галон</item>
+        <item>Баррель</item>
     </string-array>
 
     <string-array name="unit_capacity_short_names">
