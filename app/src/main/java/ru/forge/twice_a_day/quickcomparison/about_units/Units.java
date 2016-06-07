@@ -1,4 +1,4 @@
-package ru.forge.twice_a_day.quickcomparison;
+package ru.forge.twice_a_day.quickcomparison.about_units;
 
 /**
  * Created by twice on 25.05.16.

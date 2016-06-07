@@ -88,8 +88,6 @@ public class ListUnitsActivity extends AppCompatActivity {
         arrayAdapterWeight  = new ArrayAdapter<String>(this,R.layout.unit_raw, allUnits.units_names_weight);
         arrayAdapterCapacity  = new ArrayAdapter<String>(this,R.layout.unit_raw, allUnits.units_names_capacity);
 
-
-
         listViewCapacity.setAdapter(arrayAdapterCapacity);
         listViewWeight.setAdapter(arrayAdapterWeight);
     }
@@ -130,6 +128,7 @@ public class ListUnitsActivity extends AppCompatActivity {
         }
         setResult(RESULT_OK,intent);
         MainActivity.isFirstChange=false;
+
         RawFragment.rawUnitType=type;
         finish();
     }

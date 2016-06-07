@@ -1,4 +1,4 @@
-package ru.forge.twice_a_day.quickcomparison;
+package ru.forge.twice_a_day.quickcomparison.helpers;
 
 import android.text.Editable;
 import android.text.TextWatcher;

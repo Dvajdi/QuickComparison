@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +14,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import ru.forge.twice_a_day.quickcomparison.about_units.UnitsType;
+import ru.forge.twice_a_day.quickcomparison.helpers.StaticNeedSupplement;
 
 public class RawFragment extends Fragment implements Animation.AnimationListener,View.OnClickListener{
     private ArrayList fragments;
@@ -30,12 +29,13 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
     private int cardColor;
     private View rootView;
     MainActivity ctx;
-    private double unitValue=1;
+
     private Button btnUnit;
     boolean isFirstChange;
 
     public static UnitsType rawUnitType;
-
+    String rawUnit;
+    private double unitValue=1;
 
     public void setFragments(ArrayList fragments,boolean isNotWhenStart) {
         this.fragments = fragments;
@@ -83,6 +83,14 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
         this.resPac = resPac;
     }
 
+    public String getRawUnit() {
+        return rawUnit;
+    }
+
+    public void setRawUnit(String rawUnit) {
+        this.rawUnit = rawUnit;
+    }
+
     public double getResPac() {
         return resPac;
     }
@@ -121,23 +129,21 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String s = "";
         if(resultCode==ctx.RESULT_OK){
         if(requestCode==fragments.indexOf(this)){
-        btnUnit.setText(data.getStringExtra("name"));
-        unitValue = data.getDoubleExtra("value",1);
-
+            s= data.getStringExtra("name");
+            btnUnit.setText(s);
+            rawUnit = s;
+            unitValue = data.getDoubleExtra("value",1);
 
         }
         ctx.startThread();}
-
     }
 
     public double getUnitValue() {
         return unitValue;
     }
 
-    void debugger(){
-        if(btnUnit.getText().equals("кг")){rawUnitType=UnitsType.weight;}
-        if(btnUnit.getText().equals("л")){rawUnitType=UnitsType.capacity;}
-    }
+
 }

@@ -4,6 +4,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import ru.forge.twice_a_day.quickcomparison.helpers.StaticNeedSupplement;
+
 /**
  * Created by twice on 24.05.16.
  */
@@ -23,7 +25,7 @@ public class GoalQuantityTextWatcher implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        goalQuantity=StaticNeedSupplement.getDoubleFromET(etGoalQuantity);
+        goalQuantity= StaticNeedSupplement.getDoubleFromET(etGoalQuantity);
     }
 
     public GoalQuantityTextWatcher(EditText etGoalQuantity) {

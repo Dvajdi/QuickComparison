@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import ru.forge.twice_a_day.quickcomparison.about_units.AllUnits;
 import ru.forge.twice_a_day.quickcomparison.about_units.UnitsType;
+import ru.forge.twice_a_day.quickcomparison.helpers.StaticNeedSupplement;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -195,8 +196,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rawFragments.clear();
     }
 
-
-
     static class OwnHandler extends Handler{
         View v;
         TextView tv_res,tv_res_economy;
@@ -243,9 +242,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-
-
     static class OwnRunnable implements Runnable {
         RawFragment rf;
         double res,min;
@@ -282,7 +278,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             View v;
             String strPrice,strQuantity;
             double price,quantity,res;
-
 
             goalQuantity=StaticNeedSupplement.getDoubleFromET(etGoalQuantity);
             if(goalQuantity==0){goalQuantity=1;}
@@ -338,5 +333,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d("myRunTime","free = "+r.freeMemory());
         r.gc();
         Log.d("myRunTime","free after= "+r.freeMemory());
+    }
+
+    public void converterSwitchOn(){
+        //Do something
     }
 }

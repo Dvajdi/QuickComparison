@@ -1,4 +1,4 @@
-package ru.forge.twice_a_day.quickcomparison;
+package ru.forge.twice_a_day.quickcomparison.helpers;
 
 import java.util.concurrent.TimeUnit;
 
