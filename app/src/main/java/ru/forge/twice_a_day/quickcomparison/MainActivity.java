@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static double  goalQuantity;
     public static Button btnGoalUnit;
     static String goalUnit;
-    static double goalUnitValue;
+    static double goalUnitValue=1;
 
 
     public static MainTextWatcher textWatcher;
@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     static UnitsType goalUnitType = UnitsType.all;
     static public boolean isFirstChange=true;
+    static public boolean isChangeAll =false;
+    static String goalUnitName;
 
     Runtime r;
     @Override
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setContent(){
         createStartRows();
         h=new OwnHandler();
+
         COLOR_BEST=getResources().getColor(R.color.colorPrimary);
         COLOR_MAIN=getResources().getColor(R.color.colorVariant3);
         BEST_RESULT=getResources().getString(R.string.best_result);
@@ -152,17 +155,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode==RESULT_OK){
         if(requestCode==5000){
-            String s= data.getStringExtra("name");
-
-            btnGoalUnit.setText(s);
+            goalUnitName= data.getStringExtra("name");
+            btnGoalUnit.setText(goalUnitName);
             goalUnitValue=data.getDoubleExtra("value",1);
-            changeUnitsInFragments();
+            if(isChangeAll){
+            changeUnitsInFragments(goalUnitName);}
         }}
 
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void changeUnitsInFragments() {
+    public static void changeUnitsInFragments(String s) {
+
+        for (int i = 0; i < rawFragments.size(); i++) {
+            rawFragments.get(i).getBtnUnit().setText(s);
+        }
+
+            isChangeAll=false;
+
 
     }
 
@@ -249,6 +259,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public void run() {
+          //  if(isChangeAll){setNewUnitInFragments();}
             setResult();
             min=findMin();
                 for (int i = 0; i <rawFragments.size() ; i++) {

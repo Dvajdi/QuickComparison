@@ -1,48 +1,47 @@
 package ru.forge.twice_a_day.quickcomparison;
 
-import ru.forge.twice_a_day.quickcomparison.about_units.Units;
+
+import android.util.Log;
 
 /**
  * Created by twice on 25.05.16.
  */
 public class Converter {
-    Units masterUnit,slaveUnit;
-
+   double masterUnitValue, slaveUnitValue;
     double value;
 
-    public Converter(Units masterUnit, Units slaveUnit,double value) {
-        this.masterUnit = masterUnit;
-        this.slaveUnit = slaveUnit;
+    public Converter(double masterUnitValue, double slaveUnitValue,double value) {
+        this.masterUnitValue = masterUnitValue;
+        this.slaveUnitValue = slaveUnitValue;
         this.value = value;
     }
 
 
-    protected double getKoef(Units unit){
-        double koef = 0;
-
-        switch (unit){
-            case kg:koef=1;break;
-            case g:koef = 0.001;break;
-            case t:koef = 1000;break;
-        }
+    protected double getKof(){
+        double koef = masterUnitValue/slaveUnitValue;
         return koef;
     }
 
-    public double convert(){
+    private double convert(){
         double conValue=0;
-        conValue = value*getKoef(slaveUnit)/getKoef(masterUnit);
+        conValue = value*getKof();
+            Log.d("convert","value = "+value+"; masterValue = "+masterUnitValue+"; slaveValue = "+slaveUnitValue);
         return conValue;
     }
 
-    public void setMasterUnit(Units masterUnit) {
-        this.masterUnit = masterUnit;
+    public void setMasterUnit(double masterUnitValue) {
+        this.masterUnitValue = masterUnitValue;
     }
 
-    public void setSlaveUnit(Units slaveUnit) {
-        this.slaveUnit = slaveUnit;
+    public void setSlaveUnit(double slaveUnitValue) {
+        this.slaveUnitValue = slaveUnitValue;
     }
 
     public void setValue(double value) {
         this.value = value;
+    }
+
+    public double getConvertValue(){
+        return convert();
     }
 }
