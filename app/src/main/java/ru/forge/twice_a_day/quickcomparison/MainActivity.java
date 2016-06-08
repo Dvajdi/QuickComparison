@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View v;
         TextView tv_res,tv_res_economy;
         RawFragment rf;
-        double res,resPac,economy,minRes,economyPercent;
+        double res,resPac,economy,minRes,economyPercent,resWithoutUnit;
 
         @Override
         public void handleMessage(Message msg) {
@@ -227,10 +227,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     StaticNeedSupplement.ScaleLongStringsInTextView(tv_res);
                     res = rf.getRes();
                     resPac = rf.getResPac();
-
+                    resWithoutUnit=rf.getResWithoutUnit();
                     if(res==Double.MAX_VALUE){tv_res.setText(String.format(Locale.ROOT,RES_STR,"0",MES_RUB));tv_res_economy.setText("");}
                     else{
-                        tv_res.setText(String.format(Locale.ROOT, RES_STR, StaticNeedSupplement.formatter(res), MES_RUB));
+                        tv_res.setText(String.format(Locale.ROOT, RES_STR, StaticNeedSupplement.formatter(resWithoutUnit), MES_RUB));
 
                         economyPercent = StaticNeedSupplement.rounded((res / minRes - 1) * 100, 2);
                         economy = (res - minRes)*goalQuantity;
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             EditText etQuantity;
             View v;
             String strPrice,strQuantity;
-            double price,quantity,res;
+            double price,quantity,res,resWithoutUnit;
 
             goalQuantity=StaticNeedSupplement.getDoubleFromET(etGoalQuantity);
             if(goalQuantity==0){goalQuantity=1;}
@@ -318,14 +318,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     if(price==0){
                         res=0;
+                        resWithoutUnit=0;
                     }
                     else{
-
-                        res = price / quantity;
+                        resWithoutUnit=price / quantity;
+                        res = price / (quantity*rf.getUnitValue());
                         if(res<0.001&&res>0){res=0.001;}
                        }
 
                     rf.setRes(res);
+                    rf.setResWithoutUnit(resWithoutUnit);
                 }
             }
         }

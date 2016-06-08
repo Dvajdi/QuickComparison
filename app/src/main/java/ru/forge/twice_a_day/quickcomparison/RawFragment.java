@@ -25,7 +25,19 @@ import ru.forge.twice_a_day.quickcomparison.helpers.StaticNeedSupplement;
 public class RawFragment extends Fragment implements Animation.AnimationListener,View.OnClickListener{
     private ArrayList fragments;
     private EditText etPrice,etQuantity;
-    private double res,resPac;
+    private double res;
+    private double resPac;
+
+    public double getResWithoutUnit() {
+        return resWithoutUnit;
+    }
+
+    public void setResWithoutUnit(double resWithoutUnit) {
+
+        this.resWithoutUnit = resWithoutUnit;
+    }
+
+    private double resWithoutUnit;
     private MyCardView cv;
     private boolean isNotWhenStart;
     private int cardColor;
