@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -151,16 +152,15 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
             btnUnit.setText(s);
             rawUnit = s;
             unitValue = data.getDoubleExtra("value",1);
+            Log.d("converter","value = "+unitValue);
             changeUnit(s);
-           // etQuantity.setText(String.valueOf(new Converter(MainActivity.goalUnitValue,unitValue,StaticNeedSupplement.getDoubleFromET(etQuantity)).getConvertValue()));
-
         }
         ctx.startThread();}
     }
 
     private void changeUnit(String s) {
         if(MainActivity.isChangeAll){
-            MainActivity.changeUnitsInFragments(s);
+            MainActivity.changeUnitsInFragments(s,unitValue);
             MainActivity.btnGoalUnit.setText(s);
             MainActivity.goalUnitName =s;
             MainActivity.goalUnitValue = unitValue;
@@ -168,32 +168,17 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
 
     }
 
-
-
     public double getUnitValue() {
         return unitValue;
     }
 
-    public static void setRawUnitType(UnitsType rawUnitType) {
-        RawFragment.rawUnitType = rawUnitType;
-    }
-
     public void setUnitValue(double unitValue) {
         this.unitValue = unitValue;
-    }
-    public void setRawUnit(String rawUnit) {
-        this.rawUnit = rawUnit;
-       // btnUnit.setText(rawUnit);
     }
 
     public Button getBtnUnit(){
         return btnUnit;
     }
 
-    static class FragmentChangeUnitHandler extends Handler{
-        @Override
-        public void handleMessage(Message msg) {
 
-        }
-    }
 }

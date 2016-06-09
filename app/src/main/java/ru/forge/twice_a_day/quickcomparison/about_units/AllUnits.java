@@ -50,7 +50,7 @@ public class AllUnits {
         capacity_units = new Unit [units_names_capacity.length];
 
         units_value_weight=doubleArFromStringAr(units_value_weight_str);
-        units_value_capacity=doubleArFromStringAr(units_value_weight_str);
+        units_value_capacity=doubleArFromStringAr(units_value_capacity_str);
     }
 
     void initUnits(){

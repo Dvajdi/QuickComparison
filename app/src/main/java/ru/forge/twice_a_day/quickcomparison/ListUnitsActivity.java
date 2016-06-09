@@ -64,7 +64,7 @@ public class ListUnitsActivity extends AppCompatActivity {
         allUnits = MainActivity.allUnits;
         switch(whatShow){
             case all: Log.d("show","all");
-                MainActivity.isChangeAll=true;
+              //  MainActivity.isChangeAll=true;
                 listViewCapacity.setVisibility(View.VISIBLE);
                 listViewWeight.setVisibility(View.VISIBLE);
                 btnED.setVisibility(View.VISIBLE);
@@ -127,7 +127,7 @@ public class ListUnitsActivity extends AppCompatActivity {
             intent.putExtra("value",1);
         }
         setResult(RESULT_OK,intent);
-
+       if(type!=RawFragment.rawUnitType){MainActivity.isChangeAll=true;}
         MainActivity.isFirstChange=false;
         RawFragment.rawUnitType=type;
         finish();

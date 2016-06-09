@@ -158,22 +158,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             goalUnitName= data.getStringExtra("name");
             btnGoalUnit.setText(goalUnitName);
             goalUnitValue=data.getDoubleExtra("value",1);
-            if(isChangeAll){
-            changeUnitsInFragments(goalUnitName);}
-        }}
 
+            if(isChangeAll){
+            changeUnitsInFragments(goalUnitName,goalUnitValue);}
+        }}
+        startThread();
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public static void changeUnitsInFragments(String s) {
-
+    public static void changeUnitsInFragments(String s,double unitValue) {
         for (int i = 0; i < rawFragments.size(); i++) {
             rawFragments.get(i).getBtnUnit().setText(s);
+            rawFragments.get(i).setUnitValue(unitValue);
         }
-
             isChangeAll=false;
-
-
     }
 
     private void clearAll(){
@@ -233,13 +231,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         tv_res.setText(String.format(Locale.ROOT, RES_STR, StaticNeedSupplement.formatter(resWithoutUnit), MES_RUB));
 
                         economyPercent = StaticNeedSupplement.rounded((res / minRes - 1) * 100, 2);
-                        economy = (res - minRes)*goalQuantity;
-
+                        economy = (res - minRes)*goalQuantity*(goalUnitValue);
+                        //Log.d("converter","economy = "+economy);
                         if ((economy >= 0)) {
                             if (economy == 0) {
                                 tv_res_economy.setText(BEST_RESULT);
                             } else {
-
                                 tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, StaticNeedSupplement.formatter(economy), StaticNeedSupplement.formatter(economyPercent), "%",StaticNeedSupplement.formatter(goalQuantity),goalUnit));
                             }
                         }
@@ -323,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     else{
                         resWithoutUnit=price / quantity;
                         res = price / (quantity*rf.getUnitValue());
-                        if(res<0.001&&res>0){res=0.001;}
+                        //if(res<0.00001&&res>0){res=0.00001;}
                        }
 
                     rf.setRes(res);
