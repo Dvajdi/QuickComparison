@@ -233,6 +233,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         economyPercent = StaticNeedSupplement.rounded((res / minRes - 1) * 100, 2);
                         economy = (res - minRes)*goalQuantity*(goalUnitValue);
                         //Log.d("converter","economy = "+economy);
+
                         if ((economy >= 0)) {
                             if (economy == 0) {
                                 tv_res_economy.setText(BEST_RESULT);

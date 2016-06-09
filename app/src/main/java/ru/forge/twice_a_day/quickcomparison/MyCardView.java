@@ -46,9 +46,10 @@ public class MyCardView extends CardView {
     public boolean dispatchTouchEvent(MotionEvent ev) {
         scrollView.requestDisallowInterceptTouchEvent(true);
         if(ev.getAction()==MotionEvent.ACTION_DOWN){x=ev.getX();y=ev.getY();}
-        if(ev.getAction()==MotionEvent.ACTION_MOVE){moveX=Math.abs(ev.getX()-x);moveY=Math.abs(ev.getY()-y);}
+        if(ev.getAction()==MotionEvent.ACTION_MOVE){moveX=ev.getX()-x;moveY=Math.abs(ev.getY()-y);}
         Log.d("watcher","x  = "+moveX+" ; "+" y = "+Math.abs(moveY));
         if(moveX>(width/3)){rf.removeMySelf();return super.dispatchTouchEvent(ev);}
+        if(moveX<-(width/3)){rf.removeMySelfLeft();return super.dispatchTouchEvent(ev);}
         if(moveX>(width/10)||moveY<(hight/10)){
             Log.d("watcher","запретил INTERCEPT");
             scrollView.requestDisallowInterceptTouchEvent(true);

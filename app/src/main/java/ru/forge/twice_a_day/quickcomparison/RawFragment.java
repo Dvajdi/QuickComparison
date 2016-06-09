@@ -3,8 +3,6 @@ package ru.forge.twice_a_day.quickcomparison;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
@@ -97,16 +95,6 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
         this.res = res;
     }
 
-    public void setResPac(double resPac) {
-        this.resPac = resPac;
-    }
-
-    public String getRawUnit() {
-        return rawUnit;
-    }
-
-
-
     public double getResPac() {
         return resPac;
     }
@@ -117,7 +105,12 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
     }
 
     public void removeMySelf(){
-        Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.anim);
+        Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_right);
+        anim.setAnimationListener(this);
+        rootView.startAnimation(anim);
+    }
+    public void removeMySelfLeft(){
+        Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_left);
         anim.setAnimationListener(this);
         rootView.startAnimation(anim);
     }
