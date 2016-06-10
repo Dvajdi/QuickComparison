@@ -37,7 +37,7 @@
     </string-array>
 
     <string-array name="unit_capacity_names">
-        <item>Милилитр</item>
+        <item>Миллилитр</item>
         <item>Литр</item>
         <item>Кубический метр</item>
         <item>Чайная ложка</item>
