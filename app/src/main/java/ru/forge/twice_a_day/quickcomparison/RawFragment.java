@@ -3,7 +3,6 @@ package ru.forge.twice_a_day.quickcomparison;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
@@ -20,7 +19,7 @@ import android.widget.ScrollView;
 import java.util.ArrayList;
 
 import ru.forge.twice_a_day.quickcomparison.about_units.UnitsType;
-import ru.forge.twice_a_day.quickcomparison.helpers.StaticNeedSupplement;
+import ru.forge.twice_a_day.quickcomparison.standart_helpers.StaticNeedSupplement;
 
 public class RawFragment extends Fragment implements Animation.AnimationListener,View.OnClickListener{
     private ArrayList fragments;

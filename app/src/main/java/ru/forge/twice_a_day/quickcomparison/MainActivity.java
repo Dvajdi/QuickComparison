@@ -16,13 +16,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 
 import ru.forge.twice_a_day.quickcomparison.about_units.AllUnits;
-import ru.forge.twice_a_day.quickcomparison.about_units.Unit;
 import ru.forge.twice_a_day.quickcomparison.about_units.UnitsType;
-import ru.forge.twice_a_day.quickcomparison.helpers.StaticNeedSupplement;
+import ru.forge.twice_a_day.quickcomparison.standart_helpers.StaticNeedSupplement;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public static MainTextWatcher textWatcher;
-    public static GoalQuantityTextWatcher goalTextWatcher;
+
 
     static AllUnits allUnits;
 
@@ -63,25 +61,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.material_activity_without_table);
         findMyViews();
-        rawFragments=(ArrayList<RawFragment>) getLastCustomNonConfigurationInstance();
-        if(rawFragments==null){rawFragments = new ArrayList<>();}else{Log.d("life","не ноль"); }
-        if(savedInstanceState==null){setContent();}else{btnGoalUnit.setText(goalUnitName);}
-
+        findObjects(savedInstanceState);
         setListeners();
-
         startThread();
     }
-
-
 
     private void findMyViews() {
         fab=(FloatingActionButton)findViewById(R.id.fab2);
         toolbar=(Toolbar)findViewById(R.id.tool_bar);
         etGoalQuantity = (EditText)findViewById(R.id.et_goal_quantity);
         btnGoalUnit = (Button)findViewById(R.id.btnGoalUnit);
+    }
+    private void findObjects(Bundle savedInstanceState){
+        rawFragments=(ArrayList<RawFragment>) getLastCustomNonConfigurationInstance();
+        if(rawFragments==null){rawFragments = new ArrayList<>();}else{Log.d("life","не ноль"); }
+        if(savedInstanceState==null){setContent();}else{btnGoalUnit.setText(goalUnitName);}
     }
     private void setContent(){
         allUnits = new AllUnits(this);
@@ -164,7 +160,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(resultCode==RESULT_OK){
         if(requestCode==5000){
             setUnits(data.getStringExtra("name"),data.getDoubleExtra("value",1));
-
         }}
         startThread();
         super.onActivityResult(requestCode, resultCode, data);
@@ -175,8 +170,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         goalUnitName=unitName;
         goalUnitValue = unitValue;
         if(isChangeAll){changeUnitsInFragments(goalUnitName,goalUnitValue);}
-
     }
+
     public static void changeUnitsInFragments(String s,double unitValue) {
         for (int i = 0; i < rawFragments.size(); i++) {
             rawFragments.get(i).getBtnUnit().setText(s);
@@ -269,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public void run() {
-          //  if(isChangeAll){setNewUnitInFragments();}
+
             setResult();
             min=findMin();
                 for (int i = 0; i <rawFragments.size() ; i++) {
@@ -346,19 +341,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         stopThread();
-        Log.d("fragments","onDestroy");
         super.onDestroy();
 
     }
 
     private void doDebug() {
-        Log.d("myRunTime","runTime = "+r.totalMemory());
-        Log.d("myRunTime","free = "+r.freeMemory());
-        r.gc();
-        Log.d("myRunTime","free after= "+r.freeMemory());
+
     }
 
-    public void converterSwitchOn(){
-        //Do something
-    }
+
 }
