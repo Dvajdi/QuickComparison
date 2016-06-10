@@ -75,6 +75,9 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
              Log.d("restore","unitName = "+rawUnit);
              btnUnit.setText(rawUnit);
 
+         }else{
+                rawUnit=MainActivity.allUnits.defaultUnit;
+                unitValue=1;
          }
 
         return rootView;

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     private void setContent(){
         allUnits = new AllUnits(this);
-
+        goalUnitName=allUnits.defaultUnit;
         h=new OwnHandler();
 
         COLOR_BEST=getResources().getColor(R.color.colorPrimary);
@@ -110,7 +111,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try{
         isFirstChange=true;
         isChangeAll=true;
-        setUnits(allUnits.defaultUnit,1);}catch (NullPointerException e){e.printStackTrace();}
+        setUnits(allUnits.defaultUnit,1);}catch (NullPointerException e){
+            Toast.makeText(this,allUnits.defaultUnit,Toast.LENGTH_SHORT).show();}
     }
 
     private void createRow(boolean isNotWhenStart){
@@ -186,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         clearFragments();
         createStartRows();
         startThread();
+
     }
 
     private void stopThread(){
