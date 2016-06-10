@@ -3,6 +3,7 @@ package ru.forge.twice_a_day.quickcomparison;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
@@ -44,7 +45,6 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
     MainActivity ctx;
 
     private Button btnUnit;
-    boolean isFirstChange;
 
     public static UnitsType rawUnitType;
     String rawUnit;
@@ -58,6 +58,7 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
      @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
+
         rootView=inflater.inflate(R.layout.material_row_3, container, false);
         findViewsInFragment(rootView);
         cv.setRf(this);
@@ -66,7 +67,22 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
         if(cardColor!=0){cv.setCardBackgroundColor(cardColor);}
 
         ctx = (MainActivity)getActivity();
+
+         if(savedInstanceState!=null){
+
+             unitValue=savedInstanceState.getDouble("value");
+             rawUnit=savedInstanceState.getString("name");
+             Log.d("restore","unitValue = "+unitValue);
+             Log.d("restore","unitName = "+rawUnit);
+             btnUnit.setText(rawUnit);
+
+         }
+
         return rootView;
+    }
+
+    public void setRawUnit(String rawUnit) {
+        this.rawUnit = rawUnit;
     }
 
     private void findViewsInFragment(View rootView){
@@ -142,23 +158,26 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
         if(resultCode==ctx.RESULT_OK){
         if(requestCode==fragments.indexOf(this)){
             s= data.getStringExtra("name");
-            btnUnit.setText(s);
-            rawUnit = s;
-            unitValue = data.getDoubleExtra("value",1);
-            Log.d("converter","value = "+unitValue);
-            changeUnit(s);
+            setUnits(s,data.getDoubleExtra("value",1));
+            changeAllUnits(s);
         }
         ctx.startThread();}
     }
 
-    private void changeUnit(String s) {
+    public void setUnits(String unitName,double unitValue){
+        btnUnit.setText(unitName);
+        rawUnit=unitName;
+        this.unitValue=unitValue;
+
+    }
+
+    private void changeAllUnits(String s) {
         if(MainActivity.isChangeAll){
             MainActivity.changeUnitsInFragments(s,unitValue);
             MainActivity.btnGoalUnit.setText(s);
             MainActivity.goalUnitName =s;
             MainActivity.goalUnitValue = unitValue;
         }
-
     }
 
     public double getUnitValue() {
@@ -173,5 +192,18 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
         return btnUnit;
     }
 
+   /* @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        btnUnit.setText(rawUnit);
+        super.onViewStateRestored(savedInstanceState);
+    }
+*/
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        Log.d("restore","out сработал");
 
+        outState.putDouble("value",unitValue);
+        outState.putString("name",rawUnit);
+        super.onSaveInstanceState(outState);
+    }
 }

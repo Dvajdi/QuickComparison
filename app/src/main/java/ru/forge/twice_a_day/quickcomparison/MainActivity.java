@@ -16,9 +16,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 import ru.forge.twice_a_day.quickcomparison.about_units.AllUnits;
+import ru.forge.twice_a_day.quickcomparison.about_units.Unit;
 import ru.forge.twice_a_day.quickcomparison.about_units.UnitsType;
 import ru.forge.twice_a_day.quickcomparison.helpers.StaticNeedSupplement;
 
@@ -61,19 +63,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("fragments","onCreate");
 
         setContentView(R.layout.material_activity_without_table);
         findMyViews();
         rawFragments=(ArrayList<RawFragment>) getLastCustomNonConfigurationInstance();
-        if(rawFragments==null){rawFragments = new ArrayList<>();}else{Log.d("life","не ноль");}
-        if(savedInstanceState==null){setContent();}
+        if(rawFragments==null){rawFragments = new ArrayList<>();}else{Log.d("life","не ноль"); }
+        if(savedInstanceState==null){setContent();}else{btnGoalUnit.setText(goalUnitName);}
 
         setListeners();
 
         startThread();
-        r =Runtime.getRuntime();
     }
+
+
 
     private void findMyViews() {
         fab=(FloatingActionButton)findViewById(R.id.fab2);
@@ -82,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnGoalUnit = (Button)findViewById(R.id.btnGoalUnit);
     }
     private void setContent(){
-        createStartRows();
+        allUnits = new AllUnits(this);
+
         h=new OwnHandler();
 
         COLOR_BEST=getResources().getColor(R.color.colorPrimary);
@@ -92,21 +95,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ECONOMY_STR = getResources().getString(R.string.economyStr);
         RES_STR=getResources().getString(R.string.resStr);
         THREAD_NAME = getResources().getString(R.string.thread_name);
-        allUnits = new AllUnits(this);
-        textWatcher = new MainTextWatcher(this);
 
+        createStartRows();
     }
     private void setListeners(){
+        textWatcher = new MainTextWatcher(this);
         fab.setOnClickListener(this);
         btnGoalUnit.setOnClickListener(this);
         setSupportActionBar(toolbar);
         etGoalQuantity.addTextChangedListener(textWatcher);
         StaticNeedSupplement.ScaleLongStringsInTextView(etGoalQuantity);
+
         }
 
     private void createStartRows(){
         createRow(true);
         createRow(false);
+        try{
+        isFirstChange=true;
+        isChangeAll=true;
+        setUnits(allUnits.defaultUnit,1);}catch (NullPointerException e){e.printStackTrace();}
     }
 
     private void createRow(boolean isNotWhenStart){
@@ -155,20 +163,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode==RESULT_OK){
         if(requestCode==5000){
-            goalUnitName= data.getStringExtra("name");
-            btnGoalUnit.setText(goalUnitName);
-            goalUnitValue=data.getDoubleExtra("value",1);
+            setUnits(data.getStringExtra("name"),data.getDoubleExtra("value",1));
 
-            if(isChangeAll){
-            changeUnitsInFragments(goalUnitName,goalUnitValue);}
         }}
         startThread();
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    void setUnits(String unitName,double unitValue){
+        btnGoalUnit.setText(unitName);
+        goalUnitName=unitName;
+        goalUnitValue = unitValue;
+        if(isChangeAll){changeUnitsInFragments(goalUnitName,goalUnitValue);}
+
+    }
     public static void changeUnitsInFragments(String s,double unitValue) {
         for (int i = 0; i < rawFragments.size(); i++) {
             rawFragments.get(i).getBtnUnit().setText(s);
+            rawFragments.get(i).setRawUnit(s);
             rawFragments.get(i).setUnitValue(unitValue);
         }
             isChangeAll=false;
