@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -22,6 +21,7 @@ import java.util.Locale;
 import ru.forge.twice_a_day.quickcomparison.about_units.AllUnits;
 import ru.forge.twice_a_day.quickcomparison.about_units.UnitsType;
 import ru.forge.twice_a_day.quickcomparison.standart_helpers.StaticNeedSupplement;
+import ru.forge.twice_a_day.quickcomparison.standart_helpers.FormatAdapter;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static String MES_RUB;
     private static String ECONOMY_STR;
     private static String RES_STR;
+    private static String AROUND_0;
     private static ArrayList<RawFragment> rawFragments;
     private static OwnHandler h;
     private static Thread t;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int j=1;
 
 
-    static EditText etGoalQuantity;
+    static NumberEditText etGoalQuantity;
     static double  goalQuantity;
     public static Button btnGoalUnit;
     static String goalUnit;
@@ -57,8 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static public boolean isFirstChange=true;
     static public boolean isChangeAll =false;
     static String goalUnitName;
+   static int koef=0;
 
-    Runtime r;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void findMyViews() {
         fab=(FloatingActionButton)findViewById(R.id.fab2);
         toolbar=(Toolbar)findViewById(R.id.tool_bar);
-        etGoalQuantity = (EditText)findViewById(R.id.et_goal_quantity);
+        etGoalQuantity = (NumberEditText)findViewById(R.id.et_goal_quantity);
         btnGoalUnit = (Button)findViewById(R.id.btnGoalUnit);
     }
     private void findObjects(Bundle savedInstanceState){
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ECONOMY_STR = getResources().getString(R.string.economyStr);
         RES_STR=getResources().getString(R.string.resStr);
         THREAD_NAME = getResources().getString(R.string.thread_name);
-
+        AROUND_0 =getResources().getString(R.string.around_0);
         createStartRows();
     }
     private void setListeners(){
@@ -111,8 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try{
         isFirstChange=true;
         isChangeAll=true;
-        setUnits(allUnits.defaultUnit,1);}catch (NullPointerException e){
-            Toast.makeText(this,allUnits.defaultUnit,Toast.LENGTH_SHORT).show();}
+        setUnits(allUnits.defaultUnit,1);}catch (NullPointerException e){e.printStackTrace();}
     }
 
     private void createRow(boolean isNotWhenStart){
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.debug){doDebug();}
+
         if (item.getItemId() == R.id.clear_all) {
             clearAll();
         }
@@ -188,7 +188,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         clearFragments();
         createStartRows();
         startThread();
-
     }
 
     private void stopThread(){
@@ -218,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View v;
         TextView tv_res,tv_res_economy;
         RawFragment rf;
-        double res,resPac,economy,minRes,economyPercent,resWithoutUnit;
+        double res,economy,minRes,economyPercent,resWithoutUnit;
 
         @Override
         public void handleMessage(Message msg) {
@@ -234,21 +233,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     StaticNeedSupplement.ScaleLongStringsInTextView(tv_res);
                     res = rf.getRes();
-                    resPac = rf.getResPac();
+
+
                     resWithoutUnit=rf.getResWithoutUnit();
-                    if(res==Double.MAX_VALUE){tv_res.setText(String.format(Locale.ROOT,RES_STR,"0",MES_RUB));tv_res_economy.setText("");}
+                    if(res==Double.MAX_VALUE){
+                        Log.d("myres","res = "+res);
+                        tv_res.setText(String.format(Locale.ROOT,RES_STR,"0",MES_RUB));tv_res_economy.setText("");}
                     else{
-                        tv_res.setText(String.format(Locale.ROOT, RES_STR, StaticNeedSupplement.formatter(resWithoutUnit), MES_RUB));
+                        String strRes;
+                        if((resWithoutUnit>0)&&(resWithoutUnit<1/Math.pow(10,koef))){strRes=AROUND_0;}else{strRes=StaticNeedSupplement.formatter(resWithoutUnit,koef);}
+                        tv_res.setText(String.format(Locale.ROOT, RES_STR, strRes, MES_RUB));
 
                         economyPercent = StaticNeedSupplement.rounded((res / minRes - 1) * 100, 2);
                         economy = (res - minRes)*goalQuantity*(goalUnitValue);
-                        //Log.d("converter","economy = "+economy);
 
                         if ((economy >= 0)) {
                             if (economy == 0) {
                                 tv_res_economy.setText(BEST_RESULT);
                             } else {
-                                tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, StaticNeedSupplement.formatter(economy), StaticNeedSupplement.formatter(economyPercent), "%",StaticNeedSupplement.formatter(goalQuantity),goalUnit));
+                                String strEconomy = "";
+                                Log.d("koef","koef = "+economy + " ; pow = "+1/Math.pow(10,koef));
+                                if(economy<1/Math.pow(10,koef)){strEconomy= AROUND_0;}else{strEconomy= StaticNeedSupplement.formatter(economy,koef);}
+
+                                tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, strEconomy, StaticNeedSupplement.formatter(economyPercent,koef), "%",StaticNeedSupplement.formatter(goalQuantity,koef),goalUnit));
                             }
                         }
                     }
@@ -291,12 +298,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return min;
         }
         void setResult(){
+            koef=0;
             RawFragment rf;
             EditText etPrice;
             EditText etQuantity;
             View v;
             String strPrice,strQuantity;
-            double price,quantity,res,resWithoutUnit;
+            double price,quantity=1,res,resWithoutUnit;
 
             goalQuantity=StaticNeedSupplement.getDoubleFromET(etGoalQuantity);
             if(goalQuantity==0){goalQuantity=1;}
@@ -312,17 +320,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     strPrice = etPrice.getText().toString();
                     strQuantity = etQuantity.getText().toString();
+                    int someInt = FormatAdapter.getKoef(strPrice);
+                    if(koef< someInt){koef=someInt;}
 
                     try {
                         price = Double.valueOf(strPrice);
                     } catch (Exception e) {
                         price = 0;
                     }
-                    try {
-                        quantity = Double.valueOf(strQuantity);
-                    } catch (Exception e) {
-                        quantity = 1;
-                    }
+
+                    if(strQuantity.equals("")){quantity=1;
+                        Log.d("koef"," quantity = "+quantity);
+                    }else{if(quantity==0){quantity=1;}else{quantity=Double.valueOf(strQuantity);}}
 
                     if(price==0){
                         res=0;
@@ -331,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     else{
                         resWithoutUnit=price / quantity;
                         res = price / (quantity*rf.getUnitValue());
-                        //if(res<0.00001&&res>0){res=0.00001;}
+
                        }
 
                     rf.setRes(res);
@@ -348,9 +357,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void doDebug() {
 
-    }
 
 
 }

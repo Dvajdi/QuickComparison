@@ -64,8 +64,8 @@ public class StaticNeedSupplement {
         return value;
     }
 
-    public static String formatter(double d){
-        d=rounded(d,2);
+    public static String formatter(double d,int flag){
+        d=rounded(d,flag);
 
         String s="";
         if(d==(int)d){

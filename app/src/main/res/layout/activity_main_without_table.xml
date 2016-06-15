@@ -47,7 +47,7 @@
                         android:textStyle="bold"
                         android:gravity="center" />
 
-                    <EditText
+                    <ru.forge.twice_a_day.quickcomparison.NumberEditText
                         android:layout_width="0dp"
                         android:layout_height="48dp"
                         android:id="@+id/et_goal_quantity"

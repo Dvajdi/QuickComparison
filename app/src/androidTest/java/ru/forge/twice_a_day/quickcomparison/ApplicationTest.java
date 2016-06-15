@@ -8,6 +8,20 @@ import android.test.ApplicationTestCase;
  */
 public class ApplicationTest extends ApplicationTestCase<Application> {
     public ApplicationTest() {
+
+
+
         super(Application.class);
+    }
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+    }
+
+    @Override
+    protected void runTest() throws Throwable {
+
+        super.runTest();
     }
 }
