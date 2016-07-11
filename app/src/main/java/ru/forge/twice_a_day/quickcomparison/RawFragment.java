@@ -24,7 +24,7 @@ import ru.forge.twice_a_day.quickcomparison.standart_helpers.StaticNeedSupplemen
 public class RawFragment extends Fragment implements Animation.AnimationListener,View.OnClickListener{
     private ArrayList fragments;
     private EditText etPrice,etQuantity;
-    private double res;
+    private double res=Double.MAX_VALUE;
     private double resPac;
 
     public double getResWithoutUnit() {
@@ -202,7 +202,7 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
 */
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        Log.d("restore","out сработал");
+
 
         outState.putDouble("value",unitValue);
         outState.putString("name",rawUnit);
