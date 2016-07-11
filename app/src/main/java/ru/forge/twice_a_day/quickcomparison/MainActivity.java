@@ -234,10 +234,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     StaticNeedSupplement.ScaleLongStringsInTextView(tv_res);
                     res = rf.getRes();
 
-
                     resWithoutUnit=rf.getResWithoutUnit();
                     if(res==Double.MAX_VALUE){
-                        Log.d("myres","res = "+res);
                         tv_res.setText(String.format(Locale.ROOT,RES_STR,"0",MES_RUB));tv_res_economy.setText("");}
                     else{
                         String strRes;
@@ -280,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for (int i = 0; i <rawFragments.size() ; i++) {
                     rf=rawFragments.get(i);
                         res=rf.getRes();
-                            Log.d("color","min = "+min +" ; "+"res = "+res);
+
                             if (res ==min){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}
                             Message msg = h.obtainMessage(i, arg1, minIndex, min);
                         h.sendMessage(msg);
@@ -298,6 +296,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return min;
         }
         void setResult(){
+            boolean isCorrectQuantity;
             koef=0;
             RawFragment rf;
             EditText etPrice;
@@ -329,12 +328,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         price = 0;
                     }
 
-                    if(strQuantity.equals("")){quantity=1;
-                        Log.d("koef"," quantity = "+quantity);
-                    }else{if(quantity==0){quantity=1;}else{quantity=Double.valueOf(strQuantity);}}
+                    isCorrectQuantity=true;
 
-                    if(price==0){
-                        res=0;
+                    if(strQuantity.equals("0")||strQuantity.equals("0.")||strQuantity.equals("0,")){isCorrectQuantity=false;}
+                    else{
+                    if(strQuantity.equals("")){
+                        quantity=1;
+                    }else{if(quantity==0){quantity=1;}else{quantity=Double.valueOf(strQuantity);}}}
+
+                    if(price==0||!isCorrectQuantity){
+                        res=Double.MAX_VALUE;
                         resWithoutUnit=0;
                     }
                     else{
