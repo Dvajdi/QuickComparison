@@ -71,8 +71,6 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
 
              unitValue=savedInstanceState.getDouble("value");
              rawUnit=savedInstanceState.getString("name");
-             Log.d("restore","unitValue = "+unitValue);
-             Log.d("restore","unitName = "+rawUnit);
              btnUnit.setText(rawUnit);
 
          }else{
