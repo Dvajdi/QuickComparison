@@ -23,7 +23,8 @@
 
 </android.support.design.widget.AppBarLayout>
 
-<include layout="@layout/activity_main_without_table"/>
+<include layout="@layout/activity_main_without_table"
+    />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab2"
@@ -34,7 +35,7 @@
         android:src="@drawable/ic_add_black_24dp" />
 
     <LinearLayout
-        android:layout_marginRight="100dp"
+        android:layout_marginRight="85dp"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
 
@@ -49,11 +50,12 @@
         <android.support.design.widget.TextInputLayout
 
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="52dp"
             android:id="@+id/view"
             android:layout_weight="3"
             app:hintTextAppearance="@style/SmallText"
-            android:background="@drawable/rounded">
+            android:background="@drawable/rounded"
+            android:layout_marginRight="2dp">
 
             <ru.forge.twice_a_day.quickcomparison.NumberEditText
                 android:imeOptions="flagNavigateNext"
@@ -67,17 +69,20 @@
                 android:focusable="true"
                 android:gravity="center"
                 android:maxLength="9"
-                android:hint="@string/quan_economy"/>
+                android:hint="@string/quan_economy"
+                android:elevation="6dp"/>
         </android.support.design.widget.TextInputLayout>
 
         <Button
+
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="52dp"
             android:text="@string/default_unit"
             android:id="@+id/btnGoalUnit"
             android:layout_weight="1"
             android:background="@drawable/rectangle_light"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_marginLeft="2dp" />
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

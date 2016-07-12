@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static public boolean isChangeAll =false;
     static String goalUnitName;
    static int koef=0;
+    ScrollView sv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void findMyViews() {
+        sv=(ScrollView)findViewById(R.id.scrollView);
         fab=(FloatingActionButton)findViewById(R.id.fab2);
         toolbar=(Toolbar)findViewById(R.id.tool_bar);
         etGoalQuantity = (NumberEditText)findViewById(R.id.et_goal_quantity);
@@ -117,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void createRow(boolean isNotWhenStart){
         addNewFragment(isNotWhenStart);
+        sv.scrollTo(0,sv.getMaxScrollAmount());
     }
 
     @Override
@@ -205,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rf.setFragments(rawFragments,isNotFirstTwoRows);
         getSupportFragmentManager().beginTransaction().add(R.id.rl_main, rf).commit();
         rawFragments.add(rf);
+
     }
     private void clearFragments(){
         for (int i = 0; i <rawFragments.size() ; i++) {

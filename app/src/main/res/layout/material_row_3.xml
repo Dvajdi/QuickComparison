@@ -8,7 +8,7 @@
         android:id="@+id/doprow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="8dp"
+        app:cardElevation="4dp"
         app:cardCornerRadius="12dp"
         style="@style/CardView.MyCardView"
         app:cardBackgroundColor="@color/colorVariant3"
