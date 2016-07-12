@@ -34,7 +34,9 @@
         android:src="@drawable/ic_add_black_24dp" />
 
     <LinearLayout
-        android:layout_margin="70dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
 
         android:layout_gravity="bottom|start"
         style="@style/CardView.MyCardView"
@@ -42,7 +44,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/row_top"
-
         >
 
         <android.support.design.widget.TextInputLayout
