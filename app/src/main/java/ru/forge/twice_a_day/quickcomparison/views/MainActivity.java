@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import ru.forge.twice_a_day.quickcomparison.R;
+import ru.forge.twice_a_day.quickcomparison.controller.ResLoader;
 import ru.forge.twice_a_day.quickcomparison.models.work_with_units.AllUnits;
 import ru.forge.twice_a_day.quickcomparison.models.work_with_units.UnitsType;
 import ru.forge.twice_a_day.quickcomparison.util.StaticNeedSupplement;
@@ -42,8 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static int COLOR_MAIN;
 
     private int j=1;
-
-
     static NumberEditText etGoalQuantity;
     static double  goalQuantity;
     public static Button btnGoalUnit;
@@ -51,17 +50,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static double goalUnitValue=1;
 
     public static MainTextWatcher textWatcher;
-
-
-
     static AllUnits allUnits;
-
-    static UnitsType goalUnitType = UnitsType.all;
     static public boolean isFirstChange=true;
     static public boolean isChangeAll =false;
     static String goalUnitName;
     static int koef=0;
     ScrollView sv;
+
+  ResLoader res;
 
     static{
      Log.d("main","STATIC работает!!");
@@ -93,24 +89,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadRes(){
-
-
+      res = new ResLoader(this);
+      COLOR_BEST=getResources().getColor(R.color.colorPrimary);
+      COLOR_MAIN=getResources().getColor(R.color.colorVariant3);
+      BEST_RESULT=getResources().getString(R.string.best_result);
+      MES_RUB=getResources().getString(R.string.rub);
+      ECONOMY_STR = getResources().getString(R.string.economyStr);
+      RES_STR=getResources().getString(R.string.resStr);
+      THREAD_NAME = getResources().getString(R.string.thread_name);
+      AROUND_0 =getResources().getString(R.string.around_0);
     }
 
     private void setContent(){
+        loadRes();
         allUnits = new AllUnits(this);
         goalUnitName=allUnits.defaultUnit;
         h=new OwnHandler();
-        COLOR_BEST=getResources().getColor(R.color.colorPrimary);
-        COLOR_MAIN=getResources().getColor(R.color.colorVariant3);
-        BEST_RESULT=getResources().getString(R.string.best_result);
-        MES_RUB=getResources().getString(R.string.rub);
-        ECONOMY_STR = getResources().getString(R.string.economyStr);
-        RES_STR=getResources().getString(R.string.resStr);
-        THREAD_NAME = getResources().getString(R.string.thread_name);
-        AROUND_0 =getResources().getString(R.string.around_0);
         createStartRows();
     }
+
     private void setListeners(){
         textWatcher = new MainTextWatcher(this);
         fab.setOnClickListener(this);
@@ -118,8 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
         etGoalQuantity.addTextChangedListener(textWatcher);
         StaticNeedSupplement.ScaleLongStringsInTextView(etGoalQuantity);
-
-        }
+    }
 
     private void createStartRows(){
         createRow(true);
@@ -143,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (item.getItemId() == R.id.clear_all) {
             clearAll();
         }
@@ -296,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     rf= rowFragments.get(i);
                         res=rf.getRes();
 
-                            if (res ==min){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}
+                            if (res ==min){arg1=res.COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}
                             Message msg = h.obtainMessage(i, arg1, minIndex, min);
                         h.sendMessage(msg);
                     }
