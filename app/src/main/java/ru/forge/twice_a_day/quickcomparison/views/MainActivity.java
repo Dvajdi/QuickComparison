@@ -1,4 +1,4 @@
-package ru.forge.twice_a_day.quickcomparison;
+package ru.forge.twice_a_day.quickcomparison.views;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -19,11 +19,11 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import ru.forge.twice_a_day.quickcomparison.R;
 import ru.forge.twice_a_day.quickcomparison.models.work_with_units.AllUnits;
 import ru.forge.twice_a_day.quickcomparison.models.work_with_units.UnitsType;
 import ru.forge.twice_a_day.quickcomparison.util.StaticNeedSupplement;
 import ru.forge.twice_a_day.quickcomparison.util.FormatAdapter;
-import ru.forge.twice_a_day.quickcomparison.views.NumberEditText;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static String ECONOMY_STR;
     private static String RES_STR;
     private static String AROUND_0;
-    private static ArrayList<RawFragment> rawFragments;
+    private static ArrayList<RowFragment> rowFragments;
     private static OwnHandler h;
     private static Thread t;
     private static int COLOR_BEST;
@@ -86,8 +86,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void findObjects(Bundle savedInstanceState){
-        rawFragments=(ArrayList<RawFragment>) getLastCustomNonConfigurationInstance();
-        if(rawFragments==null){rawFragments = new ArrayList<>();}else{Log.d("life","не ноль"); }
+        rowFragments =(ArrayList<RowFragment>) getLastCustomNonConfigurationInstance();
+        if(rowFragments ==null){
+          rowFragments = new ArrayList<>();}else{Log.d("life","не ноль"); }
         if(savedInstanceState==null){setContent();}else{btnGoalUnit.setText(goalUnitName);}
     }
 
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public Object onRetainCustomNonConfigurationInstance() {
-        return rawFragments;
+        return rowFragments;
     }
 
     @Override
@@ -190,10 +191,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public static void changeUnitsInFragments(String s,double unitValue) {
-        for (int i = 0; i < rawFragments.size(); i++) {
-            rawFragments.get(i).getBtnUnit().setText(s);
-            rawFragments.get(i).setRawUnit(s);
-            rawFragments.get(i).setUnitValue(unitValue);
+        for (int i = 0; i < rowFragments.size(); i++) {
+            rowFragments.get(i).getBtnUnit().setText(s);
+            rowFragments.get(i).setRawUnit(s);
+            rowFragments.get(i).setUnitValue(unitValue);
         }
             isChangeAll=false;
     }
@@ -216,23 +217,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void addNewFragment(boolean isNotFirstTwoRows) {
-        RawFragment rf = new RawFragment();
-        rf.setFragments(rawFragments,isNotFirstTwoRows);
+        RowFragment rf = new RowFragment();
+        rf.setFragments(rowFragments,isNotFirstTwoRows);
         getSupportFragmentManager().beginTransaction().add(R.id.rl_main, rf).commit();
-        rawFragments.add(rf);
+        rowFragments.add(rf);
 
     }
     private void clearFragments(){
-        for (int i = 0; i <rawFragments.size() ; i++) {
-            getSupportFragmentManager().beginTransaction().remove(rawFragments.get(i)).commit();
+        for (int i = 0; i < rowFragments.size() ; i++) {
+            getSupportFragmentManager().beginTransaction().remove(rowFragments.get(i)).commit();
         }
-        rawFragments.clear();
+        rowFragments.clear();
     }
 
     static class OwnHandler extends Handler{
         View v;
         TextView tv_res,tv_res_economy;
-        RawFragment rf;
+        RowFragment rf;
         double res,economy,minRes,economyPercent,resWithoutUnit;
 
         @Override
@@ -240,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.handleMessage(msg);
             try {
                 minRes = (double) msg.obj;
-                rf = rawFragments.get(msg.what);
+                rf = rowFragments.get(msg.what);
                 v = rf.getView();
                 v = v != null ? rf.getView().findViewById(R.id.doprow) : null;
                 if (v != null) {
@@ -282,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     static class OwnRunnable implements Runnable {
-        RawFragment rf;
+        RowFragment rf;
         double res,min;
         int arg1,minIndex;
 
@@ -291,8 +292,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             setResult();
             min=findMin();
-                for (int i = 0; i <rawFragments.size() ; i++) {
-                    rf=rawFragments.get(i);
+                for (int i = 0; i < rowFragments.size() ; i++) {
+                    rf= rowFragments.get(i);
                         res=rf.getRes();
 
                             if (res ==min){arg1=COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}
@@ -304,8 +305,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public double findMin(){
             double min=Double.MAX_VALUE-1000;
             double value;
-            for (int i = 0; i <rawFragments.size(); i++) {
-                value=rawFragments.get(i).getRes();
+            for (int i = 0; i < rowFragments.size(); i++) {
+                value= rowFragments.get(i).getRes();
                 if(value!=0 && value!=Double.MAX_VALUE){
                 if(min>value){min=value;}}
             }
@@ -314,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         void setResult(){
             boolean isCorrectQuantity;
             koef=0;
-            RawFragment rf;
+            RowFragment rf;
             EditText etPrice;
             EditText etQuantity;
             View v;
@@ -326,8 +327,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             goalUnit = btnGoalUnit.getText().toString();
 
-            for (int i = 0; i <rawFragments.size() ; i++) {
-                rf = rawFragments.get(i);
+            for (int i = 0; i < rowFragments.size() ; i++) {
+                rf = rowFragments.get(i);
                 v=rf.getView();
                 if(v!=null) {
                     etPrice = (EditText) v.findViewById(R.id.et_dop_price);

@@ -1,4 +1,4 @@
-package ru.forge.twice_a_day.quickcomparison;
+package ru.forge.twice_a_day.quickcomparison.views;
 
 
 import android.content.Intent;
@@ -17,11 +17,11 @@ import android.widget.ScrollView;
 
 import java.util.ArrayList;
 
+import ru.forge.twice_a_day.quickcomparison.R;
 import ru.forge.twice_a_day.quickcomparison.models.work_with_units.UnitsType;
 import ru.forge.twice_a_day.quickcomparison.util.StaticNeedSupplement;
-import ru.forge.twice_a_day.quickcomparison.views.MyCardView;
 
-public class RawFragment extends Fragment implements Animation.AnimationListener,View.OnClickListener{
+public class RowFragment extends Fragment implements Animation.AnimationListener,View.OnClickListener{
     private ArrayList fragments;
     private EditText etPrice,etQuantity;
     private double res=Double.MAX_VALUE;
@@ -37,7 +37,7 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
     }
 
     private double resWithoutUnit;
-    private MyCardView cv;
+    private FragmentCardView cv;
     private boolean isNotWhenStart;
     private int cardColor;
     private View rootView;
@@ -86,7 +86,7 @@ public class RawFragment extends Fragment implements Animation.AnimationListener
     }
 
     private void findViewsInFragment(View rootView){
-        cv=(MyCardView) rootView;
+        cv=(FragmentCardView) rootView;
         etPrice=(EditText)rootView.findViewById(R.id.et_dop_price);
         etQuantity=(EditText)rootView.findViewById(R.id.et_dop_quantity);
         btnUnit = (Button)rootView.findViewById(R.id.button_dop_unit);

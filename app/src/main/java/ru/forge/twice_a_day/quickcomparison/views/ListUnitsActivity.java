@@ -1,4 +1,4 @@
-package ru.forge.twice_a_day.quickcomparison;
+package ru.forge.twice_a_day.quickcomparison.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,11 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import ru.forge.twice_a_day.quickcomparison.R;
 import ru.forge.twice_a_day.quickcomparison.models.work_with_units.AllUnits;
 import ru.forge.twice_a_day.quickcomparison.models.work_with_units.Unit;
 import ru.forge.twice_a_day.quickcomparison.models.work_with_units.UnitsType;
@@ -21,15 +21,9 @@ public class ListUnitsActivity extends AppCompatActivity {
     public Context ctx;
     ListView listViewWeight,listViewCapacity;
     Button btnED;
-    String [] unitsWeight;
-    String [] unitsCapacity;
-    String [] unitsWeightValues;
-    String [] unitsCapacityValues;
-
     ArrayAdapter <String>arrayAdapterWeight,arrayAdapterCapacity;
     static AllUnits allUnits;
     static boolean isFirstChange;
-
     UnitsType whatShow;
 
     @Override
@@ -38,29 +32,23 @@ public class ListUnitsActivity extends AppCompatActivity {
         setContentView(R.layout.material_activity_list);
         findMyViews();
         initValues();
-        setlisteners();
+        setListeners();
         setSupportActionBar((Toolbar)findViewById(R.id.tool_bar));
     }
-
 
     void findMyViews(){
         listViewWeight = (ListView)findViewById(R.id.listViewWieght);
         listViewCapacity = (ListView)findViewById(R.id.listViewCapacity);
         btnED = (Button)findViewById(R.id.btnED);
-
     }
 
     void initValues(){
-
         ctx=this;
         isFirstChange=MainActivity.isFirstChange;
-
-        if(isFirstChange){whatShow=UnitsType.all;}else{Log.d("show","else");whatShow=RawFragment.rawUnitType;}
-
+        if(isFirstChange){whatShow=UnitsType.all;}else{Log.d("show","else");whatShow= RowFragment.rawUnitType;}
         allUnits = MainActivity.allUnits;
         switch(whatShow){
             case all: Log.d("show","all");
-              //  MainActivity.isChangeAll=true;
                 listViewCapacity.setVisibility(View.VISIBLE);
                 listViewWeight.setVisibility(View.VISIBLE);
                 btnED.setVisibility(View.VISIBLE);
@@ -81,39 +69,22 @@ public class ListUnitsActivity extends AppCompatActivity {
                 btnED.setVisibility(View.GONE);
                 break;
         }
-        arrayAdapterWeight  = new ArrayAdapter<String>(this,R.layout.unit_raw, allUnits.units_names_weight);
-        arrayAdapterCapacity  = new ArrayAdapter<String>(this,R.layout.unit_raw, allUnits.units_names_capacity);
+        arrayAdapterWeight  = new ArrayAdapter<>(this,R.layout.unit_raw, allUnits.units_names_weight);
+        arrayAdapterCapacity  = new ArrayAdapter<>(this,R.layout.unit_raw, allUnits.units_names_capacity);
 
         listViewCapacity.setAdapter(arrayAdapterCapacity);
         listViewWeight.setAdapter(arrayAdapterWeight);
     }
 
-    void setlisteners(){
-        btnED.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                returnResult(null,1,UnitsType.ed);
-
-            }
-        });
-
-        listViewWeight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                returnResult(allUnits.weight_units,position,UnitsType.weight);
-            }
-        });
-
-        listViewCapacity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                returnResult(allUnits.capacity_units,position,UnitsType.capacity);
-            }
-        });
+    void setListeners(){
+        btnED.setOnClickListener((v) -> returnResult(null,1,UnitsType.ed));
+        listViewWeight.setOnItemClickListener((parent, view, position, id) ->
+              returnResult(allUnits.weight_units,position,UnitsType.weight));
+        listViewCapacity.setOnItemClickListener((parent, view, position, id) ->
+            returnResult(allUnits.capacity_units,position,UnitsType.capacity));
     }
 
     protected void returnResult(Unit[] str, int position,UnitsType type){
-
         Intent intent=new Intent();
         if(str!=null){
         intent.putExtra("name",str[position].getShortName());
@@ -123,9 +94,9 @@ public class ListUnitsActivity extends AppCompatActivity {
             intent.putExtra("value",1);
         }
         setResult(RESULT_OK,intent);
-       if(type!=RawFragment.rawUnitType){MainActivity.isChangeAll=true;}
+       if(type!= RowFragment.rawUnitType){MainActivity.isChangeAll=true;}
         MainActivity.isFirstChange=false;
-        RawFragment.rawUnitType=type;
+        RowFragment.rawUnitType=type;
         finish();
     }
 }

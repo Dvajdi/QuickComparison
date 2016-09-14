@@ -6,10 +6,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
 
-import ru.forge.twice_a_day.quickcomparison.RawFragment;
-
-public class MyCardView extends CardView {
-  private RawFragment rf;
+public class FragmentCardView extends CardView {
+  private RowFragment rf;
   private ScrollView scrollView;
   private float x;
   private float moveX;
@@ -17,17 +15,17 @@ public class MyCardView extends CardView {
   private float moveY;
   float width,hight;
 
-  public MyCardView(Context context) {
+  public FragmentCardView(Context context) {
     super(context);
   }
-  public MyCardView(Context context, AttributeSet attrs) {
+  public FragmentCardView(Context context, AttributeSet attrs) {
     super(context, attrs);
   }
-  public MyCardView(Context context, AttributeSet attrs, int defStyleAttr) {
+  public FragmentCardView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
   }
 
-  public void setRf(RawFragment rf) {
+  public void setRf(RowFragment rf) {
     this.rf = rf;
     setWidthAndHight();
   }
@@ -55,6 +53,5 @@ public class MyCardView extends CardView {
         }
         return super.dispatchTouchEvent(me);
     }
-
 
 }
