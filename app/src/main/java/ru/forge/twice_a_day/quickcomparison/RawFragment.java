@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,9 @@ import android.widget.ScrollView;
 
 import java.util.ArrayList;
 
-import ru.forge.twice_a_day.quickcomparison.about_units.UnitsType;
-import ru.forge.twice_a_day.quickcomparison.standart_helpers.StaticNeedSupplement;
+import ru.forge.twice_a_day.quickcomparison.models.work_with_units.UnitsType;
+import ru.forge.twice_a_day.quickcomparison.util.StaticNeedSupplement;
+import ru.forge.twice_a_day.quickcomparison.views.MyCardView;
 
 public class RawFragment extends Fragment implements Animation.AnimationListener,View.OnClickListener{
     private ArrayList fragments;

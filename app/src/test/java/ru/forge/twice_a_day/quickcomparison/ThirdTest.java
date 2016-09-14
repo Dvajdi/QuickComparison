@@ -3,7 +3,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import ru.forge.twice_a_day.quickcomparison.about_units.Unit;
+import ru.forge.twice_a_day.quickcomparison.models.work_with_units.Unit;
 
 public class ThirdTest {
     @Test

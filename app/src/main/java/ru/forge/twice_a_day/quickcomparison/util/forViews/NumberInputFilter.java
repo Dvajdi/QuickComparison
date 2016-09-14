@@ -1,4 +1,4 @@
-package ru.forge.twice_a_day.quickcomparison.standart_helpers.filters;
+package ru.forge.twice_a_day.quickcomparison.util.forViews;
 
 import android.text.InputFilter;
 import android.text.Spanned;

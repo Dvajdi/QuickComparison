@@ -3,7 +3,7 @@ package ru.forge.twice_a_day.quickcomparison;
 import org.junit.Assert;
 import org.junit.Test;
 
-import ru.forge.twice_a_day.quickcomparison.standart_helpers.FormatAdapter;
+import ru.forge.twice_a_day.quickcomparison.util.FormatAdapter;
 
 /**
  * Created by Pavel M. on 15.06.16.

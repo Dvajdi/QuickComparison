@@ -1,4 +1,4 @@
-package ru.forge.twice_a_day.quickcomparison.about_units;
+package ru.forge.twice_a_day.quickcomparison.models.work_with_units;
 
 import android.app.Activity;
 import android.widget.Toast;

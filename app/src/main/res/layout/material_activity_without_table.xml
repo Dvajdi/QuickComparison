@@ -57,7 +57,7 @@
             android:background="@drawable/rounded"
             android:layout_marginRight="2dp">
 
-            <ru.forge.twice_a_day.quickcomparison.NumberEditText
+            <ru.forge.twice_a_day.quickcomparison.views.NumberEditText
                 android:imeOptions="flagNavigateNext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

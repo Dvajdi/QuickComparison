@@ -19,10 +19,11 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import ru.forge.twice_a_day.quickcomparison.about_units.AllUnits;
-import ru.forge.twice_a_day.quickcomparison.about_units.UnitsType;
-import ru.forge.twice_a_day.quickcomparison.standart_helpers.StaticNeedSupplement;
-import ru.forge.twice_a_day.quickcomparison.standart_helpers.FormatAdapter;
+import ru.forge.twice_a_day.quickcomparison.models.work_with_units.AllUnits;
+import ru.forge.twice_a_day.quickcomparison.models.work_with_units.UnitsType;
+import ru.forge.twice_a_day.quickcomparison.util.StaticNeedSupplement;
+import ru.forge.twice_a_day.quickcomparison.util.FormatAdapter;
+import ru.forge.twice_a_day.quickcomparison.views.NumberEditText;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -49,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static String goalUnit;
     static double goalUnitValue=1;
 
-
     public static MainTextWatcher textWatcher;
+
 
 
     static AllUnits allUnits;
@@ -59,14 +60,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static public boolean isFirstChange=true;
     static public boolean isChangeAll =false;
     static String goalUnitName;
-   static int koef=0;
+    static int koef=0;
     ScrollView sv;
+
+    static{
+     Log.d("main","STATIC работает!!");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.material_activity_without_table);
-        findMyViews();
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.material_activity_without_table);
+      findMyViews();
         findObjects(savedInstanceState);
         setListeners();
         startThread();
@@ -79,16 +84,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         etGoalQuantity = (NumberEditText)findViewById(R.id.et_goal_quantity);
         btnGoalUnit = (Button)findViewById(R.id.btnGoalUnit);
     }
+
     private void findObjects(Bundle savedInstanceState){
         rawFragments=(ArrayList<RawFragment>) getLastCustomNonConfigurationInstance();
         if(rawFragments==null){rawFragments = new ArrayList<>();}else{Log.d("life","не ноль"); }
         if(savedInstanceState==null){setContent();}else{btnGoalUnit.setText(goalUnitName);}
     }
+
+    private void loadRes(){
+
+
+    }
+
     private void setContent(){
         allUnits = new AllUnits(this);
         goalUnitName=allUnits.defaultUnit;
         h=new OwnHandler();
-
         COLOR_BEST=getResources().getColor(R.color.colorPrimary);
         COLOR_MAIN=getResources().getColor(R.color.colorVariant3);
         BEST_RESULT=getResources().getString(R.string.best_result);
@@ -348,9 +359,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     else{
                         resWithoutUnit=price / quantity;
                         res = price / (quantity*rf.getUnitValue());
-
                        }
-
                     rf.setRes(res);
                     rf.setResWithoutUnit(resWithoutUnit);
                 }

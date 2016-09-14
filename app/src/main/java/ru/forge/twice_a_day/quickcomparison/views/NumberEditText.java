@@ -1,4 +1,4 @@
-package ru.forge.twice_a_day.quickcomparison;
+package ru.forge.twice_a_day.quickcomparison.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,7 +12,8 @@ import android.widget.EditText;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
-import ru.forge.twice_a_day.quickcomparison.standart_helpers.filters.NumberInputFilter;
+import ru.forge.twice_a_day.quickcomparison.R;
+import ru.forge.twice_a_day.quickcomparison.util.forViews.NumberInputFilter;
 
 // скачал с гитхаба!!!!!
 

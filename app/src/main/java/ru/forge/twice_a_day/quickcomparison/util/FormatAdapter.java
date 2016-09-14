@@ -1,4 +1,4 @@
-package ru.forge.twice_a_day.quickcomparison.standart_helpers;
+package ru.forge.twice_a_day.quickcomparison.util;
 
 /**
  * Created by Pavel M. on 15.06.16.
