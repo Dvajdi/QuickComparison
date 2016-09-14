@@ -1,9 +1,9 @@
 package ru.forge.twice_a_day.quickcomparison.controller;
 
-import android.app.Activity;
+import android.content.Context;
 import ru.forge.twice_a_day.quickcomparison.R;
 
-public class ResLoader {
+public class AppRes {
   public static int COLOR_BEST;
   public static int COLOR_MAIN;
   public static String BEST_RESULT;
@@ -13,7 +13,7 @@ public class ResLoader {
   public static String THREAD_NAME;
   public static String AROUND_0;
 
-  public ResLoader(Activity act){
+  public static void loadAppRes(Context act){
     COLOR_BEST = act.getResources().getColor(R.color.colorPrimary);
     COLOR_MAIN = act.getResources().getColor(R.color.colorVariant3);
     BEST_RESULT = act.getResources().getString(R.string.best_result);

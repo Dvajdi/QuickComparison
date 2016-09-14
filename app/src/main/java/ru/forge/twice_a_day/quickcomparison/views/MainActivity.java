@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import ru.forge.twice_a_day.quickcomparison.R;
-import ru.forge.twice_a_day.quickcomparison.controller.ResLoader;
+import ru.forge.twice_a_day.quickcomparison.controller.AppRes;
+import ru.forge.twice_a_day.quickcomparison.controller.MainHandler;
 import ru.forge.twice_a_day.quickcomparison.models.work_with_units.AllUnits;
-import ru.forge.twice_a_day.quickcomparison.models.work_with_units.UnitsType;
 import ru.forge.twice_a_day.quickcomparison.util.StaticNeedSupplement;
 import ru.forge.twice_a_day.quickcomparison.util.FormatAdapter;
 
@@ -30,47 +30,33 @@ import ru.forge.twice_a_day.quickcomparison.util.FormatAdapter;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private FloatingActionButton fab;
     private Toolbar toolbar;
-    private static String BEST_RESULT;
-    private static String THREAD_NAME;
-    private static String MES_RUB;
-    private static String ECONOMY_STR;
-    private static String RES_STR;
-    private static String AROUND_0;
-    private static ArrayList<RowFragment> rowFragments;
-    private static OwnHandler h;
+    public static ArrayList<RowFragment> rowFragments;
+    private static MainHandler h;
     private static Thread t;
-    private static int COLOR_BEST;
-    private static int COLOR_MAIN;
 
     private int j=1;
     static NumberEditText etGoalQuantity;
-    static double  goalQuantity;
+    public static double  goalQuantity;
     public static Button btnGoalUnit;
-    static String goalUnit;
-    static double goalUnitValue=1;
+    public static String goalUnit;
+    public static double goalUnitValue=1;
 
     public static MainTextWatcher textWatcher;
     static AllUnits allUnits;
     static public boolean isFirstChange=true;
     static public boolean isChangeAll =false;
     static String goalUnitName;
-    static int koef=0;
+    public static int koef=0;
     ScrollView sv;
-
-  ResLoader res;
-
-    static{
-     Log.d("main","STATIC работает!!");
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.material_activity_without_table);
       findMyViews();
-        findObjects(savedInstanceState);
-        setListeners();
-        startThread();
+      findObjects(savedInstanceState);
+      setListeners();
+      startThread();
     }
 
     private void findMyViews() {
@@ -88,23 +74,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(savedInstanceState==null){setContent();}else{btnGoalUnit.setText(goalUnitName);}
     }
 
-    private void loadRes(){
-      res = new ResLoader(this);
-      COLOR_BEST=getResources().getColor(R.color.colorPrimary);
-      COLOR_MAIN=getResources().getColor(R.color.colorVariant3);
-      BEST_RESULT=getResources().getString(R.string.best_result);
-      MES_RUB=getResources().getString(R.string.rub);
-      ECONOMY_STR = getResources().getString(R.string.economyStr);
-      RES_STR=getResources().getString(R.string.resStr);
-      THREAD_NAME = getResources().getString(R.string.thread_name);
-      AROUND_0 =getResources().getString(R.string.around_0);
-    }
-
     private void setContent(){
-        loadRes();
+        AppRes.loadAppRes(this);
         allUnits = new AllUnits(this);
         goalUnitName=allUnits.defaultUnit;
-        h=new OwnHandler();
+        h=new MainHandler();
         createStartRows();
     }
 
@@ -207,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     void startThread(){
         j++;
-        t =new Thread(new OwnRunnable(),THREAD_NAME+j);
+        t =new Thread(new OwnRunnable(),AppRes.THREAD_NAME+j);
         t.start();
     }
 
@@ -225,58 +199,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rowFragments.clear();
     }
 
-    static class OwnHandler extends Handler{
-        View v;
-        TextView tv_res,tv_res_economy;
-        RowFragment rf;
-        double res,economy,minRes,economyPercent,resWithoutUnit;
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            try {
-                minRes = (double) msg.obj;
-                rf = rowFragments.get(msg.what);
-                v = rf.getView();
-                v = v != null ? rf.getView().findViewById(R.id.doprow) : null;
-                if (v != null) {
-                    tv_res = (TextView) v.findViewById(R.id.tv_dop_result);
-                    tv_res_economy = (TextView) v.findViewById(R.id.tv_dop_economy);
-
-                    StaticNeedSupplement.ScaleLongStringsInTextView(tv_res);
-                    res = rf.getRes();
-
-                    resWithoutUnit=rf.getResWithoutUnit();
-                    if(res==Double.MAX_VALUE){
-                        tv_res.setText(String.format(Locale.ROOT,RES_STR,"0",MES_RUB));tv_res_economy.setText("");}
-                    else{
-                        String strRes;
-                        if((resWithoutUnit>0)&&(resWithoutUnit<1/Math.pow(10,koef))){strRes=AROUND_0;}else{strRes=StaticNeedSupplement.formatter(resWithoutUnit,koef);}
-                        tv_res.setText(String.format(Locale.ROOT, RES_STR, strRes, MES_RUB));
-
-                        economyPercent = StaticNeedSupplement.rounded((res / minRes - 1) * 100, 2);
-                        economy = (res - minRes)*goalQuantity*(goalUnitValue);
-
-                        if ((economy >= 0)) {
-                            if (economy == 0) {
-                                tv_res_economy.setText(BEST_RESULT);
-                            } else {
-                                String strEconomy = "";
-                                Log.d("koef","koef = "+economy + " ; pow = "+1/Math.pow(10,koef));
-                                if(economy<1/Math.pow(10,koef)){strEconomy= AROUND_0;}else{strEconomy= StaticNeedSupplement.formatter(economy,koef);}
-
-                                tv_res_economy.setText(String.format(Locale.ROOT, ECONOMY_STR, strEconomy, StaticNeedSupplement.formatter(economyPercent,koef), "%",StaticNeedSupplement.formatter(goalQuantity,koef),goalUnit));
-                            }
-                        }
-                    }
-                rf.setCardColor(msg.arg1);
-            }
-            }
-            catch(NullPointerException | IndexOutOfBoundsException e){e.printStackTrace();}
-
-        }
-    }
-
     static class OwnRunnable implements Runnable {
         RowFragment rf;
         double res,min;
@@ -284,17 +206,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public void run() {
-
             setResult();
             min=findMin();
                 for (int i = 0; i < rowFragments.size() ; i++) {
-                    rf= rowFragments.get(i);
-                        res=rf.getRes();
-
-                            if (res ==min){arg1=res.COLOR_BEST;minIndex=i;}else{arg1=COLOR_MAIN;}
-                            Message msg = h.obtainMessage(i, arg1, minIndex, min);
-                        h.sendMessage(msg);
-                    }
+            rf= rowFragments.get(i);
+            res=rf.getRes();
+            if (res ==min){arg1=AppRes.COLOR_BEST;minIndex=i;}else{arg1=AppRes.COLOR_MAIN;}
+            Message msg = h.obtainMessage(i, arg1, minIndex, min);
+            h.sendMessage(msg);
+          }
         }
 
         public double findMin(){
@@ -328,7 +248,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(v!=null) {
                     etPrice = (EditText) v.findViewById(R.id.et_dop_price);
                     etQuantity = (EditText) v.findViewById(R.id.et_dop_quantity);
-
                     strPrice = etPrice.getText().toString();
                     strQuantity = etQuantity.getText().toString();
                     int someInt = FormatAdapter.getKoef(strPrice);
