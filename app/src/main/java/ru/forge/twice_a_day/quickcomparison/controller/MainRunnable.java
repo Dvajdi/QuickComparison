@@ -10,9 +10,6 @@ import ru.forge.twice_a_day.quickcomparison.util.StaticNeedSupplement;
 import ru.forge.twice_a_day.quickcomparison.views.MainActivity;
 import ru.forge.twice_a_day.quickcomparison.views.RowFragment;
 
-/**
- * Created by Павел on 14.09.2016.
- */
 public class MainRunnable implements Runnable{
   RowFragment rf;
   double res,min;
@@ -22,20 +19,20 @@ public class MainRunnable implements Runnable{
   public void run() {
     setResult();
     min=findMin();
-    for (int i = 0; i < rowFragments.size() ; i++) {
-      rf= rowFragments.get(i);
+    for (int i = 0; i < MainActivity.rowFragments.size() ; i++) {
+      rf= MainActivity.rowFragments.get(i);
       res=rf.getRes();
       if (res ==min){arg1=AppRes.COLOR_BEST;minIndex=i;}else{arg1=AppRes.COLOR_MAIN;}
       Message msg = MainActivity.h.obtainMessage(i, arg1, minIndex, min);
-      h.sendMessage(msg);
+      MainActivity.h.sendMessage(msg);
     }
   }
 
   public double findMin(){
     double min=Double.MAX_VALUE-1000;
     double value;
-    for (int i = 0; i < rowFragments.size(); i++) {
-      value= rowFragments.get(i).getRes();
+    for (int i = 0; i < MainActivity.rowFragments.size(); i++) {
+      value= MainActivity.rowFragments.get(i).getRes();
       if(value!=0 && value!=Double.MAX_VALUE){
         if(min>value){min=value;}}
     }
@@ -43,7 +40,7 @@ public class MainRunnable implements Runnable{
   }
   void setResult(){
     boolean isCorrectQuantity;
-    koef=0;
+    MainActivity.koef=0;
     RowFragment rf;
     EditText etPrice;
     EditText etQuantity;
@@ -51,13 +48,13 @@ public class MainRunnable implements Runnable{
     String strPrice,strQuantity;
     double price,quantity=1,res,resWithoutUnit;
 
-    goalQuantity= StaticNeedSupplement.getDoubleFromET(etGoalQuantity);
-    if(goalQuantity==0){goalQuantity=1;}
+    MainActivity.goalQuantity= StaticNeedSupplement.getDoubleFromET(MainActivity.etGoalQuantity);
+    if(MainActivity.goalQuantity==0){MainActivity.goalQuantity=1;}
 
-    goalUnit = btnGoalUnit.getText().toString();
+    MainActivity.goalUnit = MainActivity.btnGoalUnit.getText().toString();
 
-    for (int i = 0; i < rowFragments.size() ; i++) {
-      rf = rowFragments.get(i);
+    for (int i = 0; i < MainActivity.rowFragments.size() ; i++) {
+      rf = MainActivity.rowFragments.get(i);
       v=rf.getView();
       if(v!=null) {
         etPrice = (EditText) v.findViewById(R.id.et_dop_price);
@@ -65,7 +62,7 @@ public class MainRunnable implements Runnable{
         strPrice = etPrice.getText().toString();
         strQuantity = etQuantity.getText().toString();
         int someInt = FormatAdapter.getKoef(strPrice);
-        if(koef< someInt){koef=someInt;}
+        if(MainActivity.koef< someInt){MainActivity.koef=someInt;}
 
         try {
           price = Double.valueOf(strPrice);
