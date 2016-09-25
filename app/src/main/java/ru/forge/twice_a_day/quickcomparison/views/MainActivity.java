@@ -27,7 +27,6 @@ import ru.forge.twice_a_day.quickcomparison.models.work_with_units.AllUnits;
 import ru.forge.twice_a_day.quickcomparison.util.StaticNeedSupplement;
 import ru.forge.twice_a_day.quickcomparison.util.FormatAdapter;
 
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private FloatingActionButton fab;
     private Toolbar toolbar;
@@ -67,14 +66,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         etGoalQuantity = (NumberEditText)findViewById(R.id.et_goal_quantity);
         btnGoalUnit = (Button)findViewById(R.id.btnGoalUnit);
     }
-
     private void findObjects(Bundle savedInstanceState){
         rowFragments =(ArrayList<RowFragment>) getLastCustomNonConfigurationInstance();
         if(rowFragments ==null){
           rowFragments = new ArrayList<>();}else{Log.d("life","не ноль"); }
         if(savedInstanceState==null){setContent();}else{btnGoalUnit.setText(goalUnitName);}
     }
-
     private void setContent(){
         AppRes.loadAppRes(this);
         allUnits = new AllUnits(this);
@@ -82,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         h=new MainHandler();
         createStartRows();
     }
-
     private void setListeners(){
         textWatcher = new MainTextWatcher(this);
         fab.setOnClickListener(this);
@@ -111,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.clear_all) {
@@ -200,16 +195,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rowFragments.clear();
     }
 
-
-
     @Override
     protected void onDestroy() {
         stopThread();
         super.onDestroy();
 
     }
-
-
-
-
 }
